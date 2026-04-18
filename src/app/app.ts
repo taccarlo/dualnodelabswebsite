@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  imports: [RouterOutlet],
+  template: '<router-outlet></router-outlet>'
 })
 export class App {
   title = 'dualnodelabswebsite';
-  version = '0.0.1';
 }
