@@ -2,8 +2,10 @@
 
   <!-- HEADER -->
   <header class="header">
-    <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="logo" />
-    <h1>Dual Node</h1>
+    <div class="header-brand">
+      <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="logo" />
+      <h1>Dual Node</h1>
+    </div>
     <p class="subtitle">Channel WebApp Platform</p>
   </header>
 
@@ -13,30 +15,43 @@
     <p>
       A modern channel-based web application for managing, streaming and distributing content.
     </p>
+    <div class="cta-buttons">
+      <a href="#features" class="btn btn-primary">Explore Features</a>
+      <a routerLink="/privacypolicy" class="btn btn-secondary">Privacy Policy</a>
+    </div>
   </section>
 
   <!-- FEATURES -->
-  <section class="features">
+  <section class="features" id="features">
     <div class="card">
       <h3>Fast</h3>
-      <p>Optimized architecture for high performance.</p>
+      <p>Optimized architecture for high performance content delivery and streaming.</p>
     </div>
 
     <div class="card">
       <h3>Scalable</h3>
-      <p>Built to grow with your channel network.</p>
+      <p>Built to grow with your channel network from startup to enterprise scale.</p>
     </div>
 
     <div class="card">
       <h3>Secure</h3>
-      <p>Modern security standards by design.</p>
+      <p>Modern security standards by design with end-to-end encryption.</p>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>© 2026 Dual Node. All rights reserved. v{{ version }}</p>
-    <p><a routerLink="/privacypolicy">Privacy Policy</a></p>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node" class="footer-logo" />
+        <span>Dual Node</span>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a routerLink="/">Home</a>
+        <a routerLink="/privacypolicy">Privacy Policy</a>
+      </nav>
+      <p class="copyright">© 2026 Dual Node. All rights reserved. v{{ version }}</p>
+    </div>
   </footer>
 
 </div>
