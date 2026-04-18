@@ -113,16 +113,35 @@
   margin-top: 40px;
 }
 
-.footer p {
-  color: #666;
-  margin-bottom: 8px;
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
-.footer a {
+.footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-nav a {
   color: #667eea;
   text-decoration: none;
+  font-weight: 500;
 }
 
-.footer a:hover {
+.footer-nav a:hover {
   text-decoration: underline;
+}
+
+.footer-separator {
+  color: #ccc;
+  font-weight: 300;
+}
+
+.footer p {
+  color: #666;
+  margin: 0;
 }
