@@ -1,0 +1,46 @@
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <!-- Logo -->
+    <a routerLink="/" class="nav-logo" aria-label="Dual Node Home">
+      <img src="assets/dualnode.png" alt="" class="nav-logo-img" />
+      <span class="nav-logo-text">Dual Node</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-links" role="menubar">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" role="menuitem">
+        <span class="nav-link-text">Home</span>
+        <span class="nav-link-indicator"></span>
+      </a>
+      <a routerLink="/privacypolicy" routerLinkActive="active" class="nav-link" role="menuitem">
+        <span class="nav-link-text">Privacy</span>
+        <span class="nav-link-indicator"></span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      class="menu-toggle" 
+      [class.active]="isMenuOpen"
+      (click)="toggleMenu()"
+      aria-label="Toggle menu"
+      [attr.aria-expanded]="isMenuOpen"
+    >
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.open]="isMenuOpen" (click)="closeMenu()">
+    <div class="mobile-menu-content" (click)="$event.stopPropagation()">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="mobile-nav-link" (click)="closeMenu()">
+        Home
+      </a>
+      <a routerLink="/privacypolicy" routerLinkActive="active" class="mobile-nav-link" (click)="closeMenu()">
+        Privacy Policy
+      </a>
+    </div>
+  </div>
+</nav>
