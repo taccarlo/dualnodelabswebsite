@@ -21,4 +21,4 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://dualnode.web.app/sitemap.xml
+Sitemap: https://dualnodelabs.web.app/sitemap.xml

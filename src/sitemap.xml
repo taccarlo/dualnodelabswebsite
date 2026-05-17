@@ -5,20 +5,20 @@
   
   <!-- Homepage - Highest priority -->
   <url>
-    <loc>https://dualnode.web.app/</loc>
+    <loc>https://dualnodelabs.web.app/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <mobile:mobile/>
     <image:image>
-      <image:loc>https://dualnode.web.app/assets/DualNode512x512NoBackground.png</image:loc>
+      <image:loc>https://dualnodelabs.web.app/assets/DualNode512x512NoBackground.png</image:loc>
       <image:title>Dual Node Logo</image:title>
     </image:image>
   </url>
   
   <!-- Privacy Policy -->
   <url>
-    <loc>https://dualnode.web.app/privacypolicy</loc>
+    <loc>https://dualnodelabs.web.app/privacypolicy</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
