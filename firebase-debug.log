@@ -1,0 +1,21 @@
+[debug] [2026-05-17T10:54:10.352Z] ----------------------------------------------------------------------
+[debug] [2026-05-17T10:54:10.354Z] Command:       C:\nvm4w\nodejs\node.exe C:\Users\tacch\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-05-17T10:54:10.354Z] CLI Version:   15.12.0
+[debug] [2026-05-17T10:54:10.354Z] Platform:      win32
+[debug] [2026-05-17T10:54:10.355Z] Node Version:  v22.22.2
+[debug] [2026-05-17T10:54:10.355Z] Time:          Sun May 17 2026 12:54:10 GMT+0200 (Ora legale dell’Europa centrale)
+[debug] [2026-05-17T10:54:10.355Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-05-17T10:54:11.948Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-05-17T10:54:11.948Z] > authorizing via signed-in user (tacchella.carlo@gmail.com)
+[debug] [2026-05-17T10:54:11.949Z] [iam] checking project dualnodelabs for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-05-17T10:54:11.950Z] Checked if tokens are valid: true, expires at: 1779017053256
+[debug] [2026-05-17T10:54:11.950Z] Checked if tokens are valid: true, expires at: 1779017053256
+[debug] [2026-05-17T10:54:11.951Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/dualnodelabs:testIamPermissions [none]
+[debug] [2026-05-17T10:54:11.951Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/dualnodelabs:testIamPermissions  x-goog-user-project=dualnodelabs
+[debug] [2026-05-17T10:54:11.951Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dualnodelabs:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-17T10:54:12.748Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/dualnodelabs:testIamPermissions 200
+[debug] [2026-05-17T10:54:12.749Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dualnodelabs:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-17T10:54:12.749Z] Checked if tokens are valid: true, expires at: 1779017053256
+[debug] [2026-05-17T10:54:12.749Z] Checked if tokens are valid: true, expires at: 1779017053256
+[debug] [2026-05-17T10:54:12.749Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/dualnodelabs [none]
