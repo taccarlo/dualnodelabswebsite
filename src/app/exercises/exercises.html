@@ -1,33 +1,33 @@
 <div class="container">
   <header class="header">
     <a routerLink="/"><img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="logo" /></a>
-    <h1>{{ 'codearena.header.title' | translate }}</h1>
-    <p class="subtitle">{{ 'codearena.header.subtitle' | translate }}</p>
+    <h1>{{ 'exercises.header.title' | translate }}</h1>
+    <p class="subtitle">{{ 'exercises.header.subtitle' | translate }}</p>
   </header>
 
-  <main class="arena-content">
-    <section class="hero">
-      <h2>{{ 'codearena.hero.title' | translate }}</h2>
-      <p>{{ 'codearena.hero.description' | translate }}</p>
-    </section>
+  <main class="content">
+    <section class="section" id="exercises">
+      <h2 class="section-title">{{ 'exercises.title' | translate }}</h2>
+      <p class="section-desc">{{ 'exercises.description' | translate }}</p>
 
-    <section class="features" id="features">
-      <div class="card">
-        <div class="card-icon">⚔</div>
-        <h3>{{ 'codearena.features.challenges.title' | translate }}</h3>
-        <p>{{ 'codearena.features.challenges.description' | translate }}</p>
-      </div>
+      <div class="features">
+        <div class="card">
+          <div class="card-icon">📝</div>
+          <h3>{{ 'exercises.algorithms.title' | translate }}</h3>
+          <p>{{ 'exercises.algorithms.description' | translate }}</p>
+        </div>
 
-      <div class="card">
-        <div class="card-icon">🏆</div>
-        <h3>{{ 'codearena.features.rankings.title' | translate }}</h3>
-        <p>{{ 'codearena.features.rankings.description' | translate }}</p>
-      </div>
+        <div class="card">
+          <div class="card-icon">🧩</div>
+          <h3>{{ 'exercises.dataStructures.title' | translate }}</h3>
+          <p>{{ 'exercises.dataStructures.description' | translate }}</p>
+        </div>
 
-      <div class="card">
-        <div class="card-icon">👥</div>
-        <h3>{{ 'codearena.features.community.title' | translate }}</h3>
-        <p>{{ 'codearena.features.community.description' | translate }}</p>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>{{ 'exercises.patterns.title' | translate }}</h3>
+          <p>{{ 'exercises.patterns.description' | translate }}</p>
+        </div>
       </div>
     </section>
   </main>
