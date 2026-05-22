@@ -9,11 +9,23 @@ export class TranslateService {
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
     if (isPlatformBrowser(this.platformId)) {
       const saved = localStorage.getItem('lang') as Lang | null;
-      if (saved === 'en' || saved === 'it') {
-        this.currentLang.set(saved);
-        document.documentElement.lang = saved;
+      const lang = saved === 'en' || saved === 'it' ? saved : this.getBrowserLanguage();
+      this.currentLang.set(lang);
+      document.documentElement.lang = lang;
+      if (saved !== lang) {
+        localStorage.setItem('lang', lang);
       }
     }
+  }
+
+  private getBrowserLanguage(): Lang {
+    if (!isPlatformBrowser(this.platformId)) {
+      return 'en';
+    }
+
+    const rawLang = navigator.language || (navigator.languages?.[0] ?? 'en');
+    const normalized = rawLang.toLowerCase().slice(0, 2);
+    return normalized === 'it' ? 'it' : 'en';
   }
 
   translate(key: string): string {
