@@ -2,82 +2,84 @@
   <!-- HEADER -->
   <header class="header">
     <img src="assets/dualnode.png" alt="Dual Node Logo" class="logo" />
-    <h1>Dual Node</h1>
-    <p class="subtitle">Channel WebApp Platform</p>
+    <h1>{{ 'privacy.header.title' | translate }}</h1>
+    <p class="subtitle">{{ 'privacy.header.subtitle' | translate }}</p>
   </header>
 
   <!-- PRIVACY POLICY CONTENT -->
   <main class="privacy-content">
-    <h1>Privacy Policy</h1>
-    <p class="effective-date">Effective Date: April 18, 2026</p>
+    <h1>{{ 'privacy.title' | translate }}</h1>
+    <p class="effective-date">{{ 'privacy.effectiveDate' | translate }}</p>
 
     <section>
-      <h2>1. Introduction</h2>
-      <p>Dual Node ("we," "us," "our," or "Company") is committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our web application and services.</p>
+      <h2>{{ 'privacy.section1.title' | translate }}</h2>
+      <p>{{ 'privacy.section1.content' | translate }}</p>
     </section>
 
     <section>
-      <h2>2. Information We Collect</h2>
-      <p>We collect information in the following ways:</p>
+      <h2>{{ 'privacy.section2.title' | translate }}</h2>
+      <p>{{ 'privacy.section2.intro' | translate }}</p>
       <ul>
-        <li><strong>Device Information:</strong> We may collect information about your device, including device type, operating system version, unique device identifiers, and device settings.</li>
-        <li><strong>Usage Information:</strong> We collect information about how you interact with our application, including features used, content accessed, and time spent.</li>
-        <li><strong>Analytics Data:</strong> We use analytics services to understand user behavior and improve our application.</li>
+        <li><strong>{{ 'privacy.section2.item1.title' | translate }}</strong> {{ 'privacy.section2.item1.text' | translate }}</li>
+        <li><strong>{{ 'privacy.section2.item2.title' | translate }}</strong> {{ 'privacy.section2.item2.text' | translate }}</li>
+        <li><strong>{{ 'privacy.section2.item3.title' | translate }}</strong> {{ 'privacy.section2.item3.text' | translate }}</li>
       </ul>
     </section>
 
     <section>
-      <h2>3. How We Use Your Information</h2>
-      <p>We use the collected information for the following purposes:</p>
+      <h2>{{ 'privacy.section3.title' | translate }}</h2>
+      <p>{{ 'privacy.section3.intro' | translate }}</p>
       <ul>
-        <li>To provide, maintain, and improve our application and services</li>
-        <li>To analyze usage patterns and user behavior</li>
-        <li>To troubleshoot technical issues and fix bugs</li>
-        <li>To develop new features and enhancements</li>
-        <li>To comply with legal and regulatory obligations</li>
+        <li>{{ 'privacy.section3.list1' | translate }}</li>
+        <li>{{ 'privacy.section3.list2' | translate }}</li>
+        <li>{{ 'privacy.section3.list3' | translate }}</li>
+        <li>{{ 'privacy.section3.list4' | translate }}</li>
+        <li>{{ 'privacy.section3.list5' | translate }}</li>
       </ul>
     </section>
 
     <section>
-      <h2>4. Data Security</h2>
-      <p>We implement appropriate technical and organizational measures to protect your information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure.</p>
+      <h2>{{ 'privacy.section4.title' | translate }}</h2>
+      <p>{{ 'privacy.section4.content' | translate }}</p>
     </section>
 
     <section>
-      <h2>5. Data Retention</h2>
-      <p>We retain your information for as long as necessary to provide our services and fulfill the purposes outlined in this Privacy Policy. When personal information is no longer needed, we securely delete or anonymize it.</p>
+      <h2>{{ 'privacy.section5.title' | translate }}</h2>
+      <p>{{ 'privacy.section5.content' | translate }}</p>
     </section>
 
     <section>
-      <h2>6. User Rights</h2>
-      <p>Depending on your location, you may have certain rights regarding your information:</p>
+      <h2>{{ 'privacy.section6.title' | translate }}</h2>
+      <p>{{ 'privacy.section6.intro' | translate }}</p>
       <ul>
-        <li><strong>Access:</strong> You have the right to access the personal information we hold about you</li>
-        <li><strong>Correction:</strong> You can request correction of inaccurate information</li>
-        <li><strong>Deletion:</strong> You can request deletion of your information</li>
+        <li><strong>{{ 'privacy.section6.item1.title' | translate }}</strong> {{ 'privacy.section6.item1.text' | translate }}</li>
+        <li><strong>{{ 'privacy.section6.item2.title' | translate }}</strong> {{ 'privacy.section6.item2.text' | translate }}</li>
+        <li><strong>{{ 'privacy.section6.item3.title' | translate }}</strong> {{ 'privacy.section6.item3.text' | translate }}</li>
       </ul>
     </section>
 
     <section>
-      <h2>7. Changes to This Privacy Policy</h2>
-      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will notify you of material changes by updating the "Effective Date" at the top of this policy.</p>
+      <h2>{{ 'privacy.section7.title' | translate }}</h2>
+      <p>{{ 'privacy.section7.content' | translate }}</p>
     </section>
 
     <section>
-      <h2>8. Contact Us</h2>
-      <p>If you have questions about this Privacy Policy or our privacy practices, please contact us through our support channels.</p>
+      <h2>{{ 'privacy.section8.title' | translate }}</h2>
+      <p>{{ 'privacy.section8.content' | translate }}</p>
     </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-content">
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <a routerLink="/">Home</a>
+      <nav class="footer-nav" [attr.aria-label]="'footer.navLabel' | translate">
+        <a routerLink="/">{{ 'footer.home' | translate }}</a>
         <span class="footer-separator" aria-hidden="true">|</span>
-        <a routerLink="/privacypolicy">Privacy Policy</a>
+        <a routerLink="/privacypolicy">{{ 'footer.privacyPolicy' | translate }}</a>
+        <span class="footer-separator" aria-hidden="true">|</span>
+        <button class="lang-switch" (click)="toggleLanguage()">{{ currentLang === 'en' ? 'IT' : 'EN' }}</button>
       </nav>
-      <p class="copyright">© 2026 Dual Node. All rights reserved. v{{ version }}</p>
+      <p class="copyright">{{ 'footer.copyright' | translate }}{{ version }}</p>
     </div>
   </footer>
 </div>
