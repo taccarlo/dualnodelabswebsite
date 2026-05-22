@@ -8,6 +8,14 @@
     ],
     "rewrites": [
       {
+        "source": "/privacyPolicy",
+        "destination": "/privacyPolicy.html"
+      },
+      {
+        "source": "/sitemap.xml",
+        "destination": "/sitemap.xml"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
