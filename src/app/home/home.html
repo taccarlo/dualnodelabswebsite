@@ -46,6 +46,8 @@
       <nav class="footer-nav" [attr.aria-label]="'footer.navLabel' | translate">
         <a routerLink="/">{{ 'footer.home' | translate }}</a>
         <span class="footer-separator" aria-hidden="true">|</span>
+        <a routerLink="/codearena">{{ 'footer.codeArena' | translate }}</a>
+        <span class="footer-separator" aria-hidden="true">|</span>
         <a routerLink="/privacypolicy">{{ 'footer.privacyPolicy' | translate }}</a>
         <span class="footer-separator" aria-hidden="true">|</span>
         <button class="lang-switch" (click)="toggleLanguage()">{{ currentLang === 'en' ? 'IT' : 'EN' }}</button>
