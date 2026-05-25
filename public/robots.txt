@@ -7,8 +7,6 @@ Allow: /
 Disallow: /.angular/
 Disallow: /node_modules/
 Disallow: /*?*  # No parameters in URLs
-Disallow: /*.json$
-Disallow: /*.xml$
 
 # Specific rules for Google
 User-agent: Googlebot
