@@ -1,20 +1,69 @@
 .subpage-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #ffffff;
+  padding: var(--space-4xl) 0;
 }
 
 .subpage-logo {
-  width: 80px;
-  height: 80px;
+  width: min(40vw, 320px);
+  height: auto;
   object-fit: contain;
   margin-bottom: var(--space-md);
   filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+  transition: width 0.2s ease;
 }
 
 .content-section {
-  background: var(--bg-secondary);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 50vh;
   display: flex;
   align-items: center;
+}
+
+/* Ensure text in white header is dark for contrast */
+.subpage-hero .heading-lg {
+  color: var(--text-primary);
+}
+.subpage-hero .body-lg {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: var(--space-md) auto 0;
+}
+
+/* Card appearance on gradient: white surface with colored text */
+.content-section .heading-md,
+.content-section .body-lg,
+.content-section .arena-btn {
+  color: inherit;
+}
+
+.content-section .arena-card,
+.content-section .mat-card {
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.06);
+  color: var(--text-primary);
+}
+
+.content-section .arena-card .heading-md {
+  color: var(--color-primary-dark);
+}
+
+.content-section .arena-card .body-lg {
+  color: var(--text-secondary);
+}
+
+.content-section .arena-card .arena-btn {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  pointer-events: auto;
+  margin-top: var(--space-lg);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.content-section .arena-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
 }
 
 .grid-2 {
@@ -97,5 +146,9 @@
     flex-direction: column;
     text-align: center;
     gap: var(--space-sm);
+  }
+  .subpage-logo {
+    width: min(48vw, 220px);
+    margin-bottom: var(--space-md);
   }
 }
