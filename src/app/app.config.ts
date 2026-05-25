@@ -6,7 +6,6 @@ import { CodeArenaComponent } from './codearena/codearena';
 import { DesignPatternsComponent } from './design-patterns/design-patterns';
 import { ExercisesComponent } from './exercises/exercises';
 import { AboutComponent } from './about/about';
-import { CookiePolicyComponent } from './cookiepolicy/cookiepolicy';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 const routes: Routes = [
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: 'design-patterns', component: DesignPatternsComponent },
   { path: 'exercises', component: ExercisesComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'cookiepolicy', component: CookiePolicyComponent },
 ];
 
 export const appConfig: ApplicationConfig = {

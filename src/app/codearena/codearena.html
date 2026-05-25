@@ -10,26 +10,19 @@
 
   <section class="content-section">
     <div class="content-container section-padding">
-      <div style="text-align: center; margin-bottom: var(--space-2xl);">
-        <h2 class="heading-md">{{ 'codearena.hero.title' | translate }}</h2>
-        <p class="body-lg" style="max-width: 600px; margin: var(--space-md) auto 0;">{{ 'codearena.hero.description' | translate }}</p>
-      </div>
-      <div class="grid-3">
-        <div class="mat-card" style="text-align: center; padding: var(--space-2xl);">
-          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">⚔</div>
-          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm);">{{ 'codearena.features.challenges.title' | translate }}</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'codearena.features.challenges.description' | translate }}</p>
-        </div>
-        <div class="mat-card" style="text-align: center; padding: var(--space-2xl);">
-          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">🏆</div>
-          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm);">{{ 'codearena.features.rankings.title' | translate }}</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'codearena.features.rankings.description' | translate }}</p>
-        </div>
-        <div class="mat-card" style="text-align: center; padding: var(--space-2xl);">
-          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">👥</div>
-          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm);">{{ 'codearena.features.community.title' | translate }}</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'codearena.features.community.description' | translate }}</p>
-        </div>
+      <div class="grid-2">
+        <a routerLink="/design-patterns" class="mat-card arena-card">
+          <div class="arena-card-icon">🏗️</div>
+          <h2 class="heading-md">{{ 'codearena.designPatterns' | translate }}</h2>
+          <p class="body-lg">{{ 'codearena.designPatternsDesc' | translate }}</p>
+          <span class="mat-btn mat-btn-filled arena-btn">{{ 'codearena.enterBtn' | translate }}</span>
+        </a>
+        <a routerLink="/exercises" class="mat-card arena-card">
+          <div class="arena-card-icon">💪</div>
+          <h2 class="heading-md">{{ 'codearena.exercises' | translate }}</h2>
+          <p class="body-lg">{{ 'codearena.exercisesDesc' | translate }}</p>
+          <span class="mat-btn mat-btn-filled arena-btn">{{ 'codearena.enterBtn' | translate }}</span>
+        </a>
       </div>
     </div>
   </section>
