@@ -1,53 +1,52 @@
-<div class="container">
-  <header class="header">
-    <a routerLink="/"><img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="logo" /></a>
-    <h1>{{ 'exercises.header.title' | translate }}</h1>
-    <p class="subtitle">{{ 'exercises.header.subtitle' | translate }}</p>
-  </header>
+<div class="page-content">
 
-  <main class="content">
-    <section class="section" id="exercises">
-      <h2 class="section-title">{{ 'exercises.title' | translate }}</h2>
-      <p class="section-desc">{{ 'exercises.description' | translate }}</p>
+  <section class="subpage-hero">
+    <div class="content-container section-padding" style="text-align: center;">
+      <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="subpage-logo" />
+      <h1 class="heading-lg" style="color: white;">{{ 'exercises.header.title' | translate }}</h1>
+      <p class="body-lg" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: var(--space-md) auto 0;">{{ 'exercises.header.subtitle' | translate }}</p>
+    </div>
+  </section>
 
-      <div class="features">
-        <div class="card">
-          <div class="card-icon">📝</div>
-          <h3>{{ 'exercises.algorithms.title' | translate }}</h3>
-          <p>{{ 'exercises.algorithms.description' | translate }}</p>
+  <section class="content-section">
+    <div class="content-container section-padding">
+      <div style="text-align: center; margin-bottom: var(--space-2xl);">
+        <h2 class="heading-md">{{ 'exercises.title' | translate }}</h2>
+        <p class="body-lg" style="max-width: 600px; margin: var(--space-md) auto 0;">{{ 'exercises.description' | translate }}</p>
+      </div>
+      <div class="grid-3">
+        <div class="mat-card" style="text-align: center; padding: var(--space-2xl);">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">📝</div>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm);">{{ 'exercises.algorithms.title' | translate }}</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.algorithms.description' | translate }}</p>
         </div>
-
-        <div class="card">
-          <div class="card-icon">🧩</div>
-          <h3>{{ 'exercises.dataStructures.title' | translate }}</h3>
-          <p>{{ 'exercises.dataStructures.description' | translate }}</p>
+        <div class="mat-card" style="text-align: center; padding: var(--space-2xl);">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">🧩</div>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm);">{{ 'exercises.dataStructures.title' | translate }}</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.dataStructures.description' | translate }}</p>
         </div>
-
-        <div class="card">
-          <div class="card-icon">⚡</div>
-          <h3>{{ 'exercises.patterns.title' | translate }}</h3>
-          <p>{{ 'exercises.patterns.description' | translate }}</p>
+        <div class="mat-card" style="text-align: center; padding: var(--space-2xl);">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">⚡</div>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm);">{{ 'exercises.patterns.title' | translate }}</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.patterns.description' | translate }}</p>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <nav class="footer-nav" [attr.aria-label]="'footer.navLabel' | translate">
-        <a routerLink="/">{{ 'footer.home' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a routerLink="/codearena">{{ 'footer.codeArena' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a routerLink="/design-patterns">{{ 'footer.designPatterns' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a routerLink="/exercises">{{ 'footer.exercises' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a routerLink="/privacypolicy">{{ 'footer.privacyPolicy' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <button class="lang-switch" (click)="toggleLanguage()">{{ currentLang === 'en' ? 'IT' : 'EN' }}</button>
-      </nav>
-      <p class="copyright">{{ 'footer.copyright' | translate }}{{ version }}</p>
+  <footer class="site-footer" style="margin-top: auto;">
+    <div class="content-container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="assets/dualnode.png" alt="Dual Node" class="footer-logo" />
+          <span class="footer-name">Dual Node</span>
+        </div>
+        <button class="mat-btn mat-btn-text lang-btn" (click)="toggleLanguage()">
+          {{ currentLang === 'en' ? 'IT' : 'EN' }}
+        </button>
+        <p class="footer-copy">{{ 'footer.copyright' | translate }}{{ version }}</p>
+      </div>
     </div>
   </footer>
+
 </div>

@@ -4,14 +4,14 @@ import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
 
 @Component({
-  selector: 'app-exercises',
+  selector: 'app-cookiepolicy',
   imports: [TranslatePipe],
-  templateUrl: './exercises.html',
-  styleUrl: './exercises.css'
+  templateUrl: './cookiepolicy.html',
+  styleUrl: './cookiepolicy.css'
 })
-export class ExercisesComponent {
-  version = packageJson.version;
+export class CookiePolicyComponent {
   private translateService = inject(TranslateService);
+  version = packageJson.version;
 
   get currentLang() {
     return this.translateService.currentLang();

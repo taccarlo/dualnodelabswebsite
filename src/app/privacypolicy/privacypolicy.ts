@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import packageJson from '../../../package.json';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
+import packageJson from '../../../package.json';
 
 @Component({
   selector: 'app-privacypolicy',
-  imports: [RouterLink, TranslatePipe],
+  imports: [TranslatePipe],
   templateUrl: './privacypolicy.html',
   styleUrl: './privacypolicy.css'
 })

@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
 
 @Component({
   selector: 'app-codearena',
-  imports: [RouterLink, TranslatePipe],
+  imports: [TranslatePipe],
   templateUrl: './codearena.html',
   styleUrl: './codearena.css'
 })
