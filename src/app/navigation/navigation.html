@@ -9,19 +9,19 @@
     <!-- Desktop Navigation -->
     <div class="nav-links" role="menubar">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" role="menuitem">
-        <span class="nav-link-text">Home</span>
+        <span class="nav-link-text">{{ 'nav.home' | translate }}</span>
         <span class="nav-link-indicator"></span>
       </a>
       <a routerLink="/codearena" routerLinkActive="active" class="nav-link" role="menuitem">
-        <span class="nav-link-text">Code Arena</span>
+        <span class="nav-link-text">{{ 'nav.codeArena' | translate }}</span>
         <span class="nav-link-indicator"></span>
       </a>
       <a routerLink="/about" routerLinkActive="active" class="nav-link" role="menuitem">
-        <span class="nav-link-text">About</span>
+        <span class="nav-link-text">{{ 'nav.about' | translate }}</span>
         <span class="nav-link-indicator"></span>
       </a>
       <a routerLink="/privacypolicy" routerLinkActive="active" class="nav-link" role="menuitem">
-        <span class="nav-link-text">Privacy</span>
+        <span class="nav-link-text">{{ 'nav.privacy' | translate }}</span>
         <span class="nav-link-indicator"></span>
       </a>
     </div>
@@ -44,16 +44,16 @@
   <div class="mobile-menu" [class.open]="isMenuOpen" (click)="closeMenu()">
     <div class="mobile-menu-content" (click)="$event.stopPropagation()">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="mobile-nav-link" (click)="closeMenu()">
-        Home
+        {{ 'nav.home' | translate }}
       </a>
       <a routerLink="/codearena" routerLinkActive="active" class="mobile-nav-link" (click)="closeMenu()">
-        Code Arena
+        {{ 'nav.codeArena' | translate }}
       </a>
       <a routerLink="/about" routerLinkActive="active" class="mobile-nav-link" (click)="closeMenu()">
-        About
+        {{ 'nav.about' | translate }}
       </a>
       <a routerLink="/privacypolicy" routerLinkActive="active" class="mobile-nav-link" (click)="closeMenu()">
-        Privacy Policy
+        {{ 'nav.privacy' | translate }}
       </a>
     </div>
   </div>

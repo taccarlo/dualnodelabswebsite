@@ -2,6 +2,11 @@ export type Lang = 'en' | 'it';
 
 export const translations: Record<Lang, Record<string, string>> = {
   en: {
+    'nav.home': 'Home',
+    'nav.codeArena': 'Code Arena',
+    'nav.about': 'About',
+    'nav.privacy': 'Privacy',
+    'about.back': 'Back',
     'home.header.title': 'Dual Node',
     'home.header.subtitle': 'Channel WebApp Platform',
     'home.hero.title': 'Welcome to Dual Node',
@@ -94,6 +99,11 @@ export const translations: Record<Lang, Record<string, string>> = {
     'cookiebanner.decline': 'Cancel',
   },
   it: {
+    'nav.home': 'Home',
+    'nav.codeArena': 'Code Arena',
+    'nav.about': 'Chi Siamo',
+    'nav.privacy': 'Privacy',
+    'about.back': 'Indietro',
     'home.header.title': 'Dual Node',
     'home.header.subtitle': 'Piattaforma WebApp per Canali',
     'home.hero.title': 'Benvenuto su Dual Node',
