@@ -11,6 +11,7 @@ import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-csharp';
 
 @Component({
   selector: 'app-singleton',
@@ -22,8 +23,8 @@ export class SingletonComponent {
   version = packageJson.version;
   private translateService = inject(TranslateService);
   private sanitizer = inject(DomSanitizer);
-  activeLang = 'Java';
-  languages = ['Java', 'Kotlin', 'TypeScript', 'Python'];
+  activeLang = 'C#';
+  languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
@@ -96,6 +97,34 @@ s.greet();`
 
 s = Singleton()
 s.greet()`
+    },
+    'C#': {
+      lang: 'csharp',
+      code: `public class Singleton
+{
+    private static Singleton _instance;
+    private static readonly object _lock = new();
+
+    private Singleton() { }
+
+    public static Singleton GetInstance()
+    {
+        if (_instance == null)
+        {
+            lock (_lock)
+            {
+                _instance ??= new Singleton();
+            }
+        }
+        return _instance;
+    }
+
+    public static void Main(string[] args)
+    {
+        var s = Singleton.GetInstance();
+        Console.WriteLine("Hello World from Singleton!");
+    }
+}`
     }
   };
 

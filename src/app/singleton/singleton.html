@@ -1,6 +1,6 @@
-<div class="singleton-page">
+<div class="dp-page">
 
-  <!-- Left: Code -->
+  <!-- Left: Code Panel -->
   <div class="code-panel">
     <div class="ide-container">
       <div class="ide-tabs">
@@ -20,17 +20,28 @@
     </div>
   </div>
 
-  <!-- Right: Info -->
+  <!-- Right: Info Panel -->
   <div class="info-panel">
-    <a routerLink="/design-patterns" class="back-link">← {{ 'singleton.back' | translate }}</a>
-    <h1 class="pattern-title">{{ 'singleton.title' | translate }}</h1>
-    <p class="pattern-subtitle">{{ 'singleton.subtitle' | translate }}</p>
-    <p class="pattern-desc">{{ 'singleton.description' | translate }}</p>
-    <div class="spacer"></div>
+    <a routerLink="/design-patterns" class="back-link">
+      <span class="back-arrow">←</span>
+      <span>{{ 'singleton.back' | translate }}</span>
+    </a>
+
+    <div class="info-header">
+      <span class="pattern-badge">{{ 'singleton.subtitle' | translate }}</span>
+      <h1 class="pattern-title">{{ 'singleton.title' | translate }}</h1>
+    </div>
+
+    <div class="pattern-desc">
+      <p>{{ 'singleton.description' | translate }}</p>
+    </div>
+
     <div class="info-footer">
-      <button class="mat-btn mat-btn-text lang-btn" (click)="toggleLanguage()">
-        {{ currentLang === 'en' ? 'IT' : 'EN' }}
-      </button>
+      <div class="footer-left">
+        <button class="lang-btn" (click)="toggleLanguage()">
+          {{ currentLang === 'en' ? 'IT' : 'EN' }}
+        </button>
+      </div>
       <span class="version">{{ 'footer.copyright' | translate }}{{ version }}</span>
     </div>
   </div>
