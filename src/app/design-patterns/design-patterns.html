@@ -18,21 +18,27 @@
       <div class="pattern-category">
         <h3 class="category-title">{{ 'designpatterns.creational' | translate }}</h3>
         <ul class="pattern-list">
-          <li *ngFor="let p of creationalPatterns">{{ p }}</li>
+          <li *ngFor="let p of creationalPatterns"
+              [routerLink]="p.route"
+              [class.clickable]="!!p.route">{{ p.name }}</li>
         </ul>
       </div>
 
       <div class="pattern-category">
         <h3 class="category-title">{{ 'designpatterns.structural' | translate }}</h3>
         <ul class="pattern-list">
-          <li *ngFor="let p of structuralPatterns">{{ p }}</li>
+          <li *ngFor="let p of structuralPatterns"
+              [routerLink]="p.route"
+              [class.clickable]="!!p.route">{{ p.name }}</li>
         </ul>
       </div>
 
       <div class="pattern-category">
         <h3 class="category-title">{{ 'designpatterns.behavioral' | translate }}</h3>
         <ul class="pattern-list">
-          <li *ngFor="let p of behavioralPatterns">{{ p }}</li>
+          <li *ngFor="let p of behavioralPatterns"
+              [routerLink]="p.route"
+              [class.clickable]="!!p.route">{{ p.name }}</li>
         </ul>
       </div>
     </div>

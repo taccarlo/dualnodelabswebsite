@@ -6,7 +6,22 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "headers": [
+      {
+        "source": "**/*.xml",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/xml"
+          }
+        ]
+      }
+    ],
     "rewrites": [
+      {
+        "source": "/sitemap.xml",
+        "destination": "/sitemap.xml"
+      },
       {
         "source": "**",
         "destination": "/index.html"

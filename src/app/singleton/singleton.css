@@ -1,0 +1,196 @@
+.singleton-page {
+  display: flex;
+  height: calc(100vh - var(--nav-height));
+  margin-top: var(--nav-height);
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Left code panel */
+.code-panel {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  background: #1e1e1e;
+  min-width: 0;
+}
+
+.ide-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+}
+
+.ide-tabs {
+  display: flex;
+  background: #252526;
+  border-bottom: 1px solid #3c3c3c;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.ide-tab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid #3c3c3c;
+  color: #969696;
+  padding: 10px 22px;
+  font-size: 0.8125rem;
+  font-family: 'Segoe UI', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.ide-tab:hover {
+  background: #2d2d2d;
+  color: #ccc;
+}
+
+.ide-tab.active {
+  background: #1e1e1e;
+  color: #fff;
+  border-bottom: 1px solid #1e1e1e;
+  margin-bottom: -1px;
+}
+
+.copy-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #969696;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s;
+  font-family: 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  color: #fff;
+}
+
+.ide-content {
+  flex: 1;
+  overflow: auto;
+  padding: 24px 28px;
+}
+
+.ide-content pre {
+  margin: 0;
+  white-space: pre;
+}
+
+.ide-content code {
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #d4d4d4;
+}
+
+/* Right info panel */
+.info-panel {
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 40px;
+  background: var(--bg-secondary);
+  overflow-y: auto;
+}
+
+.back-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: var(--space-lg);
+  display: inline-block;
+  transition: opacity 0.15s;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.pattern-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pattern-subtitle {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pattern-desc {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.spacer {
+  flex: 1;
+  min-height: var(--space-lg);
+}
+
+.info-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-light);
+}
+
+.lang-btn {
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.version {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* Override Prism tomorrow theme for dark background */
+:host ::ng-deep pre[class*="language-"],
+:host ::ng-deep code[class*="language-"] {
+  background: none;
+  text-shadow: none;
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .singleton-page {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .code-panel {
+    min-height: 50vh;
+  }
+
+  .info-panel {
+    width: 100%;
+    padding: 32px 24px;
+  }
+
+  .pattern-title {
+    font-size: 1.5rem;
+  }
+}
