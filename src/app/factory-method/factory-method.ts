@@ -27,8 +27,8 @@ export class FactoryMethodComponent {
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
 
-  codeFlex = '6 1 0';
-  infoFlex = '4 1 0';
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
   isDragging = false;
   private startX = 0;
 

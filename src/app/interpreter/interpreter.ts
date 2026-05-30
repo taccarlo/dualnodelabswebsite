@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,227 +25,234 @@ export class InterpreterComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
       lang: 'java',
-      code: `import java.util.Map;
-
-// Expression interface
-interface Expression {
-    int interpret(Map<String, Integer> context);
+      code: `interface Expression {
+    int interpret();
 }
 
-// Terminal expression
 class NumberExpression implements Expression {
     private int number;
-    public NumberExpression(int number) { this.number = number; }
-    public int interpret(Map<String, Integer> context) { return number; }
+
+    NumberExpression(int number) { this.number = number; }
+
+    public int interpret() { return number; }
 }
 
-// Non-terminal expressions
 class AddExpression implements Expression {
     private Expression left, right;
-    public AddExpression(Expression left, Expression right) {
-        this.left = left; this.right = right;
+
+    AddExpression(Expression left, Expression right) {
+        this.left = left;
+        this.right = right;
     }
-    public int interpret(Map<String, Integer> context) {
-        return left.interpret(context) + right.interpret(context);
+
+    public int interpret() {
+        return left.interpret() + right.interpret();
     }
 }
 
 class SubtractExpression implements Expression {
     private Expression left, right;
-    public SubtractExpression(Expression left, Expression right) {
-        this.left = left; this.right = right;
+
+    SubtractExpression(Expression left, Expression right) {
+        this.left = left;
+        this.right = right;
     }
-    public int interpret(Map<String, Integer> context) {
-        return left.interpret(context) - right.interpret(context);
+
+    public int interpret() {
+        return left.interpret() - right.interpret();
     }
 }
 
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        // (10 + 5) - 3
-        Expression expr = new SubtractExpression(
-            new AddExpression(new NumberExpression(10), new NumberExpression(5)),
+public static void main(String[] args) {
+    // (5 + 3) - 2
+    Expression expr = new SubtractExpression(
+        new AddExpression(
+            new NumberExpression(5),
             new NumberExpression(3)
-        );
-        System.out.println("Result: " + expr.interpret(null));
-    }
+        ),
+        new NumberExpression(2)
+    );
+    System.out.println("Result: " + expr.interpret());
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Expression interface
-interface Expression {
-    fun interpret(context: Map<String, Int>): Int
+      code: `interface Expression {
+    fun interpret(): Int
 }
 
-// Terminal expression
 class NumberExpression(private val number: Int) : Expression {
-    override fun interpret(context: Map<String, Int>) = number
+    override fun interpret() = number
 }
 
-// Non-terminal expressions
 class AddExpression(
     private val left: Expression,
     private val right: Expression
 ) : Expression {
-    override fun interpret(context: Map<String, Int>) =
-        left.interpret(context) + right.interpret(context)
+    override fun interpret() = left.interpret() + right.interpret()
 }
 
 class SubtractExpression(
     private val left: Expression,
     private val right: Expression
 ) : Expression {
-    override fun interpret(context: Map<String, Int>) =
-        left.interpret(context) - right.interpret(context)
+    override fun interpret() = left.interpret() - right.interpret()
 }
 
-// Usage
 fun main() {
-    // (10 + 5) - 3
+    // (5 + 3) - 2
     val expr = SubtractExpression(
-        AddExpression(NumberExpression(10), NumberExpression(5)),
-        NumberExpression(3)
+        AddExpression(NumberExpression(5), NumberExpression(3)),
+        NumberExpression(2)
     )
-    println("Result: " + expr.interpret(emptyMap()))
+    println("Result: " + expr.interpret())
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Expression interface
-interface Expression {
-  interpret(context: Record<string, number>): number;
+      code: `interface Expression {
+    interpret(): number;
 }
 
-// Terminal expression
 class NumberExpression implements Expression {
-  constructor(private number: number) {}
-  interpret(context: Record<string, number>): number {
-    return this.number;
-  }
+    constructor(private number: number) {}
+    interpret(): number { return this.number; }
 }
 
-// Non-terminal expressions
 class AddExpression implements Expression {
-  constructor(private left: Expression, private right: Expression) {}
-  interpret(context: Record<string, number>): number {
-    return this.left.interpret(context) + this.right.interpret(context);
-  }
+    constructor(
+        private left: Expression,
+        private right: Expression
+    ) {}
+    interpret(): number {
+        return this.left.interpret() + this.right.interpret();
+    }
 }
 
 class SubtractExpression implements Expression {
-  constructor(private left: Expression, private right: Expression) {}
-  interpret(context: Record<string, number>): number {
-    return this.left.interpret(context) - this.right.interpret(context);
-  }
+    constructor(
+        private left: Expression,
+        private right: Expression
+    ) {}
+    interpret(): number {
+        return this.left.interpret() - this.right.interpret();
+    }
 }
 
-// Usage
-// (10 + 5) - 3
-const expr = new SubtractExpression(
-  new AddExpression(new NumberExpression(10), new NumberExpression(5)),
-  new NumberExpression(3)
+// (5 + 3) - 2
+const expr: Expression = new SubtractExpression(
+    new AddExpression(
+        new NumberExpression(5),
+        new NumberExpression(3)
+    ),
+    new NumberExpression(2)
 );
-console.log("Result:", expr.interpret({}));`
+console.log("Result:", expr.interpret());`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Expression interface
 class Expression(ABC):
     @abstractmethod
-    def interpret(self, context: dict) -> int:
-        pass
+    def interpret(self): pass
 
-# Terminal expression
 class NumberExpression(Expression):
-    def __init__(self, number: int):
-        self.number = number
-    def interpret(self, context: dict) -> int:
-        return self.number
+    def __init__(self, number): self.number = number
+    def interpret(self): return self.number
 
-# Non-terminal expressions
 class AddExpression(Expression):
-    def __init__(self, left: Expression, right: Expression):
+    def __init__(self, left, right):
         self.left = left
         self.right = right
-    def interpret(self, context: dict) -> int:
-        return self.left.interpret(context) + self.right.interpret(context)
+    def interpret(self):
+        return self.left.interpret() + self.right.interpret()
 
 class SubtractExpression(Expression):
-    def __init__(self, left: Expression, right: Expression):
+    def __init__(self, left, right):
         self.left = left
         self.right = right
-    def interpret(self, context: dict) -> int:
-        return self.left.interpret(context) - self.right.interpret(context)
+    def interpret(self):
+        return self.left.interpret() - self.right.interpret()
 
-# Usage: (10 + 5) - 3
+# (5 + 3) - 2
 expr = SubtractExpression(
-    AddExpression(NumberExpression(10), NumberExpression(5)),
-    NumberExpression(3)
+    AddExpression(NumberExpression(5), NumberExpression(3)),
+    NumberExpression(2)
 )
-print("Result:", expr.interpret({}))`
+print(f"Result: {expr.interpret()}")`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-using System.Collections.Generic;
-
-// Expression interface
-public interface IExpression
+      code: `public interface IExpression
 {
-    int Interpret(Dictionary<string, int> context);
+    int Interpret();
 }
 
-// Terminal expression
 public class NumberExpression : IExpression
 {
     private int _number;
     public NumberExpression(int number) => _number = number;
-    public int Interpret(Dictionary<string, int> context) => _number;
+    public int Interpret() => _number;
 }
 
-// Non-terminal expressions
 public class AddExpression : IExpression
 {
     private IExpression _left, _right;
-    public AddExpression(IExpression left, IExpression right)
-    {
-        _left = left; _right = right;
-    }
-    public int Interpret(Dictionary<string, int> context) =>
-        _left.Interpret(context) + _right.Interpret(context);
+    public AddExpression(IExpression left, IExpression right) =>
+        (_left, _right) = (left, right);
+    public int Interpret() =>
+        _left.Interpret() + _right.Interpret();
 }
 
 public class SubtractExpression : IExpression
 {
     private IExpression _left, _right;
-    public SubtractExpression(IExpression left, IExpression right)
-    {
-        _left = left; _right = right;
-    }
-    public int Interpret(Dictionary<string, int> context) =>
-        _left.Interpret(context) - _right.Interpret(context);
+    public SubtractExpression(IExpression left, IExpression right) =>
+        (_left, _right) = (left, right);
+    public int Interpret() =>
+        _left.Interpret() - _right.Interpret();
 }
 
-// Usage
-class Program
+static void Main()
 {
-    static void Main()
-    {
-        // (10 + 5) - 3
-        IExpression expr = new SubtractExpression(
-            new AddExpression(new NumberExpression(10), new NumberExpression(5)),
+    // (5 + 3) - 2
+    IExpression expr = new SubtractExpression(
+        new AddExpression(
+            new NumberExpression(5),
             new NumberExpression(3)
-        );
-        Console.WriteLine("Result: " + expr.Interpret(null));
-    }
+        ),
+        new NumberExpression(2)
+    );
+    Console.WriteLine($"Result: {expr.Interpret()}");
 }`
     }
   };
@@ -257,23 +263,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }

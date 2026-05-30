@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,218 +25,271 @@ export class FacadeComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
       lang: 'java',
-      code: `// Complex subsystems
-class CPU {
-    public void freeze() { System.out.println("CPU: freeze"); }
-    public void jump(long addr) { System.out.println("CPU: jump to " + addr); }
-    public void execute() { System.out.println("CPU: execute"); }
+      code: `class CPU {
+    void start() {
+        System.out.println("CPU: starting...");
+    }
+    void shutdown() {
+        System.out.println("CPU: shutting down...");
+    }
 }
 
 class Memory {
-    public void load(long addr, byte[] data) {
-        System.out.println("Memory: load data at " + addr);
+    void load() {
+        System.out.println("Memory: loading data...");
+    }
+    void free() {
+        System.out.println("Memory: freeing data...");
     }
 }
 
 class HardDrive {
-    public byte[] read(long lba, int size) {
-        System.out.println("HardDrive: read " + size + " bytes");
-        return new byte[size];
+    void read() {
+        System.out.println("HDD: reading data...");
+    }
+    void write() {
+        System.out.println("HDD: writing data...");
     }
 }
 
-// Facade
 class ComputerFacade {
-    private CPU cpu = new CPU();
-    private Memory memory = new Memory();
-    private HardDrive hardDrive = new HardDrive();
+    private CPU cpu;
+    private Memory memory;
+    private HardDrive hdd;
 
-    public void start() {
-        cpu.freeze();
-        memory.load(0, hardDrive.read(0, 1024));
-        cpu.jump(0);
-        cpu.execute();
+    ComputerFacade() {
+        this.cpu = new CPU();
+        this.memory = new Memory();
+        this.hdd = new HardDrive();
+    }
+
+    void start() {
+        System.out.println("=== Starting Computer ===");
+        cpu.start();
+        memory.load();
+        hdd.read();
+        System.out.println("=== Computer Ready ===");
+    }
+
+    void shutdown() {
+        System.out.println("=== Shutting Down ===");
+        hdd.write();
+        memory.free();
+        cpu.shutdown();
+        System.out.println("=== Goodbye ===");
     }
 }
 
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        ComputerFacade computer = new ComputerFacade();
-        computer.start();
-    }
+public static void main(String[] args) {
+    ComputerFacade computer = new ComputerFacade();
+    computer.start();
+    computer.shutdown();
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Complex subsystems
-class CPU {
-    fun freeze() = println("CPU: freeze")
-    fun jump(addr: Long) = println("CPU: jump to $addr")
-    fun execute() = println("CPU: execute")
+      code: `class CPU {
+    fun start() = println("CPU: starting...")
+    fun shutdown() = println("CPU: shutting down...")
 }
 
 class Memory {
-    fun load(addr: Long, data: ByteArray) =
-        println("Memory: load data at $addr")
+    fun load() = println("Memory: loading data...")
+    fun free() = println("Memory: freeing data...")
 }
 
 class HardDrive {
-    fun read(lba: Long, size: Int): ByteArray {
-        println("HardDrive: read $size bytes")
-        return ByteArray(size)
-    }
+    fun read() = println("HDD: reading data...")
+    fun write() = println("HDD: writing data...")
 }
 
-// Facade
 class ComputerFacade {
     private val cpu = CPU()
     private val memory = Memory()
-    private val hardDrive = HardDrive()
+    private val hdd = HardDrive()
 
     fun start() {
-        cpu.freeze()
-        memory.load(0, hardDrive.read(0, 1024))
-        cpu.jump(0)
-        cpu.execute()
+        println("=== Starting Computer ===")
+        cpu.start()
+        memory.load()
+        hdd.read()
+        println("=== Computer Ready ===")
+    }
+
+    fun shutdown() {
+        println("=== Shutting Down ===")
+        hdd.write()
+        memory.free()
+        cpu.shutdown()
+        println("=== Goodbye ===")
     }
 }
 
-// Usage
 fun main() {
     val computer = ComputerFacade()
     computer.start()
+    computer.shutdown()
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Complex subsystems
-class CPU {
-  freeze(): void { console.log("CPU: freeze"); }
-  jump(addr: number): void { console.log(\`CPU: jump to \${addr}\`); }
-  execute(): void { console.log("CPU: execute"); }
+      code: `class CPU {
+    start() { console.log("CPU: starting..."); }
+    shutdown() { console.log("CPU: shutting down..."); }
 }
 
 class Memory {
-  load(addr: number, data: Uint8Array): void {
-    console.log(\`Memory: load data at \${addr}\`);
-  }
+    load() { console.log("Memory: loading data..."); }
+    free() { console.log("Memory: freeing data..."); }
 }
 
 class HardDrive {
-  read(lba: number, size: number): Uint8Array {
-    console.log(\`HardDrive: read \${size} bytes\`);
-    return new Uint8Array(size);
-  }
+    read() { console.log("HDD: reading data..."); }
+    write() { console.log("HDD: writing data..."); }
 }
 
-// Facade
 class ComputerFacade {
-  private cpu = new CPU();
-  private memory = new Memory();
-  private hardDrive = new HardDrive();
+    private cpu = new CPU();
+    private memory = new Memory();
+    private hdd = new HardDrive();
 
-  start(): void {
-    this.cpu.freeze();
-    this.memory.load(0, this.hardDrive.read(0, 1024));
-    this.cpu.jump(0);
-    this.cpu.execute();
-  }
+    start(): void {
+        console.log("=== Starting Computer ===");
+        this.cpu.start();
+        this.memory.load();
+        this.hdd.read();
+        console.log("=== Computer Ready ===");
+    }
+
+    shutdown(): void {
+        console.log("=== Shutting Down ===");
+        this.hdd.write();
+        this.memory.free();
+        this.cpu.shutdown();
+        console.log("=== Goodbye ===");
+    }
 }
 
-// Usage
 const computer = new ComputerFacade();
-computer.start();`
+computer.start();
+computer.shutdown();`
     },
     Python: {
       lang: 'python',
-      code: `# Complex subsystems
-class CPU:
-    def freeze(self): print("CPU: freeze")
-    def jump(self, addr: int): print(f"CPU: jump to {addr}")
-    def execute(self): print("CPU: execute")
+      code: `class CPU:
+    def start(self): print("CPU: starting...")
+    def shutdown(self): print("CPU: shutting down...")
 
 class Memory:
-    def load(self, addr: int, data: bytes):
-        print(f"Memory: load data at {addr}")
+    def load(self): print("Memory: loading data...")
+    def free(self): print("Memory: freeing data...")
 
 class HardDrive:
-    def read(self, lba: int, size: int) -> bytes:
-        print(f"HardDrive: read {size} bytes")
-        return b"\\x00" * size
+    def read(self): print("HDD: reading data...")
+    def write(self): print("HDD: writing data...")
 
-# Facade
 class ComputerFacade:
     def __init__(self):
-        self._cpu = CPU()
-        self._memory = Memory()
-        self._hard_drive = HardDrive()
+        self.cpu = CPU()
+        self.memory = Memory()
+        self.hdd = HardDrive()
 
     def start(self):
-        self._cpu.freeze()
-        self._memory.load(0, self._hard_drive.read(0, 1024))
-        self._cpu.jump(0)
-        self._cpu.execute()
+        print("=== Starting Computer ===")
+        self.cpu.start()
+        self.memory.load()
+        self.hdd.read()
+        print("=== Computer Ready ===")
 
-# Usage
+    def shutdown(self):
+        print("=== Shutting Down ===")
+        self.hdd.write()
+        self.memory.free()
+        self.cpu.shutdown()
+        print("=== Goodbye ===")
+
 computer = ComputerFacade()
-computer.start()`
+computer.start()
+computer.shutdown()`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-
-// Complex subsystems
-public class CPU
+      code: `public class CPU
 {
-    public void Freeze() => Console.WriteLine("CPU: freeze");
-    public void Jump(long addr) => Console.WriteLine($"CPU: jump to {addr}");
-    public void Execute() => Console.WriteLine("CPU: execute");
+    public void Start() => Console.WriteLine("CPU: starting...");
+    public void Shutdown() => Console.WriteLine("CPU: shutting down...");
 }
 
 public class Memory
 {
-    public void Load(long addr, byte[] data) =>
-        Console.WriteLine($"Memory: load data at {addr}");
+    public void Load() => Console.WriteLine("Memory: loading data...");
+    public void Free() => Console.WriteLine("Memory: freeing data...");
 }
 
 public class HardDrive
 {
-    public byte[] Read(long lba, int size)
-    {
-        Console.WriteLine($"HardDrive: read {size} bytes");
-        return new byte[size];
-    }
+    public void Read() => Console.WriteLine("HDD: reading data...");
+    public void Write() => Console.WriteLine("HDD: writing data...");
 }
 
-// Facade
 public class ComputerFacade
 {
     private CPU _cpu = new();
     private Memory _memory = new();
-    private HardDrive _hardDrive = new();
+    private HardDrive _hdd = new();
 
     public void Start()
     {
-        _cpu.Freeze();
-        _memory.Load(0, _hardDrive.Read(0, 1024));
-        _cpu.Jump(0);
-        _cpu.Execute();
+        Console.WriteLine("=== Starting Computer ===");
+        _cpu.Start();
+        _memory.Load();
+        _hdd.Read();
+        Console.WriteLine("=== Computer Ready ===");
+    }
+
+    public void Shutdown()
+    {
+        Console.WriteLine("=== Shutting Down ===");
+        _hdd.Write();
+        _memory.Free();
+        _cpu.Shutdown();
+        Console.WriteLine("=== Goodbye ===");
     }
 }
 
-// Usage
-class Program
+static void Main()
 {
-    static void Main()
-    {
-        var computer = new ComputerFacade();
-        computer.Start();
-    }
+    var computer = new ComputerFacade();
+    computer.Start();
+    computer.Shutdown();
 }`
     }
   };
@@ -248,23 +300,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }

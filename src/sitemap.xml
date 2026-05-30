@@ -70,6 +70,87 @@
     <mobile:mobile/>
   </url>
   
+  <!-- Adapter -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/adapter</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Bridge -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/bridge</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Composite -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/composite</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Decorator -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/decorator</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Facade -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/facade</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Strategy -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/strategy</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Observer -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/observer</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Iterator -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/iterator</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Interpreter -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/interpreter</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
   <!-- Exercises -->
   <url>
     <loc>https://dualnodelabs.web.app/exercises</loc>

@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,258 +25,294 @@ export class BridgeComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
       lang: 'java',
-      code: `// Implementation hierarchy
-interface Device {
-    void turnOn();
-    void turnOff();
+      code: `interface Device {
+    boolean isEnabled();
+    void enable();
+    void disable();
+    int getVolume();
     void setVolume(int percent);
 }
 
 class TV implements Device {
-    public void turnOn() { System.out.println("TV ON"); }
-    public void turnOff() { System.out.println("TV OFF"); }
-    public void setVolume(int p) { System.out.println("TV volume: " + p); }
+    private boolean on = false;
+    private int volume = 30;
+
+    public boolean isEnabled() { return on; }
+    public void enable() { on = true; }
+    public void disable() { on = false; }
+    public int getVolume() { return volume; }
+    public void setVolume(int percent) { volume = percent; }
 }
 
 class Radio implements Device {
-    public void turnOn() { System.out.println("Radio ON"); }
-    public void turnOff() { System.out.println("Radio OFF"); }
-    public void setVolume(int p) { System.out.println("Radio volume: " + p); }
+    private boolean on = false;
+    private int volume = 20;
+
+    public boolean isEnabled() { return on; }
+    public void enable() { on = true; }
+    public void disable() { on = false; }
+    public int getVolume() { return volume; }
+    public void setVolume(int percent) { volume = percent; }
 }
 
-// Abstraction hierarchy
-abstract class Remote {
+class Remote {
     protected Device device;
-    protected Remote(Device device) { this.device = device; }
-    abstract void togglePower();
-    abstract void volumeUp();
+    Remote(Device device) { this.device = device; }
+
+    void togglePower() {
+        if (device.isEnabled()) device.disable();
+        else device.enable();
+    }
+
+    void volumeDown() {
+        device.setVolume(device.getVolume() - 10);
+    }
+
+    void volumeUp() {
+        device.setVolume(device.getVolume() + 10);
+    }
 }
 
-class BasicRemote extends Remote {
-    private boolean isOn = false;
-    public BasicRemote(Device device) { super(device); }
-    public void togglePower() {
-        if (isOn) { device.turnOff(); isOn = false; }
-        else { device.turnOn(); isOn = true; }
-    }
-    public void volumeUp() { device.setVolume(10); }
-}
-
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        Remote remote = new BasicRemote(new TV());
-        remote.togglePower();
-        remote.volumeUp();
-        remote = new BasicRemote(new Radio());
-        remote.togglePower();
-    }
+public static void main(String[] args) {
+    TV tv = new TV();
+    Remote remote = new Remote(tv);
+    remote.togglePower();
+    remote.volumeUp();
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Implementation hierarchy
-interface Device {
-    fun turnOn()
-    fun turnOff()
+      code: `interface Device {
+    fun isEnabled(): Boolean
+    fun enable()
+    fun disable()
+    fun getVolume(): Int
     fun setVolume(percent: Int)
 }
 
 class TV : Device {
-    override fun turnOn() = println("TV ON")
-    override fun turnOff() = println("TV OFF")
-    override fun setVolume(p: Int) = println("TV volume: $p")
+    private var on = false
+    private var volume = 30
+    override fun isEnabled() = on
+    override fun enable() { on = true }
+    override fun disable() { on = false }
+    override fun getVolume() = volume
+    override fun setVolume(percent: Int) { volume = percent }
 }
 
 class Radio : Device {
-    override fun turnOn() = println("Radio ON")
-    override fun turnOff() = println("Radio OFF")
-    override fun setVolume(p: Int) = println("Radio volume: $p")
+    private var on = false
+    private var volume = 20
+    override fun isEnabled() = on
+    override fun enable() { on = true }
+    override fun disable() { on = false }
+    override fun getVolume() = volume
+    override fun setVolume(percent: Int) { volume = percent }
 }
 
-// Abstraction hierarchy
-abstract class Remote(protected val device: Device) {
-    abstract fun togglePower()
-    abstract fun volumeUp()
-}
-
-class BasicRemote(device: Device) : Remote(device) {
-    private var isOn = false
-    override fun togglePower() {
-        if (isOn) { device.turnOff(); isOn = false }
-        else { device.turnOn(); isOn = true }
+open class Remote(protected val device: Device) {
+    fun togglePower() {
+        if (device.isEnabled()) device.disable()
+        else device.enable()
     }
-    override fun volumeUp() = device.setVolume(10)
+    fun volumeDown() = device.setVolume(device.getVolume() - 10)
+    fun volumeUp() = device.setVolume(device.getVolume() + 10)
 }
 
-// Usage
 fun main() {
-    var remote: Remote = BasicRemote(TV())
+    val tv = TV()
+    val remote = Remote(tv)
     remote.togglePower()
     remote.volumeUp()
-    remote = BasicRemote(Radio())
-    remote.togglePower()
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Implementation hierarchy
-interface Device {
-  turnOn(): void;
-  turnOff(): void;
-  setVolume(percent: number): void;
+      code: `interface Device {
+    isEnabled(): boolean;
+    enable(): void;
+    disable(): void;
+    getVolume(): number;
+    setVolume(percent: number): void;
 }
 
 class TV implements Device {
-  turnOn() { console.log("TV ON"); }
-  turnOff() { console.log("TV OFF"); }
-  setVolume(p: number) { console.log(\`TV volume: \${p}\`); }
+    private on = false;
+    private volume = 30;
+    isEnabled() { return this.on; }
+    enable() { this.on = true; }
+    disable() { this.on = false; }
+    getVolume() { return this.volume; }
+    setVolume(percent: number) { this.volume = percent; }
 }
 
 class Radio implements Device {
-  turnOn() { console.log("Radio ON"); }
-  turnOff() { console.log("Radio OFF"); }
-  setVolume(p: number) { console.log(\`Radio volume: \${p}\`); }
+    private on = false;
+    private volume = 20;
+    isEnabled() { return this.on; }
+    enable() { this.on = true; }
+    disable() { this.on = false; }
+    getVolume() { return this.volume; }
+    setVolume(percent: number) { this.volume = percent; }
 }
 
-// Abstraction hierarchy
-abstract class Remote {
-  constructor(protected device: Device) {}
-  abstract togglePower(): void;
-  abstract volumeUp(): void;
+class Remote {
+    constructor(protected device: Device) {}
+
+    togglePower() {
+        if (this.device.isEnabled()) this.device.disable();
+        else this.device.enable();
+    }
+
+    volumeDown() {
+        this.device.setVolume(this.device.getVolume() - 10);
+    }
+
+    volumeUp() {
+        this.device.setVolume(this.device.getVolume() + 10);
+    }
 }
 
-class BasicRemote extends Remote {
-  private isOn = false;
-  togglePower() {
-    if (this.isOn) { this.device.turnOff(); this.isOn = false; }
-    else { this.device.turnOn(); this.isOn = true; }
-  }
-  volumeUp() { this.device.setVolume(10); }
-}
-
-// Usage
-let remote: Remote = new BasicRemote(new TV());
+const tv = new TV();
+const remote = new Remote(tv);
 remote.togglePower();
-remote.volumeUp();
-remote = new BasicRemote(new Radio());
-remote.togglePower();`
+remote.volumeUp();`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Implementation hierarchy
 class Device(ABC):
     @abstractmethod
-    def turn_on(self): pass
+    def is_enabled(self): pass
     @abstractmethod
-    def turn_off(self): pass
+    def enable(self): pass
     @abstractmethod
-    def set_volume(self, percent: int): pass
+    def disable(self): pass
+    @abstractmethod
+    def get_volume(self): pass
+    @abstractmethod
+    def set_volume(self, percent): pass
 
 class TV(Device):
-    def turn_on(self): print("TV ON")
-    def turn_off(self): print("TV OFF")
-    def set_volume(self, p): print(f"TV volume: {p}")
+    def __init__(self): self._on = False; self._volume = 30
+    def is_enabled(self): return self._on
+    def enable(self): self._on = True
+    def disable(self): self._on = False
+    def get_volume(self): return self._volume
+    def set_volume(self, percent): self._volume = percent
 
 class Radio(Device):
-    def turn_on(self): print("Radio ON")
-    def turn_off(self): print("Radio OFF")
-    def set_volume(self, p): print(f"Radio volume: {p}")
+    def __init__(self): self._on = False; self._volume = 20
+    def is_enabled(self): return self._on
+    def enable(self): self._on = True
+    def disable(self): self._on = False
+    def get_volume(self): return self._volume
+    def set_volume(self, percent): self._volume = percent
 
-# Abstraction hierarchy
-class Remote(ABC):
+class Remote:
     def __init__(self, device: Device):
-        self._device = device
-    @abstractmethod
-    def toggle_power(self): pass
-    @abstractmethod
-    def volume_up(self): pass
+        self.device = device
 
-class BasicRemote(Remote):
-    def __init__(self, device: Device):
-        super().__init__(device)
-        self._is_on = False
     def toggle_power(self):
-        if self._is_on:
-            self._device.turn_off()
-            self._is_on = False
-        else:
-            self._device.turn_on()
-            self._is_on = True
-    def volume_up(self):
-        self._device.set_volume(10)
+        if self.device.is_enabled(): self.device.disable()
+        else: self.device.enable()
 
-# Usage
-remote: Remote = BasicRemote(TV())
+    def volume_down(self):
+        self.device.set_volume(self.device.get_volume() - 10)
+
+    def volume_up(self):
+        self.device.set_volume(self.device.get_volume() + 10)
+
+tv = TV()
+remote = Remote(tv)
 remote.toggle_power()
-remote.volume_up()
-remote = BasicRemote(Radio())
-remote.toggle_power()`
+remote.volume_up()`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-
-// Implementation hierarchy
-public interface IDevice
+      code: `public interface IDevice
 {
-    void TurnOn();
-    void TurnOff();
+    bool IsEnabled();
+    void Enable();
+    void Disable();
+    int GetVolume();
     void SetVolume(int percent);
 }
 
-class TV : IDevice
+public class TV : IDevice
 {
-    public void TurnOn() => Console.WriteLine("TV ON");
-    public void TurnOff() => Console.WriteLine("TV OFF");
-    public void SetVolume(int p) => Console.WriteLine($"TV volume: {p}");
+    private bool _on;
+    private int _volume = 30;
+    public bool IsEnabled() => _on;
+    public void Enable() => _on = true;
+    public void Disable() => _on = false;
+    public int GetVolume() => _volume;
+    public void SetVolume(int percent) => _volume = percent;
 }
 
-class Radio : IDevice
+public class Radio : IDevice
 {
-    public void TurnOn() => Console.WriteLine("Radio ON");
-    public void TurnOff() => Console.WriteLine("Radio OFF");
-    public void SetVolume(int p) => Console.WriteLine($"Radio volume: {p}");
+    private bool _on;
+    private int _volume = 20;
+    public bool IsEnabled() => _on;
+    public void Enable() => _on = true;
+    public void Disable() => _on = false;
+    public int GetVolume() => _volume;
+    public void SetVolume(int percent) => _volume = percent;
 }
 
-// Abstraction hierarchy
-abstract class Remote
+public class Remote
 {
     protected IDevice Device;
     public Remote(IDevice device) => Device = device;
-    public abstract void TogglePower();
-    public abstract void VolumeUp();
+
+    public void TogglePower()
+    {
+        if (Device.IsEnabled()) Device.Disable();
+        else Device.Enable();
+    }
+
+    public void VolumeDown() =>
+        Device.SetVolume(Device.GetVolume() - 10);
+    public void VolumeUp() =>
+        Device.SetVolume(Device.GetVolume() + 10);
 }
 
-class BasicRemote : Remote
+static void Main()
 {
-    private bool _isOn = false;
-    public BasicRemote(IDevice device) : base(device) { }
-    public override void TogglePower()
-    {
-        if (_isOn) { Device.TurnOff(); _isOn = false; }
-        else { Device.TurnOn(); _isOn = true; }
-    }
-    public override void VolumeUp() => Device.SetVolume(10);
-}
-
-// Usage
-class Program
-{
-    static void Main()
-    {
-        Remote remote = new BasicRemote(new TV());
-        remote.TogglePower();
-        remote.VolumeUp();
-        remote = new BasicRemote(new Radio());
-        remote.TogglePower();
-    }
+    var tv = new TV();
+    var remote = new Remote(tv);
+    remote.TogglePower();
+    remote.VolumeUp();
 }`
     }
   };
@@ -288,23 +323,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }

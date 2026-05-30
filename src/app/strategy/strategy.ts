@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,227 +25,266 @@ export class StrategyComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
       lang: 'java',
-      code: `// Strategy interface
-interface PaymentStrategy {
-    void pay(int amount);
+      code: `interface PaymentStrategy {
+    void pay(double amount);
 }
 
-// Concrete strategies
 class CreditCardPayment implements PaymentStrategy {
-    private String cardNumber;
-    public CreditCardPayment(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-    public void pay(int amount) {
-        System.out.println("Paid " + amount + " using Credit Card " + cardNumber);
+    private String name;
+    CreditCardPayment(String name) { this.name = name; }
+
+    public void pay(double amount) {
+        System.out.println(name
+            + " paid $" + amount + " with Credit Card");
     }
 }
 
 class PayPalPayment implements PaymentStrategy {
     private String email;
-    public PayPalPayment(String email) {
-        this.email = email;
-    }
-    public void pay(int amount) {
-        System.out.println("Paid " + amount + " using PayPal (" + email + ")");
+    PayPalPayment(String email) { this.email = email; }
+
+    public void pay(double amount) {
+        System.out.println(email
+            + " paid $" + amount + " with PayPal");
     }
 }
 
-// Context
+class BitcoinPayment implements PaymentStrategy {
+    private String wallet;
+    BitcoinPayment(String wallet) { this.wallet = wallet; }
+
+    public void pay(double amount) {
+        System.out.println(wallet
+            + " paid $" + amount + " with Bitcoin");
+    }
+}
+
 class ShoppingCart {
     private PaymentStrategy strategy;
 
-    public void setStrategy(PaymentStrategy strategy) {
+    void setPaymentStrategy(PaymentStrategy strategy) {
         this.strategy = strategy;
     }
 
-    public void checkout(int amount) {
+    void checkout(double amount) {
         strategy.pay(amount);
     }
 }
 
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        ShoppingCart cart = new ShoppingCart();
-        cart.setStrategy(new CreditCardPayment("1234-5678"));
-        cart.checkout(100);
-        cart.setStrategy(new PayPalPayment("user@example.com"));
-        cart.checkout(200);
-    }
+public static void main(String[] args) {
+    ShoppingCart cart = new ShoppingCart();
+
+    cart.setPaymentStrategy(
+        new CreditCardPayment("Alice"));
+    cart.checkout(100.0);
+
+    cart.setPaymentStrategy(
+        new PayPalPayment("alice@example.com"));
+    cart.checkout(50.0);
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Strategy interface
-interface PaymentStrategy {
-    fun pay(amount: Int)
+      code: `interface PaymentStrategy {
+    fun pay(amount: Double)
 }
 
-// Concrete strategies
-class CreditCardPayment(private val cardNumber: String) : PaymentStrategy {
-    override fun pay(amount: Int) {
-        println("Paid $amount using Credit Card $cardNumber")
-    }
+class CreditCardPayment(private val name: String) : PaymentStrategy {
+    override fun pay(amount: Double) =
+        println("$name paid $$amount with Credit Card")
 }
 
 class PayPalPayment(private val email: String) : PaymentStrategy {
-    override fun pay(amount: Int) {
-        println("Paid $amount using PayPal ($email)")
-    }
+    override fun pay(amount: Double) =
+        println("$email paid $$amount with PayPal")
 }
 
-// Context
-class ShoppingCart {
-    var strategy: PaymentStrategy? = null
+class BitcoinPayment(private val wallet: String) : PaymentStrategy {
+    override fun pay(amount: Double) =
+        println("$wallet paid $$amount with Bitcoin")
+}
 
-    fun checkout(amount: Int) {
+class ShoppingCart {
+    private var strategy: PaymentStrategy? = null
+
+    fun setPaymentStrategy(strategy: PaymentStrategy) {
+        this.strategy = strategy
+    }
+
+    fun checkout(amount: Double) {
         strategy?.pay(amount)
     }
 }
 
-// Usage
 fun main() {
     val cart = ShoppingCart()
-    cart.strategy = CreditCardPayment("1234-5678")
-    cart.checkout(100)
-    cart.strategy = PayPalPayment("user@example.com")
-    cart.checkout(200)
+    cart.setPaymentStrategy(CreditCardPayment("Alice"))
+    cart.checkout(100.0)
+    cart.setPaymentStrategy(PayPalPayment("alice@example.com"))
+    cart.checkout(50.0)
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Strategy interface
-interface PaymentStrategy {
-  pay(amount: number): void;
+      code: `interface PaymentStrategy {
+    pay(amount: number): void;
 }
 
-// Concrete strategies
 class CreditCardPayment implements PaymentStrategy {
-  constructor(private cardNumber: string) {}
-  pay(amount: number): void {
-    console.log(\`Paid \${amount} using Credit Card \${this.cardNumber}\`);
-  }
+    constructor(private name: string) {}
+
+    pay(amount: number): void {
+        console.log(this.name, "paid $" + amount, "with Credit Card");
+    }
 }
 
 class PayPalPayment implements PaymentStrategy {
-  constructor(private email: string) {}
-  pay(amount: number): void {
-    console.log(\`Paid \${amount} using PayPal (\${this.email})\`);
-  }
+    constructor(private email: string) {}
+
+    pay(amount: number): void {
+        console.log(this.email, "paid $" + amount, "with PayPal");
+    }
 }
 
-// Context
+class BitcoinPayment implements PaymentStrategy {
+    constructor(private wallet: string) {}
+
+    pay(amount: number): void {
+        console.log(this.wallet, "paid $" + amount, "with Bitcoin");
+    }
+}
+
 class ShoppingCart {
-  private strategy?: PaymentStrategy;
+    private strategy?: PaymentStrategy;
 
-  setStrategy(strategy: PaymentStrategy): void {
-    this.strategy = strategy;
-  }
+    setPaymentStrategy(strategy: PaymentStrategy): void {
+        this.strategy = strategy;
+    }
 
-  checkout(amount: number): void {
-    this.strategy?.pay(amount);
-  }
+    checkout(amount: number): void {
+        this.strategy?.pay(amount);
+    }
 }
 
-// Usage
 const cart = new ShoppingCart();
-cart.setStrategy(new CreditCardPayment("1234-5678"));
-cart.checkout(100);
-cart.setStrategy(new PayPalPayment("user@example.com"));
-cart.checkout(200);`
+cart.setPaymentStrategy(new CreditCardPayment("Alice"));
+cart.checkout(100.0);
+cart.setPaymentStrategy(new PayPalPayment("alice@example.com"));
+cart.checkout(50.0);`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Strategy interface
 class PaymentStrategy(ABC):
     @abstractmethod
-    def pay(self, amount: int):
-        pass
+    def pay(self, amount: float): pass
 
-# Concrete strategies
 class CreditCardPayment(PaymentStrategy):
-    def __init__(self, card_number: str):
-        self.card_number = card_number
-    def pay(self, amount: int):
-        print(f"Paid {amount} using Credit Card {self.card_number}")
+    def __init__(self, name): self.name = name
+    def pay(self, amount):
+        print(f"{self.name} paid \${amount} with Credit Card")
 
 class PayPalPayment(PaymentStrategy):
-    def __init__(self, email: str):
-        self.email = email
-    def pay(self, amount: int):
-        print(f"Paid {amount} using PayPal ({self.email})")
+    def __init__(self, email): self.email = email
+    def pay(self, amount):
+        print(f"{self.email} paid \${amount} with PayPal")
 
-# Context
+class BitcoinPayment(PaymentStrategy):
+    def __init__(self, wallet): self.wallet = wallet
+    def pay(self, amount):
+        print(f"{self.wallet} paid \${amount} with Bitcoin")
+
 class ShoppingCart:
-    def __init__(self):
-        self._strategy = None
-    def set_strategy(self, strategy: PaymentStrategy):
-        self._strategy = strategy
-    def checkout(self, amount: int):
-        self._strategy.pay(amount)
+    def set_payment_strategy(self, strategy: PaymentStrategy):
+        self.strategy = strategy
 
-# Usage
+    def checkout(self, amount: float):
+        self.strategy.pay(amount)
+
 cart = ShoppingCart()
-cart.set_strategy(CreditCardPayment("1234-5678"))
-cart.checkout(100)
-cart.set_strategy(PayPalPayment("user@example.com"))
-cart.checkout(200)`
+cart.set_payment_strategy(CreditCardPayment("Alice"))
+cart.checkout(100.0)
+cart.set_payment_strategy(PayPalPayment("alice@example.com"))
+cart.checkout(50.0)`
     },
     'C#': {
       lang: 'csharp',
-      code: `// Strategy interface
-public interface IPaymentStrategy
+      code: `public interface IPaymentStrategy
 {
-    void Pay(int amount);
+    void Pay(double amount);
 }
 
-// Concrete strategies
 public class CreditCardPayment : IPaymentStrategy
 {
-    private string _cardNumber;
-    public CreditCardPayment(string cardNumber) => _cardNumber = cardNumber;
-
-    public void Pay(int amount) =>
-        Console.WriteLine($"Paid {amount} using Credit Card {_cardNumber}");
+    private string _name;
+    public CreditCardPayment(string name) => _name = name;
+    public void Pay(double amount) =>
+        Console.WriteLine(_name + " paid $" + amount + " with Credit Card");
 }
 
 public class PayPalPayment : IPaymentStrategy
 {
     private string _email;
     public PayPalPayment(string email) => _email = email;
-
-    public void Pay(int amount) =>
-        Console.WriteLine($"Paid {amount} using PayPal ({_email})");
+    public void Pay(double amount) =>
+        Console.WriteLine(_email + " paid $" + amount + " with PayPal");
 }
 
-// Context
+public class BitcoinPayment : IPaymentStrategy
+{
+    private string _wallet;
+    public BitcoinPayment(string wallet) => _wallet = wallet;
+    public void Pay(double amount) =>
+        Console.WriteLine(_wallet + " paid $" + amount + " with Bitcoin");
+}
+
 public class ShoppingCart
 {
-    private IPaymentStrategy _strategy;
+    private IPaymentStrategy? _strategy;
 
-    public void SetStrategy(IPaymentStrategy strategy) => _strategy = strategy;
+    public void SetPaymentStrategy(IPaymentStrategy strategy) =>
+        _strategy = strategy;
 
-    public void Checkout(int amount) => _strategy?.Pay(amount);
+    public void Checkout(double amount) =>
+        _strategy?.Pay(amount);
 }
 
-// Usage
-class Program
+static void Main()
 {
-    static void Main()
-    {
-        var cart = new ShoppingCart();
-        cart.SetStrategy(new CreditCardPayment("1234-5678"));
-        cart.Checkout(100);
-        cart.SetStrategy(new PayPalPayment("user@example.com"));
-        cart.Checkout(200);
-    }
+    var cart = new ShoppingCart();
+    cart.SetPaymentStrategy(new CreditCardPayment("Alice"));
+    cart.Checkout(100.0);
+    cart.SetPaymentStrategy(new PayPalPayment("alice@example.com"));
+    cart.Checkout(50.0);
 }`
     }
   };
@@ -257,23 +295,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }

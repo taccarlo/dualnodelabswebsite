@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,231 +25,224 @@ export class DecoratorComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
       lang: 'java',
-      code: `// Component interface
-interface Coffee {
-    String getDescription();
-    double getCost();
+      code: `interface Coffee {
+    double cost();
+    String description();
 }
 
-// Concrete component
 class SimpleCoffee implements Coffee {
-    public String getDescription() { return "Simple coffee"; }
-    public double getCost() { return 2.0; }
+    public double cost() { return 2.0; }
+    public String description() { return "Simple Coffee"; }
 }
 
-// Base decorator
 abstract class CoffeeDecorator implements Coffee {
     protected Coffee coffee;
-    public CoffeeDecorator(Coffee coffee) { this.coffee = coffee; }
-    public String getDescription() { return coffee.getDescription(); }
-    public double getCost() { return coffee.getCost(); }
-}
 
-// Concrete decorators
-class MilkDecorator extends CoffeeDecorator {
-    public MilkDecorator(Coffee coffee) { super(coffee); }
-    public String getDescription() { return coffee.getDescription() + ", Milk"; }
-    public double getCost() { return coffee.getCost() + 0.5; }
-}
-
-class SugarDecorator extends CoffeeDecorator {
-    public SugarDecorator(Coffee coffee) { super(coffee); }
-    public String getDescription() { return coffee.getDescription() + ", Sugar"; }
-    public double getCost() { return coffee.getCost() + 0.3; }
-}
-
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        Coffee coffee = new SimpleCoffee();
-        coffee = new MilkDecorator(coffee);
-        coffee = new SugarDecorator(coffee);
-        System.out.println(coffee.getDescription() +
-                           " -> $" + coffee.getCost());
+    CoffeeDecorator(Coffee coffee) {
+        this.coffee = coffee;
     }
+
+    public double cost() { return coffee.cost(); }
+    public String description() { return coffee.description(); }
+}
+
+class Milk extends CoffeeDecorator {
+    Milk(Coffee coffee) { super(coffee); }
+    public double cost() { return coffee.cost() + 0.5; }
+    public String description() {
+        return coffee.description() + " + Milk";
+    }
+}
+
+class Sugar extends CoffeeDecorator {
+    Sugar(Coffee coffee) { super(coffee); }
+    public double cost() { return coffee.cost() + 0.3; }
+    public String description() {
+        return coffee.description() + " + Sugar";
+    }
+}
+
+public static void main(String[] args) {
+    Coffee coffee = new SimpleCoffee();
+    coffee = new Milk(coffee);
+    coffee = new Sugar(coffee);
+    System.out.println(coffee.description()
+        + " $" + coffee.cost());
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Component interface
-interface Coffee {
-    fun getDescription(): String
-    fun getCost(): Double
+      code: `interface Coffee {
+    fun cost(): Double
+    fun description(): String
 }
 
-// Concrete component
 class SimpleCoffee : Coffee {
-    override fun getDescription() = "Simple coffee"
-    override fun getCost() = 2.0
+    override fun cost() = 2.0
+    override fun description() = "Simple Coffee"
 }
 
-// Base decorator
-open class CoffeeDecorator(protected val coffee: Coffee) : Coffee {
-    override fun getDescription() = coffee.getDescription()
-    override fun getCost() = coffee.getCost()
+open class CoffeeDecorator(
+    protected val coffee: Coffee
+) : Coffee {
+    override fun cost() = coffee.cost()
+    override fun description() = coffee.description()
 }
 
-// Concrete decorators
-class MilkDecorator(coffee: Coffee) : CoffeeDecorator(coffee) {
-    override fun getDescription() = coffee.getDescription() + ", Milk"
-    override fun getCost() = coffee.getCost() + 0.5
+class Milk(coffee: Coffee) : CoffeeDecorator(coffee) {
+    override fun cost() = coffee.cost() + 0.5
+    override fun description() = coffee.description() + " + Milk"
 }
 
-class SugarDecorator(coffee: Coffee) : CoffeeDecorator(coffee) {
-    override fun getDescription() = coffee.getDescription() + ", Sugar"
-    override fun getCost() = coffee.getCost() + 0.3
+class Sugar(coffee: Coffee) : CoffeeDecorator(coffee) {
+    override fun cost() = coffee.cost() + 0.3
+    override fun description() = coffee.description() + " + Sugar"
 }
 
-// Usage
 fun main() {
-    var coffee: Coffee = SimpleCoffee()
-    coffee = MilkDecorator(coffee)
-    coffee = SugarDecorator(coffee)
-    println("\${coffee.getDescription()} -> \$\${coffee.getCost()}")
+    val coffee = Sugar(Milk(SimpleCoffee()))
+    println("\${coffee.description()} \${coffee.cost()}")
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Component interface
-interface Coffee {
-  getDescription(): string;
-  getCost(): number;
+      code: `interface Coffee {
+    cost(): number;
+    description(): string;
 }
 
-// Concrete component
 class SimpleCoffee implements Coffee {
-  getDescription() { return "Simple coffee"; }
-  getCost() { return 2.0; }
+    cost() { return 2.0; }
+    description() { return "Simple Coffee"; }
 }
 
-// Base decorator
 abstract class CoffeeDecorator implements Coffee {
-  constructor(protected coffee: Coffee) {}
-  getDescription() { return this.coffee.getDescription(); }
-  getCost() { return this.coffee.getCost(); }
+    constructor(protected coffee: Coffee) {}
+
+    cost() { return this.coffee.cost(); }
+    description() { return this.coffee.description(); }
 }
 
-// Concrete decorators
-class MilkDecorator extends CoffeeDecorator {
-  getDescription() { return this.coffee.getDescription() + ", Milk"; }
-  getCost() { return this.coffee.getCost() + 0.5; }
+class Milk extends CoffeeDecorator {
+    cost() { return this.coffee.cost() + 0.5; }
+    description() { return this.coffee.description() + " + Milk"; }
 }
 
-class SugarDecorator extends CoffeeDecorator {
-  getDescription() { return this.coffee.getDescription() + ", Sugar"; }
-  getCost() { return this.coffee.getCost() + 0.3; }
+class Sugar extends CoffeeDecorator {
+    cost() { return this.coffee.cost() + 0.3; }
+    description() { return this.coffee.description() + " + Sugar"; }
 }
 
-// Usage
 let coffee: Coffee = new SimpleCoffee();
-coffee = new MilkDecorator(coffee);
-coffee = new SugarDecorator(coffee);
-console.log(coffee.getDescription() + " -> $" + coffee.getCost());`
+coffee = new Milk(coffee);
+coffee = new Sugar(coffee);
+console.log(coffee.description(), "$" + coffee.cost());`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Component interface
 class Coffee(ABC):
     @abstractmethod
-    def get_description(self) -> str: pass
+    def cost(self): pass
     @abstractmethod
-    def get_cost(self) -> float: pass
+    def description(self): pass
 
-# Concrete component
 class SimpleCoffee(Coffee):
-    def get_description(self) -> str:
-        return "Simple coffee"
-    def get_cost(self) -> float:
-        return 2.0
+    def cost(self): return 2.0
+    def description(self): return "Simple Coffee"
 
-# Base decorator
 class CoffeeDecorator(Coffee):
     def __init__(self, coffee: Coffee):
-        self._coffee = coffee
-    def get_description(self) -> str:
-        return self._coffee.get_description()
-    def get_cost(self) -> float:
-        return self._coffee.get_cost()
+        self.coffee = coffee
+    def cost(self): return self.coffee.cost()
+    def description(self): return self.coffee.description()
 
-# Concrete decorators
-class MilkDecorator(CoffeeDecorator):
-    def get_description(self) -> str:
-        return self._coffee.get_description() + ", Milk"
-    def get_cost(self) -> float:
-        return self._coffee.get_cost() + 0.5
+class Milk(CoffeeDecorator):
+    def cost(self): return self.coffee.cost() + 0.5
+    def description(self): return self.coffee.description() + " + Milk"
 
-class SugarDecorator(CoffeeDecorator):
-    def get_description(self) -> str:
-        return self._coffee.get_description() + ", Sugar"
-    def get_cost(self) -> float:
-        return self._coffee.get_cost() + 0.3
+class Sugar(CoffeeDecorator):
+    def cost(self): return self.coffee.cost() + 0.3
+    def description(self): return self.coffee.description() + " + Sugar"
 
-# Usage
-coffee: Coffee = SimpleCoffee()
-coffee = MilkDecorator(coffee)
-coffee = SugarDecorator(coffee)
-print(f"{coffee.get_description()} -> \${coffee.get_cost()}")`
+coffee = SimpleCoffee()
+coffee = Milk(coffee)
+coffee = Sugar(coffee)
+print(f"{coffee.description()} \${coffee.cost()}")`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-
-// Component interface
-public interface ICoffee
+      code: `public interface ICoffee
 {
-    string GetDescription();
-    double GetCost();
+    double Cost();
+    string Description();
 }
 
-// Concrete component
 public class SimpleCoffee : ICoffee
 {
-    public string GetDescription() => "Simple coffee";
-    public double GetCost() => 2.0;
+    public double Cost() => 2.0;
+    public string Description() => "Simple Coffee";
 }
 
-// Base decorator
 public abstract class CoffeeDecorator : ICoffee
 {
-    protected ICoffee Coffee;
-    public CoffeeDecorator(ICoffee coffee) => Coffee = coffee;
-    public virtual string GetDescription() => Coffee.GetDescription();
-    public virtual double GetCost() => Coffee.GetCost();
+    protected ICoffee _coffee;
+    public CoffeeDecorator(ICoffee coffee) => _coffee = coffee;
+    public virtual double Cost() => _coffee.Cost();
+    public virtual string Description() => _coffee.Description();
 }
 
-// Concrete decorators
-public class MilkDecorator : CoffeeDecorator
+public class Milk : CoffeeDecorator
 {
-    public MilkDecorator(ICoffee coffee) : base(coffee) { }
-    public override string GetDescription() =>
-        Coffee.GetDescription() + ", Milk";
-    public override double GetCost() => Coffee.GetCost() + 0.5;
+    public Milk(ICoffee coffee) : base(coffee) {}
+    public override double Cost() => _coffee.Cost() + 0.5;
+    public override string Description() =>
+        _coffee.Description() + " + Milk";
 }
 
-public class SugarDecorator : CoffeeDecorator
+public class Sugar : CoffeeDecorator
 {
-    public SugarDecorator(ICoffee coffee) : base(coffee) { }
-    public override string GetDescription() =>
-        Coffee.GetDescription() + ", Sugar";
-    public override double GetCost() => Coffee.GetCost() + 0.3;
+    public Sugar(ICoffee coffee) : base(coffee) {}
+    public override double Cost() => _coffee.Cost() + 0.3;
+    public override string Description() =>
+        _coffee.Description() + " + Sugar";
 }
 
-// Usage
-class Program
+static void Main()
 {
-    static void Main()
-    {
-        ICoffee coffee = new SimpleCoffee();
-        coffee = new MilkDecorator(coffee);
-        coffee = new SugarDecorator(coffee);
-        Console.WriteLine($"{coffee.GetDescription()} -> $\${coffee.GetCost()}");
-    }
+    ICoffee coffee = new SimpleCoffee();
+    coffee = new Milk(coffee);
+    coffee = new Sugar(coffee);
+        Console.WriteLine(_coffee.Description() + " $" + _coffee.Cost());
 }`
     }
   };
@@ -261,23 +253,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }
