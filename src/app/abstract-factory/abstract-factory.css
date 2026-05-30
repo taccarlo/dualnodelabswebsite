@@ -1,0 +1,284 @@
+.dp-page {
+  display: flex;
+  height: calc(100vh - var(--nav-height));
+  margin-top: var(--nav-height);
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-primary);
+  user-select: none;
+}
+
+.dp-page.resizing {
+  cursor: col-resize;
+}
+
+.code-panel {
+  display: flex;
+  min-width: 0;
+  background: #1e1e1e;
+}
+
+.ide-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+  min-width: 0;
+}
+
+.ide-tabs {
+  display: flex;
+  background: #252526;
+  border-bottom: 1px solid #3c3c3c;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.ide-tab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid #3c3c3c;
+  color: #888;
+  padding: 10px 22px;
+  font-size: 0.8125rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  position: relative;
+}
+
+.ide-tab:hover {
+  background: #2d2d2d;
+  color: #ccc;
+}
+
+.ide-tab.active {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+.ide-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #667eea;
+}
+
+.copy-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #3c3c3c;
+  color: #888;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  color: #fff;
+  background: #2d2d2d;
+}
+
+.ide-content {
+  flex: 1;
+  overflow: auto;
+  padding: 28px 32px;
+}
+
+.ide-content pre {
+  margin: 0;
+  white-space: pre;
+}
+
+.ide-content code {
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: #d4d4d4;
+}
+
+.divider {
+  width: 12px;
+  flex-shrink: 0;
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  position: relative;
+  z-index: 1;
+  transition: background 0.15s;
+}
+
+.divider:hover,
+.dp-page.resizing .divider {
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
+
+.divider-line {
+  width: 3px;
+  height: 48px;
+  border-radius: 4px;
+  background: var(--border-light);
+  transition: background 0.15s, height 0.15s;
+}
+
+.divider:hover .divider-line,
+.dp-page.resizing .divider-line {
+  background: var(--color-primary);
+  height: 64px;
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 48px 44px;
+  background: var(--bg-primary);
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 32px;
+  transition: opacity 0.15s;
+  padding: 6px 0;
+}
+
+.back-link:hover {
+  opacity: 0.75;
+}
+
+.back-arrow {
+  font-size: 1.1rem;
+}
+
+.info-header {
+  margin-bottom: 28px;
+}
+
+.pattern-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.pattern-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pattern-desc {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.pattern-desc p {
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.info-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.lang-btn {
+  background: none;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.lang-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+.version {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+:host ::ng-deep pre[class*="language-"],
+:host ::ng-deep code[class*="language-"] {
+  background: none;
+  text-shadow: none;
+  font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .dp-page {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - var(--nav-height));
+  }
+
+  .code-panel {
+    min-height: 45vh;
+  }
+
+  .divider {
+    width: 100%;
+    height: 12px;
+    cursor: row-resize;
+  }
+
+  .info-panel {
+    width: 100%;
+    padding: 32px 24px;
+  }
+
+  .pattern-title {
+    font-size: 1.75rem;
+  }
+
+  .ide-content {
+    padding: 20px;
+  }
+}

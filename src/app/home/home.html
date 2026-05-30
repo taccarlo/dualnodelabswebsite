@@ -1,49 +1,80 @@
-<div class="container">
+<div class="page-content">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-brand">
-      <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="logo" />
-      <h1>{{ 'home.header.title' | translate }}</h1>
+  <!-- HERO - Full bleeed -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">{{ 'home.hero.title' | translate }}</h1>
+        <p class="hero-desc">{{ 'home.hero.description' | translate }}</p>
+        <div class="hero-actions">
+          <a routerLink="/codearena" class="mat-btn mat-btn-filled mat-btn-lg">
+            {{ 'home.cta.enter' | translate }}
+          </a>
+          <a routerLink="/about" class="mat-btn mat-btn-outlined mat-btn-lg" style="color: white; border-color: rgba(255,255,255,0.5);">
+            {{ 'home.cta.about' | translate }}
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node" class="hero-logo" />
+      </div>
     </div>
-    <p class="subtitle">{{ 'home.header.subtitle' | translate }}</p>
-  </header>
-
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <h2>{{ 'home.hero.title' | translate }}</h2>
-    <p>{{ 'home.hero.description' | translate }}</p>
   </section>
 
   <!-- FEATURES -->
-  <section class="features" id="features">
-    <div class="card">
-      <h3>{{ 'home.features.fast.title' | translate }}</h3>
-      <p>{{ 'home.features.fast.description' | translate }}</p>
+  <section class="features-section">
+    <div class="content-container section-padding">
+      <div class="section-header">
+        <h2 class="heading-lg">{{ 'home.features.title' | translate }}</h2>
+        <p class="body-lg">{{ 'home.features.subtitle' | translate }}</p>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card mat-card">
+          <div class="feature-icon">⚡</div>
+          <h3>{{ 'home.features.fast.title' | translate }}</h3>
+          <p>{{ 'home.features.fast.description' | translate }}</p>
+        </div>
+        <div class="feature-card mat-card">
+          <div class="feature-icon">📈</div>
+          <h3>{{ 'home.features.scalable.title' | translate }}</h3>
+          <p>{{ 'home.features.scalable.description' | translate }}</p>
+        </div>
+        <div class="feature-card mat-card">
+          <div class="feature-icon">🔒</div>
+          <h3>{{ 'home.features.secure.title' | translate }}</h3>
+          <p>{{ 'home.features.secure.description' | translate }}</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>{{ 'home.features.scalable.title' | translate }}</h3>
-      <p>{{ 'home.features.scalable.description' | translate }}</p>
-    </div>
-
-    <div class="card">
-      <h3>{{ 'home.features.secure.title' | translate }}</h3>
-      <p>{{ 'home.features.secure.description' | translate }}</p>
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="content-container section-padding" style="text-align: center;">
+      <h2 class="heading-lg" style="color: white;">{{ 'home.cta.title' | translate }}</h2>
+      <p class="body-lg" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: var(--space-md) auto var(--space-xl);">
+        {{ 'home.cta.description' | translate }}
+      </p>
+      <a routerLink="/codearena" class="mat-btn mat-btn-filled mat-btn-lg" style="background: white; color: var(--color-primary);">
+        {{ 'home.cta.start' | translate }}
+      </a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-content">
-      <nav class="footer-nav" [attr.aria-label]="'footer.navLabel' | translate">
-        <a routerLink="/">{{ 'footer.home' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a routerLink="/privacypolicy">{{ 'footer.privacyPolicy' | translate }}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <button class="lang-switch" (click)="toggleLanguage()">{{ currentLang === 'en' ? 'IT' : 'EN' }}</button>
-      </nav>
-      <p class="copyright">{{ 'footer.copyright' | translate }}{{ version }}</p>
+  <footer class="site-footer">
+    <div class="content-container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="assets/dualnode.png" alt="Dual Node" class="footer-logo" />
+          <span class="footer-name">Dual Node</span>
+        </div>
+        <button class="mat-btn mat-btn-text lang-btn" (click)="toggleLanguage()">
+          {{ currentLang === 'en' ? 'IT' : 'EN' }}
+        </button>
+        <p class="footer-copy">{{ 'footer.copyright' | translate }}{{ version }}</p>
+      </div>
     </div>
   </footer>
 

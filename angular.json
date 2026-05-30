@@ -22,7 +22,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": ["index.html"]
               },
               {
                 "glob": "**/*",
@@ -32,7 +33,10 @@
               "src/robots.txt",
               "src/sitemap.xml"
             ],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "src/styles.css",
+              "node_modules/prismjs/themes/prism-tomorrow.min.css"
+            ],
             "outputMode": "server",
             "security": {
               "allowedHosts": []
@@ -47,13 +51,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "600kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "6kB",
+                  "maximumError": "12kB"
                 }
               ],
               "outputHashing": "all"

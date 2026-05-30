@@ -6,11 +6,18 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
+    "headers": [
       {
-        "source": "/privacyPolicy",
-        "destination": "/privacyPolicy.html"
-      },
+        "source": "**/*.xml",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/xml"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
       {
         "source": "/sitemap.xml",
         "destination": "/sitemap.xml"

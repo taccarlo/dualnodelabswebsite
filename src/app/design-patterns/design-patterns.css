@@ -1,0 +1,110 @@
+.subpage-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.subpage-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: var(--space-md);
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+}
+
+.content-section {
+  background: var(--bg-secondary);
+  min-height: 50vh;
+}
+
+.pattern-category {
+  margin-bottom: var(--space-2xl);
+}
+
+.category-title {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.pattern-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-sm);
+}
+
+.pattern-list li {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  padding: 10px 16px;
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.pattern-list li:hover {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+.pattern-list li.clickable {
+  cursor: pointer;
+}
+
+.pattern-list li.clickable:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.site-footer {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-light);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) 0;
+  gap: var(--space-md);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.footer-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.footer-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.lang-btn {
+  font-weight: 600;
+}
+
+.footer-copy {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-sm);
+  }
+}
