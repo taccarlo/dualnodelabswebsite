@@ -18,6 +18,11 @@
   background: var(--bg-secondary);
 }
 
+.privacy-content {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .content-section section {
   margin-bottom: var(--space-xl);
 }
@@ -91,10 +96,3 @@
   font-size: 0.8125rem;
 }
 
-@media (max-width: 768px) {
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: var(--space-sm);
-  }
-}

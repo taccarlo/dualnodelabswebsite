@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
@@ -26,6 +26,42 @@ export class SingletonComponent {
   activeLang = 'C#';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+
+  codeFlex = '6 1 0';
+  infoFlex = '4 1 0';
+  isDragging = false;
+  private startX = 0;
+  private startCodeFlex = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    if (!this.isDragging) return;
+    this.doResize(e.clientX);
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.isDragging = false;
+  }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault();
+    this.isDragging = true;
+    const cx = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    this.startX = cx;
+    const total = this.codeFlex + ' ' + this.infoFlex;
+    this.startCodeFlex = parseFloat(this.codeFlex);
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(30, Math.min(80, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {

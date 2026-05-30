@@ -43,6 +43,33 @@
     <mobile:mobile/>
   </url>
   
+  <!-- Builder -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/builder</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Factory Method -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/factory-method</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Abstract Factory -->
+  <url>
+    <loc>https://dualnodelabs.web.app/design-patterns/abstract-factory</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
   <!-- Exercises -->
   <url>
     <loc>https://dualnodelabs.web.app/exercises</loc>

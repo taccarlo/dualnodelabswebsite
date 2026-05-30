@@ -70,7 +70,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-xl);
-  max-width: 800px;
   margin: 0 auto;
 }
 

@@ -17,9 +17,9 @@ export class DesignPatternsComponent {
 
   creationalPatterns = [
     { name: 'Singleton', route: '/design-patterns/singleton' },
-    { name: 'Builder', route: '' },
-    { name: 'Factory Method', route: '' },
-    { name: 'Abstract Factory', route: '' },
+    { name: 'Builder', route: '/design-patterns/builder' },
+    { name: 'Factory Method', route: '/design-patterns/factory-method' },
+    { name: 'Abstract Factory', route: '/design-patterns/abstract-factory' },
   ];
   structuralPatterns = [
     { name: 'Adapter', route: '' },
