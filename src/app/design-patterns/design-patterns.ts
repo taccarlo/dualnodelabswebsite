@@ -29,10 +29,10 @@ export class DesignPatternsComponent {
     { name: 'Facade', route: '' },
   ];
   behavioralPatterns = [
-    { name: 'Strategy', route: '' },
-    { name: 'Observer', route: '' },
-    { name: 'Iterator', route: '' },
-    { name: 'Interpreter', route: '' },
+    { name: 'Strategy', route: '/design-patterns/strategy' },
+    { name: 'Observer', route: '/design-patterns/observer' },
+    { name: 'Iterator', route: '/design-patterns/iterator' },
+    { name: 'Interpreter', route: '/design-patterns/interpreter' },
   ];
 
   get currentLang() {
