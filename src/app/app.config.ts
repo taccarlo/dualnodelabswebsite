@@ -6,10 +6,6 @@ import { CodeArenaComponent } from './codearena/codearena';
 import { DesignPatternsComponent } from './design-patterns/design-patterns';
 import { ExercisesComponent } from './exercises/exercises';
 import { SingletonComponent } from './singleton/singleton';
-import { StrategyComponent } from './strategy/strategy';
-import { ObserverComponent } from './observer/observer';
-import { IteratorComponent } from './iterator/iterator';
-import { InterpreterComponent } from './interpreter/interpreter';
 import { BuilderComponent } from './builder/builder';
 import { FactoryMethodComponent } from './factory-method/factory-method';
 import { AbstractFactoryComponent } from './abstract-factory/abstract-factory';
@@ -18,6 +14,10 @@ import { BridgeComponent } from './bridge/bridge';
 import { CompositeComponent } from './composite/composite';
 import { DecoratorComponent } from './decorator/decorator';
 import { FacadeComponent } from './facade/facade';
+import { StrategyComponent } from './strategy/strategy';
+import { ObserverComponent } from './observer/observer';
+import { IteratorComponent } from './iterator/iterator';
+import { InterpreterComponent } from './interpreter/interpreter';
 import { AboutComponent } from './about/about';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
@@ -27,10 +27,6 @@ const routes: Routes = [
   { path: 'codearena', component: CodeArenaComponent },
   { path: 'design-patterns', component: DesignPatternsComponent },
   { path: 'design-patterns/singleton', component: SingletonComponent },
-  { path: 'design-patterns/strategy', component: StrategyComponent },
-  { path: 'design-patterns/observer', component: ObserverComponent },
-  { path: 'design-patterns/iterator', component: IteratorComponent },
-  { path: 'design-patterns/interpreter', component: InterpreterComponent },
   { path: 'design-patterns/builder', component: BuilderComponent },
   { path: 'design-patterns/factory-method', component: FactoryMethodComponent },
   { path: 'design-patterns/abstract-factory', component: AbstractFactoryComponent },
@@ -39,6 +35,10 @@ const routes: Routes = [
   { path: 'design-patterns/composite', component: CompositeComponent },
   { path: 'design-patterns/decorator', component: DecoratorComponent },
   { path: 'design-patterns/facade', component: FacadeComponent },
+  { path: 'design-patterns/strategy', component: StrategyComponent },
+  { path: 'design-patterns/observer', component: ObserverComponent },
+  { path: 'design-patterns/iterator', component: IteratorComponent },
+  { path: 'design-patterns/interpreter', component: InterpreterComponent },
   { path: 'exercises', component: ExercisesComponent },
   { path: 'about', component: AboutComponent },
 ];

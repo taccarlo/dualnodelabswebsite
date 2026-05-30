@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,6 +25,30 @@ export class ObserverComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
@@ -33,269 +56,204 @@ export class ObserverComponent {
       code: `import java.util.ArrayList;
 import java.util.List;
 
-// Observer interface
 interface Observer {
-    void update(float temperature);
+    void update(String news);
 }
 
-// Subject
-class WeatherStation {
+class NewsChannel implements Observer {
+    private String name;
+
+    NewsChannel(String name) { this.name = name; }
+
+    public void update(String news) {
+        System.out.println(name
+            + " received: " + news);
+    }
+}
+
+class NewsAgency {
     private List<Observer> observers = new ArrayList<>();
-    private float temperature;
+    private String news;
 
-    public void addObserver(Observer o) {
-        observers.add(o);
+    void addObserver(Observer observer) {
+        observers.add(observer);
     }
 
-    public void removeObserver(Observer o) {
-        observers.remove(o);
+    void removeObserver(Observer observer) {
+        observers.remove(observer);
     }
 
-    public void setTemperature(float temp) {
-        this.temperature = temp;
-        notifyObservers();
-    }
-
-    private void notifyObservers() {
-        for (Observer o : observers) {
-            o.update(temperature);
+    void setNews(String news) {
+        this.news = news;
+        for (Observer observer : observers) {
+            observer.update(news);
         }
     }
 }
 
-// Concrete observers
-class PhoneDisplay implements Observer {
-    public void update(float temp) {
-        System.out.println("Phone: Temperature is " + temp + "°C");
-    }
-}
+public static void main(String[] args) {
+    NewsAgency agency = new NewsAgency();
 
-class WindowDisplay implements Observer {
-    public void update(float temp) {
-        System.out.println("Window: Temperature is " + temp + "°C");
-    }
-}
+    NewsChannel cnbc = new NewsChannel("CNBC");
+    NewsChannel bbc = new NewsChannel("BBC");
 
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        WeatherStation station = new WeatherStation();
-        station.addObserver(new PhoneDisplay());
-        station.addObserver(new WindowDisplay());
-        station.setTemperature(25.5f);
-        station.setTemperature(30.0f);
-    }
+    agency.addObserver(cnbc);
+    agency.addObserver(bbc);
+
+    agency.setNews("Breaking News!");
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Observer interface
-interface Observer {
-    fun update(temperature: Float)
+      code: `interface Observer {
+    fun update(news: String)
 }
 
-// Subject
-class WeatherStation {
+class NewsChannel(private val name: String) : Observer {
+    override fun update(news: String) =
+        println("$name received: $news")
+}
+
+class NewsAgency {
     private val observers = mutableListOf<Observer>()
-    private var temperature: Float = 0f
+    private var news: String = ""
 
-    fun addObserver(o: Observer) {
-        observers.add(o)
-    }
+    fun addObserver(observer: Observer) = observers.add(observer)
+    fun removeObserver(observer: Observer) = observers.remove(observer)
 
-    fun removeObserver(o: Observer) {
-        observers.remove(o)
-    }
-
-    fun setTemperature(temp: Float) {
-        temperature = temp
-        notifyObservers()
-    }
-
-    private fun notifyObservers() {
-        observers.forEach { it.update(temperature) }
+    fun setNews(news: String) {
+        this.news = news
+        observers.forEach { it.update(news) }
     }
 }
 
-// Concrete observers
-class PhoneDisplay : Observer {
-    override fun update(temp: Float) {
-        println("Phone: Temperature is \${temp}°C")
-    }
-}
-
-class WindowDisplay : Observer {
-    override fun update(temp: Float) {
-        println("Window: Temperature is \${temp}°C")
-    }
-}
-
-// Usage
 fun main() {
-    val station = WeatherStation()
-    station.addObserver(PhoneDisplay())
-    station.addObserver(WindowDisplay())
-    station.setTemperature(25.5f)
-    station.setTemperature(30.0f)
+    val agency = NewsAgency()
+    val cnbc = NewsChannel("CNBC")
+    val bbc = NewsChannel("BBC")
+
+    agency.addObserver(cnbc)
+    agency.addObserver(bbc)
+    agency.setNews("Breaking News!")
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Observer interface
-interface Observer {
-  update(temperature: number): void;
+      code: `interface Observer {
+    update(news: string): void;
 }
 
-// Subject
-class WeatherStation {
-  private observers: Observer[] = [];
-  private temperature: number = 0;
+class NewsChannel implements Observer {
+    constructor(private name: string) {}
 
-  addObserver(o: Observer): void {
-    this.observers.push(o);
-  }
-
-  removeObserver(o: Observer): void {
-    const idx = this.observers.indexOf(o);
-    if (idx !== -1) this.observers.splice(idx, 1);
-  }
-
-  setTemperature(temp: number): void {
-    this.temperature = temp;
-    this.notifyObservers();
-  }
-
-  private notifyObservers(): void {
-    for (const o of this.observers) {
-      o.update(this.temperature);
+    update(news: string): void {
+        console.log(this.name, "received:", news);
     }
-  }
 }
 
-// Concrete observers
-class PhoneDisplay implements Observer {
-  update(temp: number): void {
-    console.log(\`Phone: Temperature is \${temp}°C\`);
-  }
+class NewsAgency {
+    private observers: Observer[] = [];
+
+    addObserver(observer: Observer): void {
+        this.observers.push(observer);
+    }
+
+    removeObserver(observer: Observer): void {
+        const idx = this.observers.indexOf(observer);
+        if (idx >= 0) this.observers.splice(idx, 1);
+    }
+
+    setNews(news: string): void {
+        for (const observer of this.observers) {
+            observer.update(news);
+        }
+    }
 }
 
-class WindowDisplay implements Observer {
-  update(temp: number): void {
-    console.log(\`Window: Temperature is \${temp}°C\`);
-  }
-}
+const agency = new NewsAgency();
+const cnbc = new NewsChannel("CNBC");
+const bbc = new NewsChannel("BBC");
 
-// Usage
-const station = new WeatherStation();
-station.addObserver(new PhoneDisplay());
-station.addObserver(new WindowDisplay());
-station.setTemperature(25.5);
-station.setTemperature(30.0);`
+agency.addObserver(cnbc);
+agency.addObserver(bbc);
+agency.setNews("Breaking News!");`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Observer interface
 class Observer(ABC):
     @abstractmethod
-    def update(self, temperature: float):
-        pass
+    def update(self, news: str): pass
 
-# Subject
-class WeatherStation:
+class NewsChannel(Observer):
+    def __init__(self, name): self.name = name
+    def update(self, news):
+        print(f"{self.name} received: {news}")
+
+class NewsAgency:
     def __init__(self):
-        self._observers = []
-        self._temperature = 0.0
+        self.observers = []
 
-    def add_observer(self, observer: Observer):
-        self._observers.append(observer)
+    def add_observer(self, observer):
+        self.observers.append(observer)
 
-    def remove_observer(self, observer: Observer):
-        self._observers.remove(observer)
+    def remove_observer(self, observer):
+        self.observers.remove(observer)
 
-    def set_temperature(self, temp: float):
-        self._temperature = temp
-        self._notify_observers()
+    def set_news(self, news):
+        for observer in self.observers:
+            observer.update(news)
 
-    def _notify_observers(self):
-        for o in self._observers:
-            o.update(self._temperature)
+agency = NewsAgency()
+cnbc = NewsChannel("CNBC")
+bbc = NewsChannel("BBC")
 
-# Concrete observers
-class PhoneDisplay(Observer):
-    def update(self, temp: float):
-        print(f"Phone: Temperature is {temp}°C")
-
-class WindowDisplay(Observer):
-    def update(self, temp: float):
-        print(f"Window: Temperature is {temp}°C")
-
-# Usage
-station = WeatherStation()
-station.add_observer(PhoneDisplay())
-station.add_observer(WindowDisplay())
-station.set_temperature(25.5)
-station.set_temperature(30.0)`
+agency.add_observer(cnbc)
+agency.add_observer(bbc)
+agency.set_news("Breaking News!")`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-using System.Collections.Generic;
-
-// Observer interface
-public interface IObserver
+      code: `public interface IObserver
 {
-    void Update(float temperature);
+    void Update(string news);
 }
 
-// Subject
-public class WeatherStation
+public class NewsChannel : IObserver
+{
+    private string _name;
+    public NewsChannel(string name) => _name = name;
+    public void Update(string news) =>
+        Console.WriteLine($"{_name} received: {news}");
+}
+
+public class NewsAgency
 {
     private List<IObserver> _observers = new();
-    private float _temperature;
 
-    public void AddObserver(IObserver o) => _observers.Add(o);
+    public void AddObserver(IObserver observer) =>
+        _observers.Add(observer);
 
-    public void RemoveObserver(IObserver o) => _observers.Remove(o);
+    public void RemoveObserver(IObserver observer) =>
+        _observers.Remove(observer);
 
-    public void SetTemperature(float temp)
+    public void SetNews(string news)
     {
-        _temperature = temp;
-        NotifyObservers();
-    }
-
-    private void NotifyObservers()
-    {
-        foreach (var o in _observers)
-            o.Update(_temperature);
+        foreach (var observer in _observers)
+            observer.Update(news);
     }
 }
 
-// Concrete observers
-public class PhoneDisplay : IObserver
+static void Main()
 {
-    public void Update(float temp) =>
-        Console.WriteLine($"Phone: Temperature is {temp}°C");
-}
+    var agency = new NewsAgency();
+    var cnbc = new NewsChannel("CNBC");
+    var bbc = new NewsChannel("BBC");
 
-public class WindowDisplay : IObserver
-{
-    public void Update(float temp) =>
-        Console.WriteLine($"Window: Temperature is {temp}°C");
-}
-
-// Usage
-class Program
-{
-    static void Main()
-    {
-        var station = new WeatherStation();
-        station.AddObserver(new PhoneDisplay());
-        station.AddObserver(new WindowDisplay());
-        station.SetTemperature(25.5f);
-        station.SetTemperature(30.0f);
-    }
+    agency.AddObserver(cnbc);
+    agency.AddObserver(bbc);
+    agency.SetNews("Breaking News!");
 }`
     }
   };
@@ -306,23 +264,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }

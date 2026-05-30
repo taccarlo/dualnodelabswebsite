@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,266 +25,272 @@ export class IteratorComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
       lang: 'java',
-      code: `import java.util.ArrayList;
-import java.util.List;
-
-// Iterator interface
-interface Iterator<T> {
+      code: `interface Iterator<T> {
     boolean hasNext();
     T next();
 }
 
-// Aggregate interface
-interface Container<T> {
+interface IterableCollection<T> {
     Iterator<T> createIterator();
 }
 
-// Concrete aggregate
-class BookCollection implements Container<String> {
-    private List<String> books = new ArrayList<>();
+class BrowseHistory implements IterableCollection<String> {
+    private String[] urls = new String[10];
+    private int count = 0;
 
-    public void addBook(String book) { books.add(book); }
-
-    public Iterator<String> createIterator() {
-        return new BookIterator();
+    void push(String url) {
+        urls[count++] = url;
     }
 
-    private class BookIterator implements Iterator<String> {
+    String pop() {
+        return urls[--count];
+    }
+
+    public Iterator<String> createIterator() {
+        return new HistoryIterator(this);
+    }
+
+    private class HistoryIterator implements Iterator<String> {
+        private BrowseHistory history;
         private int index = 0;
 
+        HistoryIterator(BrowseHistory history) {
+            this.history = history;
+        }
+
         public boolean hasNext() {
-            return index < books.size();
+            return index < history.count;
         }
 
         public String next() {
-            return books.get(index++);
+            return history.urls[index++];
         }
     }
 }
 
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        BookCollection collection = new BookCollection();
-        collection.addBook("Design Patterns");
-        collection.addBook("Clean Code");
-        collection.addBook("Refactoring");
+public static void main(String[] args) {
+    BrowseHistory history = new BrowseHistory();
+    history.push("a.com");
+    history.push("b.com");
+    history.push("c.com");
 
-        Iterator<String> it = collection.createIterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
+    Iterator<String> iterator = history.createIterator();
+    while (iterator.hasNext()) {
+        System.out.println(iterator.next());
     }
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Iterator interface
-interface Iterator<T> {
+      code: `interface Iterator<T> {
     fun hasNext(): Boolean
     fun next(): T
 }
 
-// Aggregate interface
-interface Container<T> {
+interface IterableCollection<T> {
     fun createIterator(): Iterator<T>
 }
 
-// Concrete aggregate
-class BookCollection : Container<String> {
-    private val books = mutableListOf<String>()
+class BrowseHistory : IterableCollection<String> {
+    private val urls = mutableListOf<String>()
 
-    fun addBook(book: String) { books.add(book) }
+    fun push(url: String) { urls.add(url) }
+    fun pop() = urls.removeLast()
 
-    override fun createIterator(): Iterator<String> = BookIterator()
-
-    private inner class BookIterator : Iterator<String> {
-        private var index = 0
-
-        override fun hasNext(): Boolean = index < books.size
-
-        override fun next(): String = books[index++]
-    }
+    override fun createIterator(): Iterator<String> =
+        object : Iterator<String> {
+            private var index = 0
+            override fun hasNext() = index < urls.size
+            override fun next() = urls[index++]
+        }
 }
 
-// Usage
 fun main() {
-    val collection = BookCollection()
-    collection.addBook("Design Patterns")
-    collection.addBook("Clean Code")
-    collection.addBook("Refactoring")
+    val history = BrowseHistory()
+    history.push("a.com")
+    history.push("b.com")
+    history.push("c.com")
 
-    val it = collection.createIterator()
-    while (it.hasNext()) {
-        println(it.next())
+    val iterator = history.createIterator()
+    while (iterator.hasNext()) {
+        println(iterator.next())
     }
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Iterator interface
-interface Iterator<T> {
-  hasNext(): boolean;
-  next(): T;
+      code: `interface Iterator<T> {
+    hasNext(): boolean;
+    next(): T;
 }
 
-// Aggregate interface
-interface Container<T> {
-  createIterator(): Iterator<T>;
+interface IterableCollection<T> {
+    createIterator(): Iterator<T>;
 }
 
-// Concrete aggregate
-class BookCollection implements Container<string> {
-  private books: string[] = [];
+class BrowseHistory implements IterableCollection<string> {
+    private urls: string[] = [];
 
-  addBook(book: string): void {
-    this.books.push(book);
-  }
+    push(url: string): void {
+        this.urls.push(url);
+    }
 
-  createIterator(): Iterator<string> {
-    return new BookIterator(this.books);
-  }
+    pop(): string | undefined {
+        return this.urls.pop();
+    }
+
+    createIterator(): Iterator<string> {
+        let index = 0;
+        const urls = this.urls;
+        return {
+            hasNext(): boolean {
+                return index < urls.length;
+            },
+            next(): string {
+                return urls[index++];
+            }
+        };
+    }
 }
 
-// Concrete iterator
-class BookIterator implements Iterator<string> {
-  private index = 0;
+const history = new BrowseHistory();
+history.push("a.com");
+history.push("b.com");
+history.push("c.com");
 
-  constructor(private books: string[]) {}
-
-  hasNext(): boolean {
-    return this.index < this.books.length;
-  }
-
-  next(): string {
-    return this.books[this.index++];
-  }
-}
-
-// Usage
-const collection = new BookCollection();
-collection.addBook("Design Patterns");
-collection.addBook("Clean Code");
-collection.addBook("Refactoring");
-
-const it = collection.createIterator();
-while (it.hasNext()) {
-  console.log(it.next());
+const iterator = history.createIterator();
+while (iterator.hasNext()) {
+    console.log(iterator.next());
 }`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Iterator interface
 class Iterator(ABC):
     @abstractmethod
-    def has_next(self) -> bool:
-        pass
+    def has_next(self): pass
     @abstractmethod
-    def next(self):
-        pass
+    def next(self): pass
 
-# Aggregate interface
-class Container(ABC):
+class IterableCollection(ABC):
     @abstractmethod
-    def create_iterator(self) -> Iterator:
-        pass
+    def create_iterator(self): pass
 
-# Concrete aggregate
-class BookCollection(Container):
+class BrowseHistory(IterableCollection):
     def __init__(self):
-        self._books = []
+        self._urls = []
 
-    def add_book(self, book: str):
-        self._books.append(book)
+    def push(self, url):
+        self._urls.append(url)
 
-    def create_iterator(self) -> Iterator:
-        return BookIterator(self._books)
+    def pop(self):
+        return self._urls.pop()
 
-# Concrete iterator
-class BookIterator(Iterator):
-    def __init__(self, books):
-        self._books = books
+    def create_iterator(self):
+        return BrowseHistoryIterator(self._urls)
+
+class BrowseHistoryIterator(Iterator):
+    def __init__(self, urls):
+        self._urls = urls
         self._index = 0
 
-    def has_next(self) -> bool:
-        return self._index < len(self._books)
+    def has_next(self):
+        return self._index < len(self._urls)
 
     def next(self):
-        book = self._books[self._index]
+        val = self._urls[self._index]
         self._index += 1
-        return book
+        return val
 
-# Usage
-collection = BookCollection()
-collection.add_book("Design Patterns")
-collection.add_book("Clean Code")
-collection.add_book("Refactoring")
+history = BrowseHistory()
+history.push("a.com")
+history.push("b.com")
+history.push("c.com")
 
-it = collection.create_iterator()
-while it.has_next():
-    print(it.next())`
+iterator = history.create_iterator()
+while iterator.has_next():
+    print(iterator.next())`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-using System.Collections.Generic;
-
-// Iterator interface
-public interface IIterator<T>
+      code: `public interface IIterator<T>
 {
     bool HasNext();
     T Next();
 }
 
-// Aggregate interface
-public interface IContainer<T>
+public interface IIterableCollection<T>
 {
     IIterator<T> CreateIterator();
 }
 
-// Concrete aggregate
-public class BookCollection : IContainer<string>
+public class BrowseHistory : IIterableCollection<string>
 {
-    private List<string> _books = new();
+    private List<string> _urls = new();
 
-    public void AddBook(string book) => _books.Add(book);
-
-    public IIterator<string> CreateIterator() => new BookIterator(_books);
-}
-
-// Concrete iterator
-public class BookIterator : IIterator<string>
-{
-    private List<string> _books;
-    private int _index = 0;
-
-    public BookIterator(List<string> books) => _books = books;
-
-    public bool HasNext() => _index < _books.Count;
-
-    public string Next() => _books[_index++];
-}
-
-// Usage
-class Program
-{
-    static void Main()
+    public void Push(string url) => _urls.Add(url);
+    public string Pop()
     {
-        var collection = new BookCollection();
-        collection.AddBook("Design Patterns");
-        collection.AddBook("Clean Code");
-        collection.AddBook("Refactoring");
-
-        var it = collection.CreateIterator();
-        while (it.HasNext())
-            Console.WriteLine(it.Next());
+        var last = _urls[^1];
+        _urls.RemoveAt(_urls.Count - 1);
+        return last;
     }
+
+    public IIterator<string> CreateIterator() =>
+        new HistoryIterator(this);
+
+    private class HistoryIterator : IIterator<string>
+    {
+        private BrowseHistory _history;
+        private int _index;
+
+        public HistoryIterator(BrowseHistory history) =>
+            _history = history;
+
+        public bool HasNext() => _index < _history._urls.Count;
+        public string Next() => _history._urls[_index++];
+    }
+}
+
+static void Main()
+{
+    var history = new BrowseHistory();
+    history.Push("a.com");
+    history.Push("b.com");
+    history.Push("c.com");
+
+    var iterator = history.CreateIterator();
+    while (iterator.HasNext())
+        Console.WriteLine(iterator.Next());
 }`
     }
   };
@@ -296,23 +301,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }

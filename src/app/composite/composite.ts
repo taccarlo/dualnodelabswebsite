@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
 import packageJson from '../../../package.json';
-
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -26,6 +25,30 @@ export class CompositeComponent {
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  codeFlex = '4 1 0';
+  infoFlex = '6 1 0';
+  isDragging = false;
+  private startX = 0;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) { if (!this.isDragging) return; this.doResize(e.clientX); }
+  @HostListener('document:mouseup')
+  onMouseUp() { this.isDragging = false; }
+
+  onDividerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault(); this.isDragging = true;
+    this.startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  }
+
+  private doResize(clientX: number) {
+    const dp = (document.querySelector('.dp-page') as HTMLElement);
+    if (!dp) return;
+    const rect = dp.getBoundingClientRect();
+    const pct = (clientX - rect.left) / rect.width * 100;
+    const clamped = Math.max(20, Math.min(70, pct));
+    this.codeFlex = `${clamped} 1 0`;
+    this.infoFlex = `${100 - clamped} 1 0`;
+  }
 
   private codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {
@@ -33,225 +56,223 @@ export class CompositeComponent {
       code: `import java.util.ArrayList;
 import java.util.List;
 
-// Component
-interface FileSystemNode {
-    void show(String indent);
+interface FileSystemComponent {
+    void showDetails();
 }
 
-// Leaf
-class File implements FileSystemNode {
+class File implements FileSystemComponent {
     private String name;
-    public File(String name) { this.name = name; }
-    public void show(String indent) {
-        System.out.println(indent + "\uD83D\uDCC4 " + name);
+
+    File(String name) { this.name = name; }
+
+    public void showDetails() {
+        System.out.println("File: " + name);
     }
 }
 
-// Composite
-class Folder implements FileSystemNode {
+class Folder implements FileSystemComponent {
     private String name;
-    private List<FileSystemNode> children = new ArrayList<>();
+    private List<FileSystemComponent> children = new ArrayList<>();
 
-    public Folder(String name) { this.name = name; }
-    public void add(FileSystemNode node) { children.add(node); }
-    public void remove(FileSystemNode node) { children.remove(node); }
+    Folder(String name) { this.name = name; }
 
-    public void show(String indent) {
-        System.out.println(indent + "\uD83D\uDCC1 " + name);
-        for (FileSystemNode child : children) {
-            child.show(indent + "  ");
+    void add(FileSystemComponent component) {
+        children.add(component);
+    }
+
+    void remove(FileSystemComponent component) {
+        children.remove(component);
+    }
+
+    public void showDetails() {
+        System.out.println("Folder: " + name);
+        for (FileSystemComponent child : children) {
+            child.showDetails();
         }
     }
 }
 
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        Folder root = new Folder("root");
-        Folder src = new Folder("src");
-        src.add(new File("main.java"));
-        src.add(new File("utils.java"));
-        root.add(src);
-        root.add(new File("README.md"));
-        root.show("");
-    }
+public static void main(String[] args) {
+    File file1 = new File("file1.txt");
+    File file2 = new File("file2.txt");
+
+    Folder folder = new Folder("Documents");
+    folder.add(file1);
+    folder.add(file2);
+
+    Folder root = new Folder("Root");
+    root.add(folder);
+    root.showDetails();
 }`
     },
     Kotlin: {
       lang: 'kotlin',
-      code: `// Component
-interface FileSystemNode {
-    fun show(indent: String)
+      code: `interface FileSystemComponent {
+    fun showDetails()
 }
 
-// Leaf
-class File(private val name: String) : FileSystemNode {
-    override fun show(indent: String) {
-        println("\${indent}\uD83D\uDCC4 $name")
+class File(private val name: String) : FileSystemComponent {
+    override fun showDetails() = println("File: $name")
+}
+
+class Folder(private val name: String) : FileSystemComponent {
+    private val children = mutableListOf<FileSystemComponent>()
+
+    fun add(component: FileSystemComponent) = children.add(component)
+    fun remove(component: FileSystemComponent) = children.remove(component)
+
+    override fun showDetails() {
+        println("Folder: $name")
+        children.forEach { it.showDetails() }
     }
 }
 
-// Composite
-class Folder(private val name: String) : FileSystemNode {
-    private val children = mutableListOf<FileSystemNode>()
-
-    fun add(node: FileSystemNode) { children.add(node) }
-    fun remove(node: FileSystemNode) { children.remove(node) }
-
-    override fun show(indent: String) {
-        println("\${indent}\uD83D\uDCC1 $name")
-        children.forEach { it.show("$indent  ") }
-    }
-}
-
-// Usage
 fun main() {
-    val root = Folder("root")
-    val src = Folder("src")
-    src.add(File("main.java"))
-    src.add(File("utils.java"))
-    root.add(src)
-    root.add(File("README.md"))
-    root.show("")
+    val file1 = File("file1.txt")
+    val file2 = File("file2.txt")
+
+    val folder = Folder("Documents").apply {
+        add(file1)
+        add(file2)
+    }
+
+    Folder("Root").apply {
+        add(folder)
+        showDetails()
+    }
 }`
     },
     TypeScript: {
       lang: 'typescript',
-      code: `// Component
-interface FileSystemNode {
-  show(indent: string): void;
+      code: `interface FileSystemComponent {
+    showDetails(): void;
 }
 
-// Leaf
-class File implements FileSystemNode {
-  constructor(private name: string) {}
-  show(indent: string): void {
-    console.log(indent + "📄 " + this.name);
-  }
-}
+class File implements FileSystemComponent {
+    constructor(private name: string) {}
 
-// Composite
-class Folder implements FileSystemNode {
-  private children: FileSystemNode[] = [];
-
-  constructor(private name: string) {}
-
-  add(node: FileSystemNode): void { this.children.push(node); }
-  remove(node: FileSystemNode): void {
-    const idx = this.children.indexOf(node);
-    if (idx !== -1) this.children.splice(idx, 1);
-  }
-
-  show(indent: string): void {
-    console.log(indent + "📁 " + this.name);
-    for (const child of this.children) {
-      child.show(indent + "  ");
+    showDetails(): void {
+        console.log("File:", this.name);
     }
-  }
 }
 
-// Usage
-const root = new Folder("root");
-const src = new Folder("src");
-src.add(new File("main.java"));
-src.add(new File("utils.java"));
-root.add(src);
-root.add(new File("README.md"));
-root.show("");`
+class Folder implements FileSystemComponent {
+    private children: FileSystemComponent[] = [];
+
+    constructor(private name: string) {}
+
+    add(component: FileSystemComponent): void {
+        this.children.push(component);
+    }
+
+    remove(component: FileSystemComponent): void {
+        const idx = this.children.indexOf(component);
+        if (idx >= 0) this.children.splice(idx, 1);
+    }
+
+    showDetails(): void {
+        console.log("Folder:", this.name);
+        for (const child of this.children) {
+            child.showDetails();
+        }
+    }
+}
+
+const file1 = new File("file1.txt");
+const file2 = new File("file2.txt");
+const folder = new Folder("Documents");
+folder.add(file1);
+folder.add(file2);
+
+const root = new Folder("Root");
+root.add(folder);
+root.showDetails();`
     },
     Python: {
       lang: 'python',
       code: `from abc import ABC, abstractmethod
 
-# Component
-class FileSystemNode(ABC):
+class FileSystemComponent(ABC):
     @abstractmethod
-    def show(self, indent: str): pass
+    def show_details(self): pass
 
-# Leaf
-class File(FileSystemNode):
-    def __init__(self, name: str):
+class File(FileSystemComponent):
+    def __init__(self, name): self.name = name
+    def show_details(self): print(f"File: {self.name}")
+
+class Folder(FileSystemComponent):
+    def __init__(self, name):
         self.name = name
-    def show(self, indent: str):
-        print(f"{indent}\uD83D\uDCC4 {self.name}")
+        self.children = []
 
-# Composite
-class Folder(FileSystemNode):
-    def __init__(self, name: str):
-        self.name = name
-        self._children = []
+    def add(self, component):
+        self.children.append(component)
 
-    def add(self, node: FileSystemNode):
-        self._children.append(node)
+    def remove(self, component):
+        self.children.remove(component)
 
-    def remove(self, node: FileSystemNode):
-        self._children.remove(node)
+    def show_details(self):
+        print(f"Folder: {self.name}")
+        for child in self.children:
+            child.show_details()
 
-    def show(self, indent: str):
-        print(f"{indent}\uD83D\uDCC1 {self.name}")
-        for child in self._children:
-            child.show(indent + "  ")
+file1 = File("file1.txt")
+file2 = File("file2.txt")
+folder = Folder("Documents")
+folder.add(file1)
+folder.add(file2)
 
-# Usage
-root = Folder("root")
-src = Folder("src")
-src.add(File("main.java"))
-src.add(File("utils.java"))
-root.add(src)
-root.add(File("README.md"))
-root.show("")`
+root = Folder("Root")
+root.add(folder)
+root.show_details()`
     },
     'C#': {
       lang: 'csharp',
-      code: `using System;
-using System.Collections.Generic;
-
-// Component
-public interface IFileSystemNode
+      code: `public interface IFileSystemComponent
 {
-    void Show(string indent);
+    void ShowDetails();
 }
 
-// Leaf
-public class File : IFileSystemNode
+public class File : IFileSystemComponent
 {
     private string _name;
     public File(string name) => _name = name;
-    public void Show(string indent) =>
-        Console.WriteLine($"{indent}\uD83D\uDCC4 {_name}");
+    public void ShowDetails() =>
+        Console.WriteLine($"File: {_name}");
 }
 
-// Composite
-public class Folder : IFileSystemNode
+public class Folder : IFileSystemComponent
 {
     private string _name;
-    private List<IFileSystemNode> _children = new();
+    private List<IFileSystemComponent> _children = new();
 
     public Folder(string name) => _name = name;
-    public void Add(IFileSystemNode node) => _children.Add(node);
-    public void Remove(IFileSystemNode node) => _children.Remove(node);
 
-    public void Show(string indent)
+    public void Add(IFileSystemComponent component) =>
+        _children.Add(component);
+
+    public void Remove(IFileSystemComponent component) =>
+        _children.Remove(component);
+
+    public void ShowDetails()
     {
-        Console.WriteLine($"{indent}\uD83D\uDCC1 {_name}");
+        Console.WriteLine($"Folder: {_name}");
         foreach (var child in _children)
-            child.Show(indent + "  ");
+            child.ShowDetails();
     }
 }
 
-// Usage
-class Program
+static void Main()
 {
-    static void Main()
-    {
-        var root = new Folder("root");
-        var src = new Folder("src");
-        src.Add(new File("main.java"));
-        src.Add(new File("utils.java"));
-        root.Add(src);
-        root.Add(new File("README.md"));
-        root.Show("");
-    }
+    var file1 = new File("file1.txt");
+    var file2 = new File("file2.txt");
+    var folder = new Folder("Documents");
+    folder.Add(file1);
+    folder.Add(file2);
+
+    var root = new Folder("Root");
+    root.Add(folder);
+    root.ShowDetails();
 }`
     }
   };
@@ -262,23 +283,15 @@ class Program
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  getCode(lang: string): string {
-    return this.codeSamples[lang]?.code || '';
-  }
+  getCode(lang: string): string { return this.codeSamples[lang]?.code || ''; }
 
   copyCode() {
     const code = this.getCode(this.activeLang);
     navigator.clipboard.writeText(code).then(() => {
-      this.copied = true;
-      setTimeout(() => this.copied = false, 2000);
+      this.copied = true; setTimeout(() => this.copied = false, 2000);
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
+  get currentLang() { return this.translateService.currentLang(); }
+  toggleLanguage() { this.translateService.toggleLanguage(); }
 }
