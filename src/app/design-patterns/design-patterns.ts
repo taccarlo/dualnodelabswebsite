@@ -22,11 +22,11 @@ export class DesignPatternsComponent {
     { name: 'Abstract Factory', route: '/design-patterns/abstract-factory' },
   ];
   structuralPatterns = [
-    { name: 'Adapter', route: '' },
-    { name: 'Bridge', route: '' },
-    { name: 'Composite', route: '' },
-    { name: 'Decorator', route: '' },
-    { name: 'Facade', route: '' },
+    { name: 'Adapter', route: '/design-patterns/adapter' },
+    { name: 'Bridge', route: '/design-patterns/bridge' },
+    { name: 'Composite', route: '/design-patterns/composite' },
+    { name: 'Decorator', route: '/design-patterns/decorator' },
+    { name: 'Facade', route: '/design-patterns/facade' },
   ];
   behavioralPatterns = [
     { name: 'Strategy', route: '/design-patterns/strategy' },

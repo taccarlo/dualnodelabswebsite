@@ -13,6 +13,11 @@ import { InterpreterComponent } from './interpreter/interpreter';
 import { BuilderComponent } from './builder/builder';
 import { FactoryMethodComponent } from './factory-method/factory-method';
 import { AbstractFactoryComponent } from './abstract-factory/abstract-factory';
+import { AdapterComponent } from './adapter/adapter';
+import { BridgeComponent } from './bridge/bridge';
+import { CompositeComponent } from './composite/composite';
+import { DecoratorComponent } from './decorator/decorator';
+import { FacadeComponent } from './facade/facade';
 import { AboutComponent } from './about/about';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
@@ -29,6 +34,11 @@ const routes: Routes = [
   { path: 'design-patterns/builder', component: BuilderComponent },
   { path: 'design-patterns/factory-method', component: FactoryMethodComponent },
   { path: 'design-patterns/abstract-factory', component: AbstractFactoryComponent },
+  { path: 'design-patterns/adapter', component: AdapterComponent },
+  { path: 'design-patterns/bridge', component: BridgeComponent },
+  { path: 'design-patterns/composite', component: CompositeComponent },
+  { path: 'design-patterns/decorator', component: DecoratorComponent },
+  { path: 'design-patterns/facade', component: FacadeComponent },
   { path: 'exercises', component: ExercisesComponent },
   { path: 'about', component: AboutComponent },
 ];
