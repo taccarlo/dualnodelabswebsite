@@ -23,7 +23,7 @@ export class AdapterComponent {
   version = packageJson.version;
   private translateService = inject(TranslateService);
   private sanitizer = inject(DomSanitizer);
-  activeLang = 'C#';
+  activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
 
