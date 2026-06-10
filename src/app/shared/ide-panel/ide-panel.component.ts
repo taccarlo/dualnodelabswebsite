@@ -64,8 +64,8 @@ export class IdePanelComponent {
     const rect = dp.getBoundingClientRect();
     const pct = (clientX - rect.left) / rect.width * 100;
     const clamped = Math.max(30, Math.min(80, pct));
-    this.codeFlex = `${clamped} 1 0`;
-    this.infoFlex = `${100 - clamped} 1 0`;
+    this.infoFlex = `${clamped} 1 0`;
+    this.codeFlex = `${100 - clamped} 1 0`;
   }
 
   get highlightedCode(): SafeHtml {
