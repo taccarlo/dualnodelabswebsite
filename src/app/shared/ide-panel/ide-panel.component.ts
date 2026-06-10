@@ -2,7 +2,6 @@ import { Component, Input, inject, HostListener } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgFor } from '@angular/common';
 import { TranslatePipe } from '../../i18n/translate.pipe';
-import { TranslateService } from '../../i18n/translate.service';
 import { RouterLink } from '@angular/router';
 
 import Prism from 'prismjs';
@@ -20,13 +19,11 @@ import 'prismjs/components/prism-csharp';
 })
 export class IdePanelComponent {
   @Input() codeSamples: Record<string, { code: string; lang: string }> = {};
-  @Input() version = '';
   @Input() backKey = '';
   @Input() subtitleKey = '';
   @Input() titleKey = '';
   @Input() descriptionKey = '';
 
-  private translateService = inject(TranslateService);
   private sanitizer = inject(DomSanitizer);
 
   activeLang = 'Java';
@@ -95,11 +92,4 @@ export class IdePanelComponent {
     });
   }
 
-  get currentLang() {
-    return this.translateService.currentLang();
-  }
-
-  toggleLanguage() {
-    this.translateService.toggleLanguage();
-  }
 }

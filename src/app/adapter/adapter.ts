@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IdePanelComponent } from '../shared/ide-panel/ide-panel.component';
-import packageJson from '../../../package.json';
 
 @Component({
   selector: 'app-adapter',
@@ -9,7 +8,6 @@ import packageJson from '../../../package.json';
   styleUrl: './adapter.css'
 })
 export class AdapterComponent {
-  version = packageJson.version;
 
   codeSamples: Record<string, { code: string; lang: string }> = {
     Java: {

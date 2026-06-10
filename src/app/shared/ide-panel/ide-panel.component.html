@@ -14,14 +14,6 @@
       <p>{{ descriptionKey | translate }}</p>
     </div>
 
-    <div class="info-footer">
-      <div class="footer-left">
-        <button class="lang-btn" (click)="toggleLanguage()">
-          {{ currentLang === 'en' ? 'IT' : 'EN' }}
-        </button>
-      </div>
-      <span class="version">{{ 'footer.copyright' | translate }}{{ version }}</span>
-    </div>
   </div>
 
   <div class="divider"
