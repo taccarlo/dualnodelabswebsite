@@ -1,0 +1,60 @@
+<div class="page-content">
+
+  <section class="subpage-hero">
+    <div class="content-container section-padding" style="text-align: center;">
+      <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="subpage-logo" />
+      <div style="font-size: 3rem; margin-bottom: var(--space-sm);">⚡</div>
+      <h1 class="heading-lg" style="color: white;">{{ 'exercises.patterns.title' | translate }}</h1>
+      <p class="body-lg" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: var(--space-md) auto 0;">{{ 'exercises.patterns.detailSubtitle' | translate }}</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="content-container section-padding">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <h2 class="heading-md" style="margin-bottom: var(--space-lg);">{{ 'exercises.patterns.detailTitle' | translate }}</h2>
+        <p class="body-lg" style="margin-bottom: var(--space-lg);">{{ 'exercises.patterns.detailIntro' | translate }}</p>
+
+        <div class="topic-card">
+          <h3 class="topic-title"><span style="margin-right: var(--space-sm);">🏗️</span>{{ 'exercises.patterns.topic1Title' | translate }}</h3>
+          <p class="body-md">{{ 'exercises.patterns.topic1Desc' | translate }}</p>
+        </div>
+
+        <div class="topic-card">
+          <h3 class="topic-title"><span style="margin-right: var(--space-sm);">🧱</span>{{ 'exercises.patterns.topic2Title' | translate }}</h3>
+          <p class="body-md">{{ 'exercises.patterns.topic2Desc' | translate }}</p>
+        </div>
+
+        <div class="topic-card">
+          <h3 class="topic-title"><span style="margin-right: var(--space-sm);">🔄</span>{{ 'exercises.patterns.topic3Title' | translate }}</h3>
+          <p class="body-md">{{ 'exercises.patterns.topic3Desc' | translate }}</p>
+        </div>
+
+        <div class="topic-card">
+          <h3 class="topic-title"><span style="margin-right: var(--space-sm);">⚠️</span>{{ 'exercises.patterns.topic4Title' | translate }}</h3>
+          <p class="body-md">{{ 'exercises.patterns.topic4Desc' | translate }}</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: var(--space-3xl);">
+        <a routerLink="/exercises" class="mat-btn mat-btn-outlined">{{ 'exercises.patterns.back' | translate }}</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" style="margin-top: auto;">
+    <div class="content-container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="assets/dualnode.png" alt="Dual Node" class="footer-logo" />
+          <span class="footer-name">Dual Node</span>
+        </div>
+        <button class="mat-btn mat-btn-text lang-btn" (click)="toggleLanguage()">
+          {{ currentLang === 'en' ? 'IT' : 'EN' }}
+        </button>
+        <p class="footer-copy">{{ 'footer.copyright' | translate }}{{ version }}</p>
+      </div>
+    </div>
+  </footer>
+
+</div>

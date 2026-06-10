@@ -19,6 +19,9 @@ import { ObserverComponent } from './observer/observer';
 import { IteratorComponent } from './iterator/iterator';
 import { InterpreterComponent } from './interpreter/interpreter';
 import { AboutComponent } from './about/about';
+import { AlgorithmsComponent } from './exercises/algorithms/algorithms';
+import { DataStructuresComponent } from './exercises/data-structures/data-structures';
+import { PatternsComponent } from './exercises/patterns/patterns';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 const routes: Routes = [
@@ -40,6 +43,9 @@ const routes: Routes = [
   { path: 'design-patterns/iterator', component: IteratorComponent },
   { path: 'design-patterns/interpreter', component: InterpreterComponent },
   { path: 'exercises', component: ExercisesComponent },
+  { path: 'exercises/algorithms', component: AlgorithmsComponent },
+  { path: 'exercises/data-structures', component: DataStructuresComponent },
+  { path: 'exercises/patterns', component: PatternsComponent },
   { path: 'about', component: AboutComponent },
 ];
 

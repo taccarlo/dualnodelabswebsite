@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
+import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TranslateService } from '../../i18n/translate.service';
 import { RouterLink } from '@angular/router';
-import { TranslatePipe } from '../i18n/translate.pipe';
-import { TranslateService } from '../i18n/translate.service';
-import packageJson from '../../../package.json';
+import packageJson from '../../../../package.json';
 
 @Component({
-  selector: 'app-exercises',
+  selector: 'app-exercises-data-structures',
   imports: [TranslatePipe, RouterLink],
-  templateUrl: './exercises.html',
-  styleUrl: './exercises.css'
+  templateUrl: './data-structures.html',
+  styleUrl: './data-structures.css'
 })
-export class ExercisesComponent {
+export class DataStructuresComponent {
   version = packageJson.version;
   private translateService = inject(TranslateService);
 
