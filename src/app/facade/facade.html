@@ -1,18 +1,8 @@
-<div class="dp-page" [class.resizing]="isDragging">
-  <div class="code-panel" [style.flex]="codeFlex">
-    <div class="ide-container">
-      <div class="ide-tabs">
-        <button *ngFor="let lang of languages" class="ide-tab" [class.active]="activeLang === lang" (click)="activeLang = lang">{{ lang }}</button>
-        <button class="copy-btn" (click)="copyCode()" [title]="copied ? 'Copied!' : 'Copy'">{{ copied ? '✓ Copied' : '📋 Copy' }}</button>
-      </div>
-      <div class="ide-content"><pre><code [innerHTML]="highlightedCode"></code></pre></div>
-    </div>
-  </div>
-  <div class="divider" (mousedown)="onDividerDown($event)" (touchstart)="onDividerDown($event)"><div class="divider-line"></div></div>
-  <div class="info-panel" [style.flex]="infoFlex">
-    <a routerLink="/design-patterns" class="back-link"><span class="back-arrow">←</span><span>{{ 'facade.back' | translate }}</span></a>
-    <div class="info-header"><span class="pattern-badge">{{ 'facade.subtitle' | translate }}</span><h1 class="pattern-title">{{ 'facade.title' | translate }}</h1></div>
-    <div class="pattern-desc"><p>{{ 'facade.description' | translate }}</p></div>
-    <div class="info-footer"><div class="footer-left"><button class="lang-btn" (click)="toggleLanguage()">{{ currentLang === 'en' ? 'IT' : 'EN' }}</button></div><span class="version">{{ 'footer.copyright' | translate }}{{ version }}</span></div>
-  </div>
-</div>
+<app-ide-panel
+  [codeSamples]="codeSamples"
+  [version]="version"
+  backKey="facade.back"
+  subtitleKey="facade.subtitle"
+  titleKey="facade.title"
+  descriptionKey="facade.description">
+</app-ide-panel>
