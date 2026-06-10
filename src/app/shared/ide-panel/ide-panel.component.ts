@@ -36,13 +36,13 @@ export class IdePanelComponent {
   codeFlex = '4 1 0';
   infoFlex = '6 1 0';
   isDragging = false;
-  private startX = 0;
-  private startCodeFlex = 0;
+  private startPos = 0;
+  private startFlex = 0;
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
     if (!this.isDragging) return;
-    this.doResize(e.clientX);
+    this.doResize(e);
   }
 
   @HostListener('document:mouseup')
@@ -53,16 +53,24 @@ export class IdePanelComponent {
   onDividerDown(e: MouseEvent | TouchEvent) {
     e.preventDefault();
     this.isDragging = true;
-    const cx = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    this.startX = cx;
-    this.startCodeFlex = parseFloat(this.codeFlex);
+    this.startPos = this.getClientPos(e);
+    this.startFlex = parseFloat(this.infoFlex);
   }
 
-  private doResize(clientX: number) {
-    const dp = (document.querySelector('.dp-page') as HTMLElement);
+  private getClientPos(e: MouseEvent | TouchEvent): number {
+    const isMobile = window.innerWidth <= 768;
+    const val = 'touches' in e ? e.touches[0] : e;
+    return isMobile ? val.clientY : val.clientX;
+  }
+
+  private doResize(e: MouseEvent | TouchEvent) {
+    const dp = document.querySelector('.dp-page') as HTMLElement;
     if (!dp) return;
     const rect = dp.getBoundingClientRect();
-    const pct = (clientX - rect.left) / rect.width * 100;
+    const isMobile = window.innerWidth <= 768;
+    const pos = this.getClientPos(e);
+    const total = isMobile ? rect.height : rect.width;
+    const pct = ((pos - (isMobile ? rect.top : rect.left)) / total) * 100;
     const clamped = Math.max(30, Math.min(80, pct));
     this.infoFlex = `${clamped} 1 0`;
     this.codeFlex = `${100 - clamped} 1 0`;

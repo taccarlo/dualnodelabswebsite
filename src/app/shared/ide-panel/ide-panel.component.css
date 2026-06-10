@@ -93,6 +93,7 @@
   flex: 1;
   overflow: auto;
   padding: 28px 32px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ide-content pre {
@@ -261,26 +262,152 @@
     min-height: calc(100vh - var(--nav-height));
   }
 
+  .dp-page.resizing {
+    cursor: row-resize;
+  }
+
   .code-panel {
-    min-height: 45vh;
+    min-height: 40vh;
   }
 
   .divider {
     width: 100%;
-    height: 12px;
+    height: 16px;
     cursor: row-resize;
+    position: sticky;
+    top: 0;
+  }
+
+  .divider-line {
+    width: 48px;
+    height: 3px;
+  }
+
+  .divider:hover .divider-line,
+  .dp-page.resizing .divider-line {
+    width: 64px;
+    height: 3px;
   }
 
   .info-panel {
     width: 100%;
-    padding: 32px 24px;
+    padding: 24px 20px;
   }
 
   .pattern-title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+  }
+
+  .pattern-desc p {
+    font-size: 0.875rem;
   }
 
   .ide-content {
-    padding: 20px;
+    padding: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ide-content code {
+    font-size: 0.75rem;
+  }
+
+  .ide-tabs {
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 4px 0;
+  }
+
+  .ide-tab {
+    padding: 10px 8px;
+    font-size: 0.7rem;
+    min-width: 0;
+    flex: 1 0 auto;
+  }
+
+  .ide-tab:last-child {
+    border-right: none;
+  }
+
+  .copy-btn {
+    padding: 10px 12px;
+    font-size: 0.7rem;
+  }
+
+  .pattern-desc {
+    flex: none;
+    overflow-y: visible;
+  }
+
+  .back-link {
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+  }
+
+  .info-header {
+    margin-bottom: 20px;
+  }
+
+  .pattern-badge {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+
+  .info-footer {
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+
+  .lang-btn {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    min-height: 44px;
+  }
+
+  :host ::ng-deep pre[class*="language-"],
+  :host ::ng-deep code[class*="language-"] {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-panel {
+    padding: 16px 14px;
+  }
+
+  .pattern-title {
+    font-size: 1.25rem;
+  }
+
+  .ide-tab {
+    font-size: 0.6rem;
+    padding: 8px 4px;
+  }
+
+  .copy-btn {
+    font-size: 0.6rem;
+    padding: 8px 8px;
+  }
+
+  .ide-content {
+    padding: 12px;
+  }
+
+  .ide-content code {
+    font-size: 0.65rem;
+  }
+
+  .ide-content pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .back-link {
+    font-size: 0.75rem;
+    margin-bottom: 14px;
+  }
+
+  .pattern-badge {
+    font-size: 0.6rem;
   }
 }
