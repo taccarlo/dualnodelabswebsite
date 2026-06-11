@@ -8,6 +8,28 @@
     <div class="info-header">
       <span class="pattern-badge">{{ subtitleKey | translate }}</span>
       <h1 class="pattern-title">{{ titleKey | translate }}</h1>
+
+      <div class="share-wrap">
+        <button class="share-btn" (click)="toggleShare($event)" [class.open]="shareOpen" title="Share">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          <span>Share</span>
+        </button>
+
+        <div class="share-menu" *ngIf="shareOpen" (click)="$event.stopPropagation()">
+          <button *ngFor="let t of shareTargets" class="share-item" (click)="openShare(t, $event)">
+            {{ t.name }}
+          </button>
+          <button class="share-item copy-link" (click)="copyLink($event)">
+            {{ linkCopied ? '✓ Link copied' : 'Copy link' }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="pattern-desc">
@@ -22,7 +44,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <div class="code-panel" [style.flex]="codeFlex">
+  <div class="code-panel" [style.flex]="codeFlex" [class.fullscreen]="isFullscreen">
     <div class="ide-container">
       <div class="ide-tabs">
         <button *ngFor="let lang of languages"
@@ -33,6 +55,15 @@
         </button>
         <button class="copy-btn" (click)="copyCode()" [title]="copied ? 'Copied!' : 'Copy'">
           {{ copied ? '✓ Copied' : '📋 Copy' }}
+        </button>
+        <button class="icon-btn" (click)="toggleFullscreen()"
+                [title]="isFullscreen ? 'Exit full screen (Esc)' : 'Full screen'">
+          <svg *ngIf="!isFullscreen" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+          <svg *ngIf="isFullscreen" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+          </svg>
         </button>
       </div>
       <div class="ide-content">

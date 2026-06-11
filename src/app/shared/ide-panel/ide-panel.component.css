@@ -89,6 +89,98 @@
   background: #2d2d2d;
 }
 
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #3c3c3c;
+  color: #888;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.icon-btn:hover {
+  color: #fff;
+  background: #2d2d2d;
+}
+
+.code-panel.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  flex: 1 1 auto !important;
+  min-width: 0;
+}
+
+/* Share control */
+.share-wrap {
+  position: relative;
+  margin-top: 16px;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  color: var(--color-primary);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+
+.share-btn:hover,
+.share-btn.open {
+  background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  border-color: var(--color-primary);
+}
+
+.share-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 6px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.share-item {
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 9px 12px;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s;
+  font-family: inherit;
+}
+
+.share-item:hover {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.share-item.copy-link {
+  border-top: 1px solid var(--border-light);
+  margin-top: 4px;
+  padding-top: 11px;
+}
+
 .ide-content {
   flex: 1;
   overflow: auto;
@@ -103,7 +195,7 @@
 
 .ide-content code {
   font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   line-height: 1.8;
   color: #d4d4d4;
 }
@@ -217,7 +309,7 @@
   background: none;
   text-shadow: none;
   font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   line-height: 1.8;
 }
 
@@ -298,6 +390,10 @@
   .copy-btn {
     padding: 10px 12px;
     font-size: 0.7rem;
+  }
+
+  .icon-btn {
+    padding: 10px 10px;
   }
 
   .pattern-desc {

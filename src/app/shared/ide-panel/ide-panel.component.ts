@@ -1,7 +1,8 @@
-import { Component, Input, inject, HostListener } from '@angular/core';
+import { Component, Input, inject, HostListener, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf, isPlatformBrowser } from '@angular/common';
 import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TranslateService } from '../../i18n/translate.service';
 import { RouterLink } from '@angular/router';
 
 import Prism from 'prismjs';
@@ -13,7 +14,7 @@ import 'prismjs/components/prism-csharp';
 
 @Component({
   selector: 'app-ide-panel',
-  imports: [NgFor, TranslatePipe, RouterLink],
+  imports: [NgFor, NgIf, TranslatePipe, RouterLink],
   templateUrl: './ide-panel.component.html',
   styleUrl: './ide-panel.component.css'
 })
@@ -25,10 +26,15 @@ export class IdePanelComponent {
   @Input() descriptionKey = '';
 
   private sanitizer = inject(DomSanitizer);
+  private translate = inject(TranslateService);
+  private platformId = inject(PLATFORM_ID);
 
   activeLang = 'Java';
   languages = ['Java', 'Kotlin', 'TypeScript', 'Python', 'C#'];
   copied = false;
+  isFullscreen = false;
+  shareOpen = false;
+  linkCopied = false;
 
   codeFlex = '4 1 0';
   infoFlex = '6 1 0';
@@ -45,6 +51,66 @@ export class IdePanelComponent {
   @HostListener('document:mouseup')
   onMouseUp() {
     this.isDragging = false;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.shareOpen) {
+      this.shareOpen = false;
+    } else if (this.isFullscreen) {
+      this.isFullscreen = false;
+    }
+  }
+
+  @HostListener('document:click')
+  onDocumentClick() {
+    this.shareOpen = false;
+  }
+
+  toggleFullscreen() {
+    this.isFullscreen = !this.isFullscreen;
+  }
+
+  toggleShare(e: Event) {
+    e.stopPropagation();
+    this.shareOpen = !this.shareOpen;
+  }
+
+  private get pageUrl(): string {
+    return isPlatformBrowser(this.platformId) ? window.location.href : '';
+  }
+
+  get shareTargets(): { name: string; url: string }[] {
+    const url = encodeURIComponent(this.pageUrl);
+    const text = encodeURIComponent(this.translate.translate(this.titleKey));
+    return [
+      { name: 'LinkedIn', url: `https://www.linkedin.com/sharing/share-offsite/?url=${url}` },
+      { name: 'WhatsApp', url: `https://wa.me/?text=${text}%20${url}` },
+      { name: 'X', url: `https://twitter.com/intent/tweet?url=${url}&text=${text}` },
+      { name: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${url}` },
+      { name: 'Reddit', url: `https://www.reddit.com/submit?url=${url}&title=${text}` },
+      { name: 'Email', url: `mailto:?subject=${text}&body=${url}` },
+    ];
+  }
+
+  openShare(target: { name: string; url: string }, e: Event) {
+    e.stopPropagation();
+    if (isPlatformBrowser(this.platformId)) {
+      if (target.name === 'Email') {
+        window.location.href = target.url;
+      } else {
+        window.open(target.url, '_blank', 'noopener,noreferrer,width=600,height=600');
+      }
+    }
+    this.shareOpen = false;
+  }
+
+  copyLink(e: Event) {
+    e.stopPropagation();
+    navigator.clipboard.writeText(this.pageUrl).then(() => {
+      this.linkCopied = true;
+      setTimeout(() => this.linkCopied = false, 2000);
+    });
   }
 
   onDividerDown(e: MouseEvent | TouchEvent) {
