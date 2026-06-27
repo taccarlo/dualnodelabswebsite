@@ -1,25 +1,38 @@
 <div class="exercise-page">
-  <div class="exercise-header">
+  <div class="exercise-content">
     <a routerLink="/exercises/patterns" class="back-link">
       <span class="back-arrow">←</span>
       <span>{{ 'exercises.patterns.builder.back' | translate }}</span>
     </a>
-    <h1 class="exercise-title">{{ currentExercise.title }}</h1>
-    <p class="exercise-desc">{{ currentExercise.description }}</p>
-  </div>
 
-  <div class="open-action">
-    <p class="open-text">Open the {{ currentExercise.label }} pattern exercise in StackBlitz:</p>
-    @if (currentExercise.url) {
-      <a
-        [href]="currentExercise.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mat-btn mat-btn-filled mat-btn-lg">
-        Open in StackBlitz
-      </a>
-    } @else {
-      <span class="mat-btn mat-btn-filled mat-btn-lg">Coming soon</span>
-    }
+    <div class="exercise-card">
+      <div class="exercise-main">
+        <span class="exercise-badge">Practice</span>
+        <h1 class="exercise-title">{{ currentExercise.title }}</h1>
+        <p class="exercise-desc">{{ currentExercise.description }}</p>
+
+        <div class="pattern-warning">
+          <strong>What could go wrong?</strong>
+          <p>{{ currentExercise.warning }}</p>
+        </div>
+      </div>
+
+      <div class="open-action">
+        <div class="stackblitz-card">
+          <p class="open-text">Open the {{ currentExercise.label }} pattern exercise in StackBlitz:</p>
+          @if (currentExercise.url) {
+            <a
+              [href]="currentExercise.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mat-btn mat-btn-filled mat-btn-lg">
+              Open in StackBlitz
+            </a>
+          } @else {
+            <span class="mat-btn mat-btn-filled mat-btn-lg">Coming soon</span>
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </div>

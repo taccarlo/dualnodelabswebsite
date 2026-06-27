@@ -21,6 +21,22 @@ const patternExerciseRoutes: Record<string, string> = {
   interpreter: '/exercises/patterns/interpreter',
 };
 
+const patternWarningCopy: Record<string, string> = {
+  singleton: 'Without this pattern, shared resources can be created multiple times, causing inconsistent state and hard-to-debug bugs.',
+  builder: 'Without this pattern, object construction can turn into a long, fragile constructor chain that is hard to read and maintain.',
+  'factory-method': 'Without this pattern, code can become tightly coupled to concrete classes, making future extensions and substitutions much harder.',
+  'abstract-factory': 'Without this pattern, switching families of related objects often requires scattered conditional logic and brittle changes.',
+  adapter: 'Without this pattern, incompatible interfaces can force awkward workarounds and duplicate logic across the codebase.',
+  bridge: 'Without this pattern, abstraction and implementation details become tightly coupled, making changes more expensive.',
+  composite: 'Without this pattern, tree-like structures are harder to manage and often require special-case logic for individual nodes.',
+  decorator: 'Without this pattern, adding responsibilities often means creating many subclasses or modifying existing classes in risky ways.',
+  facade: 'Without this pattern, clients must understand too many internal classes and dependencies, increasing complexity.',
+  strategy: 'Without this pattern, changing behavior often means branching through conditionals and duplicating logic.',
+  observer: 'Without this pattern, components become tightly coupled and updates are harder to propagate consistently.',
+  iterator: 'Without this pattern, traversing collections often leaks internal details and makes client code more cumbersome.',
+  interpreter: 'Without this pattern, parsing domain-specific rules becomes scattered and difficult to evolve.',
+};
+
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -180,6 +196,14 @@ export class IdePanelComponent {
     }
 
     return patternExerciseRoutes[patternSlug] ?? '/exercises/patterns';
+  }
+
+  getPatternWarning(patternSlug: string | null): string {
+    if (!patternSlug) {
+      return '';
+    }
+
+    return patternWarningCopy[patternSlug] ?? 'Without this pattern, the design can become harder to evolve and maintain over time.';
   }
 
   copyCode() {

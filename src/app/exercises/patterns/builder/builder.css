@@ -63,6 +63,14 @@
   margin: 0;
 }
 
+.warning-text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .exercise-header {
     padding: 16px 20px;
