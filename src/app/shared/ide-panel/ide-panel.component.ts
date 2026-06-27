@@ -5,6 +5,38 @@ import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
 import { Router, RouterLink } from '@angular/router';
 
+const patternExerciseRoutes: Record<string, string> = {
+  singleton: '/exercises/patterns/singleton',
+  builder: '/exercises/patterns/builder',
+  'factory-method': '/exercises/patterns/factory-method',
+  'abstract-factory': '/exercises/patterns/abstract-factory',
+  adapter: '/exercises/patterns/adapter',
+  bridge: '/exercises/patterns/bridge',
+  composite: '/exercises/patterns/composite',
+  decorator: '/exercises/patterns/decorator',
+  facade: '/exercises/patterns/facade',
+  strategy: '/exercises/patterns/strategy',
+  observer: '/exercises/patterns/observer',
+  iterator: '/exercises/patterns/iterator',
+  interpreter: '/exercises/patterns/interpreter',
+};
+
+const patternWarningCopy: Record<string, string> = {
+  singleton: 'Without this pattern, shared resources can be created multiple times, causing inconsistent state and hard-to-debug bugs.',
+  builder: 'Without this pattern, object construction can turn into a long, fragile constructor chain that is hard to read and maintain.',
+  'factory-method': 'Without this pattern, code can become tightly coupled to concrete classes, making future extensions and substitutions much harder.',
+  'abstract-factory': 'Without this pattern, switching families of related objects often requires scattered conditional logic and brittle changes.',
+  adapter: 'Without this pattern, incompatible interfaces can force awkward workarounds and duplicate logic across the codebase.',
+  bridge: 'Without this pattern, abstraction and implementation details become tightly coupled, making changes more expensive.',
+  composite: 'Without this pattern, tree-like structures are harder to manage and often require special-case logic for individual nodes.',
+  decorator: 'Without this pattern, adding responsibilities often means creating many subclasses or modifying existing classes in risky ways.',
+  facade: 'Without this pattern, clients must understand too many internal classes and dependencies, increasing complexity.',
+  strategy: 'Without this pattern, changing behavior often means branching through conditionals and duplicating logic.',
+  observer: 'Without this pattern, components become tightly coupled and updates are harder to propagate consistently.',
+  iterator: 'Without this pattern, traversing collections often leaks internal details and makes client code more cumbersome.',
+  interpreter: 'Without this pattern, parsing domain-specific rules becomes scattered and difficult to evolve.',
+};
+
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -24,6 +56,7 @@ export class IdePanelComponent {
   @Input() subtitleKey = '';
   @Input() titleKey = '';
   @Input() descriptionKey = '';
+  @Input() hasExercise = false;
 
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
@@ -155,6 +188,22 @@ export class IdePanelComponent {
     const url = this.router.url;
     const match = url.match(/\/design-patterns\/([^\/?#]+)/);
     return match ? match[1] : null;
+  }
+
+  getExerciseRoute(patternSlug: string | null): string {
+    if (!patternSlug) {
+      return '/exercises/patterns';
+    }
+
+    return patternExerciseRoutes[patternSlug] ?? '/exercises/patterns';
+  }
+
+  getPatternWarning(patternSlug: string | null): string {
+    if (!patternSlug) {
+      return '';
+    }
+
+    return patternWarningCopy[patternSlug] ?? 'Without this pattern, the design can become harder to evolve and maintain over time.';
   }
 
   copyCode() {

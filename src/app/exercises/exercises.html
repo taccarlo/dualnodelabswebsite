@@ -15,21 +15,23 @@
         <p class="body-lg" style="max-width: 600px; margin: var(--space-md) auto 0;">{{ 'exercises.description' | translate }}</p>
       </div>
       <div class="grid-3">
-        <a routerLink="/exercises/algorithms" class="mat-card clickable-card" style="text-align: center; padding: var(--space-2xl); text-decoration: none; display: block;">
-          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">📝</div>
-          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">{{ 'exercises.algorithms.title' | translate }}</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.algorithms.description' | translate }}</p>
-        </a>
-        <a routerLink="/exercises/data-structures" class="mat-card clickable-card" style="text-align: center; padding: var(--space-2xl); text-decoration: none; display: block;">
-          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">🧩</div>
-          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">{{ 'exercises.dataStructures.title' | translate }}</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.dataStructures.description' | translate }}</p>
-        </a>
         <a routerLink="/exercises/patterns" class="mat-card clickable-card" style="text-align: center; padding: var(--space-2xl); text-decoration: none; display: block;">
           <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">⚡</div>
           <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">{{ 'exercises.patterns.title' | translate }}</h3>
           <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.patterns.description' | translate }}</p>
         </a>
+        <div class="mat-card coming-soon-card" style="text-align: center; padding: var(--space-2xl); display: block;">
+          <div class="coming-soon-badge">{{ 'exercises.comingSoon' | translate }}</div>
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">📝</div>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">{{ 'exercises.algorithms.title' | translate }}</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.algorithms.description' | translate }}</p>
+        </div>
+        <div class="mat-card coming-soon-card" style="text-align: center; padding: var(--space-2xl); display: block;">
+          <div class="coming-soon-badge">{{ 'exercises.comingSoon' | translate }}</div>
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-lg);">🧩</div>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-sm); color: var(--text-primary);">{{ 'exercises.dataStructures.title' | translate }}</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">{{ 'exercises.dataStructures.description' | translate }}</p>
+        </div>
       </div>
     </div>
   </section>

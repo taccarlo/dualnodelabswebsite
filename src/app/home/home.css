@@ -1,7 +1,14 @@
 /* HERO */
+.page-content {
+  min-height: calc(100dvh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+}
+
 .hero-section {
   position: relative;
-  min-height: calc(100vh - var(--nav-height));
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   overflow: hidden;
