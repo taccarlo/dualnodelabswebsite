@@ -36,6 +36,17 @@ app.use(
 );
 
 /**
+ * Add cross-origin isolation headers for StackBlitz WebContainers (Builder exercise).
+ */
+app.use((req, res, next) => {
+  if (req.path.startsWith('/exercises/patterns/')) {
+    // COOP is needed; COEP on the *host* page is what breaks StackBlitz assets
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    // Remove the COEP line entirely
+  }
+  next();
+});
+/**
  * Handle all other requests by rendering the Angular application.
  */
 app.use((req, res, next) => {
