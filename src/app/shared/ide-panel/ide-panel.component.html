@@ -36,6 +36,10 @@
       <p>{{ descriptionKey | translate }}</p>
     </div>
 
+    <a *ngIf="patternSlug" [routerLink]="'/exercises/patterns/' + patternSlug" class="practice-btn">
+      {{ 'designPatterns.practice' | translate }}
+    </a>
+
   </div>
 
   <div class="divider"

@@ -3,7 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgFor, NgIf, isPlatformBrowser } from '@angular/common';
 import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
@@ -25,6 +25,7 @@ export class IdePanelComponent {
   @Input() titleKey = '';
   @Input() descriptionKey = '';
 
+  private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
   private translate = inject(TranslateService);
   private platformId = inject(PLATFORM_ID);
@@ -148,6 +149,12 @@ export class IdePanelComponent {
 
   getCode(lang: string): string {
     return this.codeSamples[lang]?.code || '';
+  }
+
+  get patternSlug(): string | null {
+    const url = this.router.url;
+    const match = url.match(/\/design-patterns\/([^\/?#]+)/);
+    return match ? match[1] : null;
   }
 
   copyCode() {

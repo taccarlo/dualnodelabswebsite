@@ -36,6 +36,32 @@
   margin-bottom: var(--space-sm);
 }
 
+.pattern-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.pattern-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.pattern-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
 .body-md {
   font-size: 1rem;
   line-height: 1.7;
