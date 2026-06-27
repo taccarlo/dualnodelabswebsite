@@ -24,6 +24,7 @@ export class IdePanelComponent {
   @Input() subtitleKey = '';
   @Input() titleKey = '';
   @Input() descriptionKey = '';
+  @Input() hasExercise = false;
 
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
