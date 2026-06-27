@@ -5,6 +5,22 @@ import { TranslatePipe } from '../../i18n/translate.pipe';
 import { TranslateService } from '../../i18n/translate.service';
 import { Router, RouterLink } from '@angular/router';
 
+const patternExerciseRoutes: Record<string, string> = {
+  singleton: '/exercises/patterns/singleton',
+  builder: '/exercises/patterns/builder',
+  'factory-method': '/exercises/patterns/factory-method',
+  'abstract-factory': '/exercises/patterns/abstract-factory',
+  adapter: '/exercises/patterns/adapter',
+  bridge: '/exercises/patterns/bridge',
+  composite: '/exercises/patterns/composite',
+  decorator: '/exercises/patterns/decorator',
+  facade: '/exercises/patterns/facade',
+  strategy: '/exercises/patterns/strategy',
+  observer: '/exercises/patterns/observer',
+  iterator: '/exercises/patterns/iterator',
+  interpreter: '/exercises/patterns/interpreter',
+};
+
 import Prism from 'prismjs';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
@@ -156,6 +172,14 @@ export class IdePanelComponent {
     const url = this.router.url;
     const match = url.match(/\/design-patterns\/([^\/?#]+)/);
     return match ? match[1] : null;
+  }
+
+  getExerciseRoute(patternSlug: string | null): string {
+    if (!patternSlug) {
+      return '/exercises/patterns';
+    }
+
+    return patternExerciseRoutes[patternSlug] ?? '/exercises/patterns';
   }
 
   copyCode() {
