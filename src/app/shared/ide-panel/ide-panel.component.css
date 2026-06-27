@@ -297,6 +297,28 @@
   padding-right: 4px;
 }
 
+.practice-btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s, transform 0.15s;
+  letter-spacing: 0.3px;
+}
+
+.practice-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
 .pattern-desc p {
   font-size: 0.9375rem;
   line-height: 1.8;
@@ -401,6 +423,13 @@
     overflow-y: visible;
   }
 
+  .practice-btn {
+    margin-top: 16px;
+    padding: 10px 24px;
+    font-size: 0.8125rem;
+    width: 100%;
+  }
+
   .back-link {
     margin-bottom: 20px;
     font-size: 0.8rem;
@@ -414,11 +443,6 @@
     font-size: 0.65rem;
     padding: 3px 10px;
     margin-bottom: 12px;
-  }
-
-  .info-footer {
-    padding-top: 16px;
-    margin-top: 16px;
   }
 
   :host ::ng-deep pre[class*="language-"],
@@ -466,5 +490,11 @@
 
   .pattern-badge {
     font-size: 0.6rem;
+  }
+
+  .practice-btn {
+    margin-top: 12px;
+    padding: 10px 20px;
+    font-size: 0.75rem;
   }
 }
