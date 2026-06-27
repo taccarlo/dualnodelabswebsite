@@ -1,35 +1,37 @@
 .subpage-hero {
   background: #ffffff;
-  padding: var(--space-4xl) 0;
+  padding: var(--space-xl) 0;
+  flex-shrink: 0;
 }
 
 .subpage-logo {
-  width: min(40vw, 320px);
+  width: min(30vw, 180px);
   height: auto;
   object-fit: contain;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
   filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
   transition: width 0.2s ease;
 }
 
 .content-section {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 50vh;
+  flex: 1;
   display: flex;
   align-items: center;
 }
 
-/* Ensure text in white header is dark for contrast */
 .subpage-hero .heading-lg {
   color: var(--text-primary);
+  font-size: clamp(1.25rem, 3.5vw, 2rem);
 }
+
 .subpage-hero .body-lg {
   color: var(--text-secondary);
   max-width: 600px;
-  margin: var(--space-md) auto 0;
+  margin: var(--space-xs) auto 0;
+  font-size: clamp(0.8125rem, 2vw, 1rem);
 }
 
-/* Card appearance on gradient: white surface with colored text */
 .content-section .heading-md,
 .content-section .body-lg,
 .content-section .arena-btn {
@@ -75,7 +77,7 @@
 
 .arena-card {
   text-align: center;
-  padding: var(--space-3xl) var(--space-xl);
+  padding: var(--space-xl) var(--space-lg);
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -86,27 +88,27 @@
 }
 
 .arena-card-icon {
-  font-size: 3rem;
-  margin-bottom: var(--space-lg);
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .arena-btn {
   display: inline-block;
-  margin-top: var(--space-lg);
+  margin-top: var(--space-md);
   pointer-events: none;
 }
 
-/* Footer */
 .site-footer {
   background: var(--bg-primary);
   border-top: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-lg) 0;
+  padding: var(--space-md) 0;
   gap: var(--space-md);
 }
 
@@ -137,17 +139,50 @@
 }
 
 @media (max-width: 768px) {
+  .page-content {
+    min-height: 100dvh;
+  }
+
   .grid-2 {
     grid-template-columns: 1fr;
+  }
+
+  .subpage-hero {
+    padding: var(--space-md) 0;
+  }
+
+  .subpage-logo {
+    width: min(40vw, 140px);
+    margin-bottom: var(--space-xs);
+  }
+
+  .arena-card {
+    padding: var(--space-md);
+  }
+
+  .arena-card-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-xs);
   }
 
   .footer-inner {
     flex-direction: column;
     text-align: center;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
+    padding: var(--space-sm) 0;
   }
+}
+
+@media (max-width: 480px) {
   .subpage-logo {
-    width: min(48vw, 220px);
-    margin-bottom: var(--space-md);
+    width: min(50vw, 100px);
+  }
+
+  .arena-card {
+    padding: var(--space-sm);
+  }
+
+  .arena-card-icon {
+    font-size: 1.5rem;
   }
 }

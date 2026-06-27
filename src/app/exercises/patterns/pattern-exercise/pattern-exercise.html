@@ -1,38 +1,25 @@
-<div class="page-content">
+<div class="exercise-page">
+  <div class="exercise-header">
+    <a routerLink="/exercises/patterns" class="back-link">
+      <span class="back-arrow">←</span>
+      <span>{{ 'exercises.patterns.builder.back' | translate }}</span>
+    </a>
+    <h1 class="exercise-title">{{ currentExercise.title }}</h1>
+    <p class="exercise-desc">{{ currentExercise.description }}</p>
+  </div>
 
-  <section class="subpage-hero">
-    <div class="content-container section-padding" style="text-align: center;">
-      <img src="assets/DualNode512x512NoBackground.png" alt="Dual Node Logo" class="subpage-logo" />
-      <div style="font-size: 3rem; margin-bottom: var(--space-sm);">🚧</div>
-      <h1 class="heading-lg" style="color: white;">{{ patternName }}</h1>
-      <p class="body-lg" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: var(--space-md) auto 0;">{{ 'exercises.patterns.comingSoon.subtitle' | translate }}</p>
-    </div>
-  </section>
-
-  <section class="content-section">
-    <div class="content-container section-padding" style="text-align: center;">
-      <div style="max-width: 600px; margin: 0 auto;">
-        <div style="font-size: 4rem; margin-bottom: var(--space-xl);">⏳</div>
-        <h2 class="heading-md" style="margin-bottom: var(--space-lg);">{{ 'exercises.patterns.comingSoon.title' | translate }}</h2>
-        <p class="body-lg" style="margin-bottom: var(--space-xl);">{{ 'exercises.patterns.comingSoon.description' | translate }}</p>
-        <a routerLink="/exercises/patterns" class="mat-btn mat-btn-outlined">{{ 'exercises.patterns.comingSoon.back' | translate }}</a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer" style="margin-top: auto;">
-    <div class="content-container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <img src="assets/dualnode.png" alt="Dual Node" class="footer-logo" />
-          <span class="footer-name">Dual Node</span>
-        </div>
-        <button class="mat-btn mat-btn-text lang-btn" (click)="toggleLanguage()">
-          {{ currentLang === 'en' ? 'IT' : 'EN' }}
-        </button>
-        <p class="footer-copy">{{ 'footer.copyright' | translate }}{{ version }}</p>
-      </div>
-    </div>
-  </footer>
-
+  <div class="open-action">
+    <p class="open-text">Open the {{ currentExercise.label }} pattern exercise in StackBlitz:</p>
+    @if (currentExercise.url) {
+      <a
+        [href]="currentExercise.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mat-btn mat-btn-filled mat-btn-lg">
+        Open in StackBlitz
+      </a>
+    } @else {
+      <span class="mat-btn mat-btn-filled mat-btn-lg">Coming soon</span>
+    }
+  </div>
 </div>

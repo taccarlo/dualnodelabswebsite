@@ -1,65 +1,78 @@
-.subpage-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.subpage-logo {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: var(--space-md);
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
-}
-
-.content-section {
-  background: var(--bg-secondary);
-  min-height: 50vh;
+.exercise-page {
   display: flex;
-  align-items: center;
-}
-
-.site-footer {
+  flex-direction: column;
+  min-height: 100vh;
+  margin-top: var(--nav-height);
   background: var(--bg-primary);
-  border-top: 1px solid var(--border-light);
 }
 
-.footer-inner {
-  display: flex;
+.exercise-header {
+  padding: 24px 32px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.back-link {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--space-lg) 0;
-  gap: var(--space-md);
+  gap: 8px;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  transition: opacity 0.15s;
 }
 
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+.back-link:hover {
+  opacity: 0.75;
 }
 
-.footer-logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
+.back-arrow {
+  font-size: 1.1rem;
 }
 
-.footer-name {
-  font-weight: 600;
+.exercise-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 8px;
   color: var(--text-primary);
 }
 
-.lang-btn {
-  font-weight: 600;
+.exercise-desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
 }
 
-.footer-copy {
-  color: var(--text-muted);
-  font-size: 0.8125rem;
+.open-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 32px;
+}
+
+.open-text {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: var(--space-sm);
+  .exercise-header {
+    padding: 16px 20px;
+  }
+
+  .exercise-title {
+    font-size: 1.25rem;
+  }
+
+  .exercise-desc {
+    font-size: 0.8125rem;
   }
 }
