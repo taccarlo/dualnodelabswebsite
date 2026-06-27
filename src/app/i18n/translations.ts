@@ -4,15 +4,12 @@ export const translations: Record<Lang, Record<string, string>> = {
   en: {
     'nav.home': 'Home',
     'nav.codeArena': 'Code Arena',
-    'nav.about': 'Learn More',
     'nav.privacy': 'Privacy',
-    'about.back': 'Back',
     'home.header.title': 'Dual Node',
     'home.header.subtitle': 'Channel WebApp Platform',
     'home.hero.title': 'Welcome to Dual Node',
     'home.hero.description': 'A modern channel-based web application for managing, streaming and distributing content.',
-    'home.about.title': 'About Us',
-    'home.about.content': '',
+
     'home.features.title': 'Why Dual Node?',
     'home.features.subtitle': 'Built for modern channel networks with performance, scalability, and security at its core.',
     'home.features.fast.title': 'Fast',
@@ -22,7 +19,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.features.secure.title': 'Secure',
     'home.features.secure.description': 'Modern security standards by design with end-to-end encryption.',
     'home.cta.enter': 'Enter Code Arena',
-    'home.cta.about': 'Learn More',
+
     'home.cta.title': 'Ready to Get Started?',
     'home.cta.description': 'Dive into competitive coding, explore design patterns, and sharpen your skills.',
     'home.cta.start': 'Get Started',
@@ -195,9 +192,7 @@ export const translations: Record<Lang, Record<string, string>> = {
   it: {
     'nav.home': 'Home',
     'nav.codeArena': 'Code Arena',
-    'nav.about': 'Scopri di Pi\u00f9',
     'nav.privacy': 'Privacy',
-    'about.back': 'Indietro',
     'home.header.title': 'Dual Node',
     'home.header.subtitle': 'Piattaforma WebApp per Canali',
     'home.hero.title': 'Benvenuto su Dual Node',
@@ -208,12 +203,11 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.features.fast.description': "Architettura ottimizzata per la distribuzione e lo streaming di contenuti ad alte prestazioni.",
     'home.features.scalable.title': 'Scalabile',
     'home.features.scalable.description': "Progettato per crescere con la tua rete di canali, dall'avvio alla scala enterprise.",
-    'home.about.title': 'Chi siamo',
-    'home.about.content': '',
+
     'home.features.secure.title': 'Sicuro',
     'home.features.secure.description': 'Standard di sicurezza moderni by design con crittografia end-to-end.',
     'home.cta.enter': 'Entra in Code Arena',
-    'home.cta.about': 'Scopri di Pi\u00f9',
+
     'home.cta.title': 'Pronto a Iniziare?',
     'home.cta.description': 'Immergiti nel coding competitivo, esplora i design pattern e affina le tue competenze.',
     'home.cta.start': 'Inizia Ora',

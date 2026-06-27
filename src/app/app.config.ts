@@ -18,7 +18,6 @@ import { StrategyComponent } from './strategy/strategy';
 import { ObserverComponent } from './observer/observer';
 import { IteratorComponent } from './iterator/iterator';
 import { InterpreterComponent } from './interpreter/interpreter';
-import { AboutComponent } from './about/about';
 import { AlgorithmsComponent } from './exercises/algorithms/algorithms';
 import { DataStructuresComponent } from './exercises/data-structures/data-structures';
 import { PatternsComponent } from './exercises/patterns/patterns';
@@ -48,7 +47,6 @@ const routes: Routes = [
   { path: 'exercises/data-structures', component: DataStructuresComponent },
   { path: 'exercises/patterns', component: PatternsComponent },
   { path: 'exercises/patterns/builder', component: BuilderExerciseComponent },
-  { path: 'about', component: AboutComponent },
 ];
 
 export const appConfig: ApplicationConfig = {
