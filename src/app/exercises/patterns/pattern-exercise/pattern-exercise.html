@@ -7,29 +7,29 @@
 
     <div class="exercise-card">
       <div class="exercise-main">
-        <span class="exercise-badge">Practice</span>
+        <span class="exercise-badge">{{ 'exercises.patterns.exercise.badge' | translate }}</span>
         <h1 class="exercise-title">{{ currentExercise.title }}</h1>
         <p class="exercise-desc">{{ currentExercise.description }}</p>
 
         <div class="pattern-warning">
-          <strong>What could go wrong?</strong>
+          <strong>{{ 'exercises.patterns.exercise.warningTitle' | translate }}</strong>
           <p>{{ currentExercise.warning }}</p>
         </div>
       </div>
 
       <div class="open-action">
         <div class="stackblitz-card">
-          <p class="open-text">Open the {{ currentExercise.label }} pattern exercise in StackBlitz:</p>
+          <p class="open-text">{{ currentExercise.openText }}</p>
           @if (currentExercise.url) {
             <a
               [href]="currentExercise.url"
               target="_blank"
               rel="noopener noreferrer"
               class="mat-btn mat-btn-filled mat-btn-lg">
-              Open in StackBlitz
+              {{ 'exercises.patterns.exercise.openButton' | translate }}
             </a>
           } @else {
-            <span class="mat-btn mat-btn-filled mat-btn-lg">Coming soon</span>
+            <span class="mat-btn mat-btn-filled mat-btn-lg">{{ 'exercises.patterns.exercise.comingSoon' | translate }}</span>
           }
         </div>
       </div>
