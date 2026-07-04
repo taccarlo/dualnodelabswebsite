@@ -9,6 +9,7 @@ interface PatternExerciseConfig {
   title: string;
   description: string;
   warning: string;
+  openText: string;
   url: string | null;
 }
 
@@ -25,96 +26,96 @@ export class PatternExerciseComponent {
 
   slug = '';
 
-  private readonly patternExercises: Record<string, PatternExerciseConfig> = {
+  private readonly patternExercises: Record<string, { label: string; titleKey: string; descriptionKey: string; warningKey: string; url: string | null }> = {
     builder: {
       label: 'Builder',
-      title: 'Builder Pattern Practice',
-      description: 'Practice the Builder pattern in Python.',
-      warning: 'Without this pattern, object construction can turn into a long, fragile constructor chain that is hard to read and maintain.',
+      titleKey: 'exercises.patterns.builder.practice.title',
+      descriptionKey: 'exercises.patterns.builder.practice.description',
+      warningKey: 'exercises.patterns.builder.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-fy4wvmjq?file=main.py'
     },
     singleton: {
       label: 'Singleton',
-      title: 'Singleton Pattern Practice',
-      description: 'Practice the Singleton pattern in Python.',
-      warning: 'Without this pattern, shared resources can be created multiple times, causing inconsistent state and hard-to-debug bugs.',
+      titleKey: 'exercises.patterns.singleton.practice.title',
+      descriptionKey: 'exercises.patterns.singleton.practice.description',
+      warningKey: 'exercises.patterns.singleton.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-hb9cvs76?file=main.py'
     },
     'factory-method': {
       label: 'Factory Method',
-      title: 'Factory Method Pattern Practice',
-      description: 'Practice the Factory Method pattern in Python.',
-      warning: 'Without this pattern, code can become tightly coupled to concrete classes, making future extensions and substitutions much harder.',
+      titleKey: 'exercises.patterns.factory-method.practice.title',
+      descriptionKey: 'exercises.patterns.factory-method.practice.description',
+      warningKey: 'exercises.patterns.factory-method.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-tygpcxsw?file=main.py'
     },
     'abstract-factory': {
       label: 'Abstract Factory',
-      title: 'Abstract Factory Pattern Practice',
-      description: 'Practice the Abstract Factory pattern in Python.',
-      warning: 'Without this pattern, switching families of related objects often requires scattered conditional logic and brittle changes.',
+      titleKey: 'exercises.patterns.abstract-factory.practice.title',
+      descriptionKey: 'exercises.patterns.abstract-factory.practice.description',
+      warningKey: 'exercises.patterns.abstract-factory.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-s8knur2u?file=main.py'
     },
     adapter: {
       label: 'Adapter',
-      title: 'Adapter Pattern Practice',
-      description: 'Practice the Adapter pattern in Python.',
-      warning: 'Without this pattern, incompatible interfaces can force awkward workarounds and duplicate logic across the codebase.',
+      titleKey: 'exercises.patterns.adapter.practice.title',
+      descriptionKey: 'exercises.patterns.adapter.practice.description',
+      warningKey: 'exercises.patterns.adapter.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-9bjvcxm9?file=main.py'
     },
     bridge: {
       label: 'Bridge',
-      title: 'Bridge Pattern Practice',
-      description: 'Practice the Bridge pattern in Python.',
-      warning: 'Without this pattern, abstraction and implementation details become tightly coupled, making changes more expensive.',
+      titleKey: 'exercises.patterns.bridge.practice.title',
+      descriptionKey: 'exercises.patterns.bridge.practice.description',
+      warningKey: 'exercises.patterns.bridge.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-13jvmmvg?file=main.py'
     },
     composite: {
       label: 'Composite',
-      title: 'Composite Pattern Practice',
-      description: 'Practice the Composite pattern in Python.',
-      warning: 'Without this pattern, tree-like structures are harder to manage and often require special-case logic for individual nodes.',
+      titleKey: 'exercises.patterns.composite.practice.title',
+      descriptionKey: 'exercises.patterns.composite.practice.description',
+      warningKey: 'exercises.patterns.composite.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-ytr6dujk?file=main.py'
     },
     decorator: {
       label: 'Decorator',
-      title: 'Decorator Pattern Practice',
-      description: 'Practice the Decorator pattern in Python.',
-      warning: 'Without this pattern, adding responsibilities often means creating many subclasses or modifying existing classes in risky ways.',
+      titleKey: 'exercises.patterns.decorator.practice.title',
+      descriptionKey: 'exercises.patterns.decorator.practice.description',
+      warningKey: 'exercises.patterns.decorator.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-36egzvjc?file=main.py'
     },
     facade: {
       label: 'Facade',
-      title: 'Facade Pattern Practice',
-      description: 'Practice the Facade pattern in Python.',
-      warning: 'Without this pattern, clients must understand too many internal classes and dependencies, increasing complexity.',
+      titleKey: 'exercises.patterns.facade.practice.title',
+      descriptionKey: 'exercises.patterns.facade.practice.description',
+      warningKey: 'exercises.patterns.facade.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-6oat66nh?file=main.py'
     },
     strategy: {
       label: 'Strategy',
-      title: 'Strategy Pattern Practice',
-      description: 'Practice the Strategy pattern in Python.',
-      warning: 'Without this pattern, changing behavior often means branching through conditionals and duplicating logic.',
+      titleKey: 'exercises.patterns.strategy.practice.title',
+      descriptionKey: 'exercises.patterns.strategy.practice.description',
+      warningKey: 'exercises.patterns.strategy.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-3hvkxjyb?file=main.py'
     },
     observer: {
       label: 'Observer',
-      title: 'Observer Pattern Practice',
-      description: 'Practice the Observer pattern in Python.',
-      warning: 'Without this pattern, components become tightly coupled and updates are harder to propagate consistently.',
+      titleKey: 'exercises.patterns.observer.practice.title',
+      descriptionKey: 'exercises.patterns.observer.practice.description',
+      warningKey: 'exercises.patterns.observer.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-zisfzec5?file=main.py'
     },
     iterator: {
       label: 'Iterator',
-      title: 'Iterator Pattern Practice',
-      description: 'Practice the Iterator pattern in Python.',
-      warning: 'Without this pattern, traversing collections often leaks internal details and makes client code more cumbersome.',
+      titleKey: 'exercises.patterns.iterator.practice.title',
+      descriptionKey: 'exercises.patterns.iterator.practice.description',
+      warningKey: 'exercises.patterns.iterator.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-vqrzr26k?file=main.py'
     },
     interpreter: {
       label: 'Interpreter',
-      title: 'Interpreter Pattern Practice',
-      description: 'Practice the Interpreter pattern in Python.',
-      warning: 'Without this pattern, parsing domain-specific rules becomes scattered and difficult to evolve.',
+      titleKey: 'exercises.patterns.interpreter.practice.title',
+      descriptionKey: 'exercises.patterns.interpreter.practice.description',
+      warningKey: 'exercises.patterns.interpreter.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-cqrakwgd?file=main.py'
     }
   };
@@ -134,13 +135,28 @@ export class PatternExerciseComponent {
   }
 
   get currentExercise(): PatternExerciseConfig {
-    return this.patternExercises[this.slug] ?? {
-      label: this.patternName,
-      title: `${this.patternName} Pattern Practice`,
-      description: 'This pattern exercise is coming soon.',
-      warning: 'Without this pattern, the design can become harder to evolve and maintain over time.',
-      url: null
+    const exercise = this.patternExercises[this.slug];
+
+    const label = exercise?.label ?? this.patternName;
+    const title = this.translateWithPattern(exercise?.titleKey ?? 'exercises.patterns.exercise.fallback.title');
+    const description = this.translateService.translate(exercise?.descriptionKey ?? 'exercises.patterns.exercise.fallback.description');
+    const warning = this.translateWithPattern(exercise?.warningKey ?? 'exercises.patterns.exercise.fallback.warning');
+    const openText = this.translateWithPattern('exercises.patterns.exercise.openText', label);
+
+    return {
+      label,
+      title,
+      description,
+      warning,
+      openText,
+      url: exercise?.url ?? null
     };
+  }
+
+  private translateWithPattern(key: string, fallbackLabel?: string): string {
+    const value = this.translateService.translate(key);
+    const patternLabel = fallbackLabel ?? this.patternName;
+    return value.includes('{pattern}') ? value.replace('{pattern}', patternLabel) : value;
   }
 
   get patternName(): string {
