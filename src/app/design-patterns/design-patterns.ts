@@ -36,6 +36,13 @@ export class DesignPatternsComponent {
     { name: 'Observer', route: '/design-patterns/observer' },
     { name: 'Iterator', route: '/design-patterns/iterator' },
     { name: 'Interpreter', route: '/design-patterns/interpreter' },
+    { name: 'Null Object', route: '/design-patterns/null-object' },
+    { name: 'Template Method', route: '/design-patterns/template-method' },
+    { name: 'Visitor', route: '/design-patterns/visitor' },
+    { name: 'Command', route: '/design-patterns/command' },
+    { name: 'Memento', route: '/design-patterns/memento' },
+    { name: 'State', route: '/design-patterns/state' },
+    { name: 'Chain of Responsibility', route: '/design-patterns/chain-of-responsibility' },
   ];
   architecturalPatterns = [
     { name: 'Repository', route: '/design-patterns/repository' },

@@ -18,6 +18,13 @@ import { StrategyComponent } from './strategy/strategy';
 import { ObserverComponent } from './observer/observer';
 import { IteratorComponent } from './iterator/iterator';
 import { InterpreterComponent } from './interpreter/interpreter';
+import { NullObjectComponent } from './null-object/null-object';
+import { TemplateMethodComponent } from './template-method/template-method';
+import { VisitorComponent } from './visitor/visitor';
+import { CommandComponent } from './command/command';
+import { MementoComponent } from './memento/memento';
+import { StateComponent } from './state/state';
+import { ChainOfResponsibilityComponent } from './chain-of-responsibility/chain-of-responsibility';
 import { RepositoryComponent } from './repository/repository';
 import { ResultComponent } from './result/result';
 import { LazyInitializationComponent } from './lazy-initialization/lazy-initialization';
@@ -50,6 +57,13 @@ const routes: Routes = [
   { path: 'design-patterns/observer', component: ObserverComponent },
   { path: 'design-patterns/iterator', component: IteratorComponent },
   { path: 'design-patterns/interpreter', component: InterpreterComponent },
+  { path: 'design-patterns/null-object', component: NullObjectComponent },
+  { path: 'design-patterns/template-method', component: TemplateMethodComponent },
+  { path: 'design-patterns/visitor', component: VisitorComponent },
+  { path: 'design-patterns/command', component: CommandComponent },
+  { path: 'design-patterns/memento', component: MementoComponent },
+  { path: 'design-patterns/state', component: StateComponent },
+  { path: 'design-patterns/chain-of-responsibility', component: ChainOfResponsibilityComponent },
   { path: 'design-patterns/repository', component: RepositoryComponent },
   { path: 'design-patterns/result', component: ResultComponent },
   { path: 'exercises', component: ExercisesComponent },
