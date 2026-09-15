@@ -34,6 +34,10 @@ export class DesignPatternsComponent {
     { name: 'Iterator', route: '/design-patterns/iterator' },
     { name: 'Interpreter', route: '/design-patterns/interpreter' },
   ];
+  architecturalPatterns = [
+    { name: 'Repository', route: '/design-patterns/repository' },
+    { name: 'Result', route: '/design-patterns/result' },
+  ];
 
   get currentLang() {
     return this.translateService.currentLang();

@@ -18,6 +18,8 @@ import { StrategyComponent } from './strategy/strategy';
 import { ObserverComponent } from './observer/observer';
 import { IteratorComponent } from './iterator/iterator';
 import { InterpreterComponent } from './interpreter/interpreter';
+import { RepositoryComponent } from './repository/repository';
+import { ResultComponent } from './result/result';
 import { AlgorithmsComponent } from './exercises/algorithms/algorithms';
 import { DataStructuresComponent } from './exercises/data-structures/data-structures';
 import { PatternsComponent } from './exercises/patterns/patterns';
@@ -42,6 +44,8 @@ const routes: Routes = [
   { path: 'design-patterns/observer', component: ObserverComponent },
   { path: 'design-patterns/iterator', component: IteratorComponent },
   { path: 'design-patterns/interpreter', component: InterpreterComponent },
+  { path: 'design-patterns/repository', component: RepositoryComponent },
+  { path: 'design-patterns/result', component: ResultComponent },
   { path: 'exercises', component: ExercisesComponent },
   { path: 'exercises/algorithms', component: AlgorithmsComponent },
   { path: 'exercises/data-structures', component: DataStructuresComponent },
