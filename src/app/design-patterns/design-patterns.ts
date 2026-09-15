@@ -30,6 +30,9 @@ export class DesignPatternsComponent {
     { name: 'Composite', route: '/design-patterns/composite' },
     { name: 'Decorator', route: '/design-patterns/decorator' },
     { name: 'Facade', route: '/design-patterns/facade' },
+    { name: 'Flyweight', route: '/design-patterns/flyweight' },
+    { name: 'Proxy', route: '/design-patterns/proxy' },
+    { name: 'Dependency Injection', route: '/design-patterns/dependency-injection' },
   ];
   behavioralPatterns = [
     { name: 'Strategy', route: '/design-patterns/strategy' },

@@ -23,6 +23,9 @@ import { ResultComponent } from './result/result';
 import { LazyInitializationComponent } from './lazy-initialization/lazy-initialization';
 import { PrototypeComponent } from './prototype/prototype';
 import { ObjectPoolComponent } from './object-pool/object-pool';
+import { FlyweightComponent } from './flyweight/flyweight';
+import { ProxyComponent } from './proxy/proxy';
+import { DependencyInjectionComponent } from './dependency-injection/dependency-injection';
 import { AlgorithmsComponent } from './exercises/algorithms/algorithms';
 import { DataStructuresComponent } from './exercises/data-structures/data-structures';
 import { PatternsComponent } from './exercises/patterns/patterns';
@@ -46,6 +49,9 @@ const routes: Routes = [
   { path: 'design-patterns/composite', component: CompositeComponent },
   { path: 'design-patterns/decorator', component: DecoratorComponent },
   { path: 'design-patterns/facade', component: FacadeComponent },
+  { path: 'design-patterns/flyweight', component: FlyweightComponent },
+  { path: 'design-patterns/proxy', component: ProxyComponent },
+  { path: 'design-patterns/dependency-injection', component: DependencyInjectionComponent },
   { path: 'design-patterns/strategy', component: StrategyComponent },
   { path: 'design-patterns/observer', component: ObserverComponent },
   { path: 'design-patterns/iterator', component: IteratorComponent },
