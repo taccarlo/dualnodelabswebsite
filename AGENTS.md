@@ -8,7 +8,7 @@
 Angular 19 SSR app at `C:\DUALNODE\dualnodelabswebsite` — design patterns website with IDE-style code viewer. Firebase Hosting (Classic).
 
 ## Component Architecture
-- **Shared `IdePanelComponent`** at `src/app/shared/ide-panel/` — handles ALL IDE panel logic: Prism highlighting, divider drag/resize, copy button, language tabs. All 13 pattern pages (`src/app/singleton/`, `src/app/builder/`, `src/app/factory-method/`, `src/app/abstract-factory/`, `src/app/adapter/`, `src/app/bridge/`, `src/app/composite/`, `src/app/decorator/`, `src/app/facade/`, `src/app/strategy/`, `src/app/observer/`, `src/app/iterator/`, `src/app/interpreter/`) use `<app-ide-panel>` with `@Input()` code samples and translation keys.
+- **Shared `IdePanelComponent`** at `src/app/shared/ide-panel/` — handles ALL IDE panel logic: Prism highlighting, divider drag/resize, copy button, language tabs. All 19 pattern pages (`src/app/singleton/`, `src/app/builder/`, `src/app/factory-method/`, `src/app/abstract-factory/`, `src/app/lazy-initialization/`, `src/app/prototype/`, `src/app/object-pool/`, `src/app/adapter/`, `src/app/bridge/`, `src/app/composite/`, `src/app/decorator/`, `src/app/facade/`, `src/app/flyweight/`, `src/app/proxy/`, `src/app/dependency-injection/`, `src/app/strategy/`, `src/app/observer/`, `src/app/iterator/`, `src/app/interpreter/`) use `<app-ide-panel>` with `@Input()` code samples and translation keys.
 - **All layout CSS** (`.dp-page`, `.code-panel`, `.ide-tabs`, `.divider`, `.info-panel`, `.pattern-title`, `.pattern-desc`, `.info-footer`) lives in shared component CSS.
 - Divider resize clamp: code panel 30%–80%, info panel 70%–20%.
 - 5 languages per pattern: Java, Kotlin, TypeScript, Python, C#.

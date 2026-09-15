@@ -55,6 +55,34 @@ export class PatternExerciseComponent {
       warningKey: 'exercises.patterns.abstract-factory.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-s8knur2u?file=main.py'
     },
+    'lazy-initialization': {
+      label: 'Lazy Initialization',
+      titleKey: 'exercises.patterns.lazy-initialization.practice.title',
+      descriptionKey: 'exercises.patterns.lazy-initialization.practice.description',
+      warningKey: 'exercises.patterns.lazy-initialization.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-qrnuhdjg?file=main.py'
+    },
+    prototype: {
+      label: 'Prototype',
+      titleKey: 'exercises.patterns.prototype.practice.title',
+      descriptionKey: 'exercises.patterns.prototype.practice.description',
+      warningKey: 'exercises.patterns.prototype.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-pfawyra9?file=main.py'
+    },
+    result: {
+      label: 'Result',
+      titleKey: 'exercises.patterns.result.practice.title',
+      descriptionKey: 'exercises.patterns.result.practice.description',
+      warningKey: 'exercises.patterns.result.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-9rwjs3iz?file=main.py'
+    },
+    repository: {
+      label: 'Repository',
+      titleKey: 'exercises.patterns.repository.practice.title',
+      descriptionKey: 'exercises.patterns.repository.practice.description',
+      warningKey: 'exercises.patterns.repository.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-yeld7czx?file=main.py'
+    },
     adapter: {
       label: 'Adapter',
       titleKey: 'exercises.patterns.adapter.practice.title',

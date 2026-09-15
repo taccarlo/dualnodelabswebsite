@@ -18,6 +18,21 @@ import { StrategyComponent } from './strategy/strategy';
 import { ObserverComponent } from './observer/observer';
 import { IteratorComponent } from './iterator/iterator';
 import { InterpreterComponent } from './interpreter/interpreter';
+import { NullObjectComponent } from './null-object/null-object';
+import { TemplateMethodComponent } from './template-method/template-method';
+import { VisitorComponent } from './visitor/visitor';
+import { CommandComponent } from './command/command';
+import { MementoComponent } from './memento/memento';
+import { StateComponent } from './state/state';
+import { ChainOfResponsibilityComponent } from './chain-of-responsibility/chain-of-responsibility';
+import { RepositoryComponent } from './repository/repository';
+import { ResultComponent } from './result/result';
+import { LazyInitializationComponent } from './lazy-initialization/lazy-initialization';
+import { PrototypeComponent } from './prototype/prototype';
+import { ObjectPoolComponent } from './object-pool/object-pool';
+import { FlyweightComponent } from './flyweight/flyweight';
+import { ProxyComponent } from './proxy/proxy';
+import { DependencyInjectionComponent } from './dependency-injection/dependency-injection';
 import { AlgorithmsComponent } from './exercises/algorithms/algorithms';
 import { DataStructuresComponent } from './exercises/data-structures/data-structures';
 import { PatternsComponent } from './exercises/patterns/patterns';
@@ -33,15 +48,30 @@ const routes: Routes = [
   { path: 'design-patterns/builder', component: BuilderComponent },
   { path: 'design-patterns/factory-method', component: FactoryMethodComponent },
   { path: 'design-patterns/abstract-factory', component: AbstractFactoryComponent },
+  { path: 'design-patterns/lazy-initialization', component: LazyInitializationComponent },
+  { path: 'design-patterns/prototype', component: PrototypeComponent },
+  { path: 'design-patterns/object-pool', component: ObjectPoolComponent },
   { path: 'design-patterns/adapter', component: AdapterComponent },
   { path: 'design-patterns/bridge', component: BridgeComponent },
   { path: 'design-patterns/composite', component: CompositeComponent },
   { path: 'design-patterns/decorator', component: DecoratorComponent },
   { path: 'design-patterns/facade', component: FacadeComponent },
+  { path: 'design-patterns/flyweight', component: FlyweightComponent },
+  { path: 'design-patterns/proxy', component: ProxyComponent },
+  { path: 'design-patterns/dependency-injection', component: DependencyInjectionComponent },
   { path: 'design-patterns/strategy', component: StrategyComponent },
   { path: 'design-patterns/observer', component: ObserverComponent },
   { path: 'design-patterns/iterator', component: IteratorComponent },
   { path: 'design-patterns/interpreter', component: InterpreterComponent },
+  { path: 'design-patterns/null-object', component: NullObjectComponent },
+  { path: 'design-patterns/template-method', component: TemplateMethodComponent },
+  { path: 'design-patterns/visitor', component: VisitorComponent },
+  { path: 'design-patterns/command', component: CommandComponent },
+  { path: 'design-patterns/memento', component: MementoComponent },
+  { path: 'design-patterns/state', component: StateComponent },
+  { path: 'design-patterns/chain-of-responsibility', component: ChainOfResponsibilityComponent },
+  { path: 'design-patterns/repository', component: RepositoryComponent },
+  { path: 'design-patterns/result', component: ResultComponent },
   { path: 'exercises', component: ExercisesComponent },
   { path: 'exercises/algorithms', component: AlgorithmsComponent },
   { path: 'exercises/data-structures', component: DataStructuresComponent },

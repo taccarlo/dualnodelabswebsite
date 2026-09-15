@@ -20,6 +20,9 @@ export class DesignPatternsComponent {
     { name: 'Builder', route: '/design-patterns/builder' },
     { name: 'Factory Method', route: '/design-patterns/factory-method' },
     { name: 'Abstract Factory', route: '/design-patterns/abstract-factory' },
+    { name: 'Lazy Initialization', route: '/design-patterns/lazy-initialization' },
+    { name: 'Prototype', route: '/design-patterns/prototype' },
+    { name: 'Object Pool', route: '/design-patterns/object-pool' },
   ];
   structuralPatterns = [
     { name: 'Adapter', route: '/design-patterns/adapter' },
@@ -27,12 +30,26 @@ export class DesignPatternsComponent {
     { name: 'Composite', route: '/design-patterns/composite' },
     { name: 'Decorator', route: '/design-patterns/decorator' },
     { name: 'Facade', route: '/design-patterns/facade' },
+    { name: 'Flyweight', route: '/design-patterns/flyweight' },
+    { name: 'Proxy', route: '/design-patterns/proxy' },
+    { name: 'Dependency Injection', route: '/design-patterns/dependency-injection' },
   ];
   behavioralPatterns = [
     { name: 'Strategy', route: '/design-patterns/strategy' },
     { name: 'Observer', route: '/design-patterns/observer' },
     { name: 'Iterator', route: '/design-patterns/iterator' },
     { name: 'Interpreter', route: '/design-patterns/interpreter' },
+    { name: 'Null Object', route: '/design-patterns/null-object' },
+    { name: 'Template Method', route: '/design-patterns/template-method' },
+    { name: 'Visitor', route: '/design-patterns/visitor' },
+    { name: 'Command', route: '/design-patterns/command' },
+    { name: 'Memento', route: '/design-patterns/memento' },
+    { name: 'State', route: '/design-patterns/state' },
+    { name: 'Chain of Responsibility', route: '/design-patterns/chain-of-responsibility' },
+  ];
+  architecturalPatterns = [
+    { name: 'Repository', route: '/design-patterns/repository' },
+    { name: 'Result', route: '/design-patterns/result' },
   ];
 
   get currentLang() {

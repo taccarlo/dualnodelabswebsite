@@ -37,6 +37,15 @@
               [class.clickable]="!!p.route">{{ p.name }}</li>
         </ul>
       </div>
+
+      <div class="pattern-category">
+        <h3 class="category-title">{{ 'designpatterns.architectural' | translate }}</h3>
+        <ul class="pattern-list">
+          <li *ngFor="let p of architecturalPatterns"
+              [routerLink]="p.route"
+              [class.clickable]="!!p.route">{{ p.name }}</li>
+        </ul>
+      </div>
     </div>
   </section>
 
