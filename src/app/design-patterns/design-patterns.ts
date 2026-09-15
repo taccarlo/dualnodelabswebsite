@@ -20,6 +20,9 @@ export class DesignPatternsComponent {
     { name: 'Builder', route: '/design-patterns/builder' },
     { name: 'Factory Method', route: '/design-patterns/factory-method' },
     { name: 'Abstract Factory', route: '/design-patterns/abstract-factory' },
+    { name: 'Lazy Initialization', route: '/design-patterns/lazy-initialization' },
+    { name: 'Prototype', route: '/design-patterns/prototype' },
+    { name: 'Object Pool', route: '/design-patterns/object-pool' },
   ];
   structuralPatterns = [
     { name: 'Adapter', route: '/design-patterns/adapter' },

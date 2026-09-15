@@ -20,6 +20,9 @@ import { IteratorComponent } from './iterator/iterator';
 import { InterpreterComponent } from './interpreter/interpreter';
 import { RepositoryComponent } from './repository/repository';
 import { ResultComponent } from './result/result';
+import { LazyInitializationComponent } from './lazy-initialization/lazy-initialization';
+import { PrototypeComponent } from './prototype/prototype';
+import { ObjectPoolComponent } from './object-pool/object-pool';
 import { AlgorithmsComponent } from './exercises/algorithms/algorithms';
 import { DataStructuresComponent } from './exercises/data-structures/data-structures';
 import { PatternsComponent } from './exercises/patterns/patterns';
@@ -35,6 +38,9 @@ const routes: Routes = [
   { path: 'design-patterns/builder', component: BuilderComponent },
   { path: 'design-patterns/factory-method', component: FactoryMethodComponent },
   { path: 'design-patterns/abstract-factory', component: AbstractFactoryComponent },
+  { path: 'design-patterns/lazy-initialization', component: LazyInitializationComponent },
+  { path: 'design-patterns/prototype', component: PrototypeComponent },
+  { path: 'design-patterns/object-pool', component: ObjectPoolComponent },
   { path: 'design-patterns/adapter', component: AdapterComponent },
   { path: 'design-patterns/bridge', component: BridgeComponent },
   { path: 'design-patterns/composite', component: CompositeComponent },
