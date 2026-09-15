@@ -10,6 +10,8 @@ const patternExerciseRoutes: Record<string, string> = {
   builder: '/exercises/patterns/builder',
   'factory-method': '/exercises/patterns/factory-method',
   'abstract-factory': '/exercises/patterns/abstract-factory',
+  result: '/exercises/patterns/result',
+  repository: '/exercises/patterns/repository',
   'lazy-initialization': '/exercises/patterns/lazy-initialization',
   prototype: '/exercises/patterns/prototype',
   'object-pool': '/exercises/patterns/object-pool',

@@ -55,6 +55,20 @@ export class PatternExerciseComponent {
       warningKey: 'exercises.patterns.abstract-factory.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-s8knur2u?file=main.py'
     },
+    result: {
+      label: 'Result',
+      titleKey: 'exercises.patterns.result.practice.title',
+      descriptionKey: 'exercises.patterns.result.practice.description',
+      warningKey: 'exercises.patterns.result.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-9rwjs3iz?file=main.py'
+    },
+    repository: {
+      label: 'Repository',
+      titleKey: 'exercises.patterns.repository.practice.title',
+      descriptionKey: 'exercises.patterns.repository.practice.description',
+      warningKey: 'exercises.patterns.repository.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-yeld7czx?file=main.py'
+    },
     adapter: {
       label: 'Adapter',
       titleKey: 'exercises.patterns.adapter.practice.title',
