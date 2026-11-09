@@ -27,6 +27,13 @@ const patternExerciseRoutes: Record<string, string> = {
   observer: '/exercises/patterns/observer',
   iterator: '/exercises/patterns/iterator',
   interpreter: '/exercises/patterns/interpreter',
+  'null-object': '/exercises/patterns/null-object',
+  'template-method': '/exercises/patterns/template-method',
+  visitor: '/exercises/patterns/visitor',
+  command: '/exercises/patterns/command',
+  memento: '/exercises/patterns/memento',
+  state: '/exercises/patterns/state',
+  'chain-of-responsibility': '/exercises/patterns/chain-of-responsibility',
 };
 
 const patternWarningCopy: Record<string, string> = {
