@@ -145,6 +145,83 @@ export class PatternExerciseComponent {
       descriptionKey: 'exercises.patterns.interpreter.practice.description',
       warningKey: 'exercises.patterns.interpreter.practice.warning',
       url: 'https://stackblitz.com/edit/secret-python-cqrakwgd?file=main.py'
+    },
+    'object-pool': {
+      label: 'Object Pool',
+      titleKey: 'exercises.patterns.object-pool.practice.title',
+      descriptionKey: 'exercises.patterns.object-pool.practice.description',
+      warningKey: 'exercises.patterns.object-pool.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-yberw64q?file=main.py'
+    },
+    flyweight: {
+      label: 'Flyweight',
+      titleKey: 'exercises.patterns.flyweight.practice.title',
+      descriptionKey: 'exercises.patterns.flyweight.practice.description',
+      warningKey: 'exercises.patterns.flyweight.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-wvnddrdo?file=main.py'
+    },
+    proxy: {
+      label: 'Proxy',
+      titleKey: 'exercises.patterns.proxy.practice.title',
+      descriptionKey: 'exercises.patterns.proxy.practice.description',
+      warningKey: 'exercises.patterns.proxy.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-1iv5zmxk?file=main.py'
+    },
+    'dependency-injection': {
+      label: 'Dependency Injection',
+      titleKey: 'exercises.patterns.dependency-injection.practice.title',
+      descriptionKey: 'exercises.patterns.dependency-injection.practice.description',
+      warningKey: 'exercises.patterns.dependency-injection.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-gar7i4y5?file=main.py'
+    },
+    'null-object': {
+      label: 'Null Object',
+      titleKey: 'exercises.patterns.null-object.practice.title',
+      descriptionKey: 'exercises.patterns.null-object.practice.description',
+      warningKey: 'exercises.patterns.null-object.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-tgametvf?file=main.py'
+    },
+    'template-method': {
+      label: 'Template Method',
+      titleKey: 'exercises.patterns.template-method.practice.title',
+      descriptionKey: 'exercises.patterns.template-method.practice.description',
+      warningKey: 'exercises.patterns.template-method.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-bjxfndhg?file=main.py'
+    },
+    visitor: {
+      label: 'Visitor',
+      titleKey: 'exercises.patterns.visitor.practice.title',
+      descriptionKey: 'exercises.patterns.visitor.practice.description',
+      warningKey: 'exercises.patterns.visitor.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-odeuysnk?file=main.py'
+    },
+    command: {
+      label: 'Command',
+      titleKey: 'exercises.patterns.command.practice.title',
+      descriptionKey: 'exercises.patterns.command.practice.description',
+      warningKey: 'exercises.patterns.command.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-iw4hrkzg?file=main.py'
+    },
+    memento: {
+      label: 'Memento',
+      titleKey: 'exercises.patterns.memento.practice.title',
+      descriptionKey: 'exercises.patterns.memento.practice.description',
+      warningKey: 'exercises.patterns.memento.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-sq7tsvsy?file=main.py'
+    },
+    state: {
+      label: 'State',
+      titleKey: 'exercises.patterns.state.practice.title',
+      descriptionKey: 'exercises.patterns.state.practice.description',
+      warningKey: 'exercises.patterns.state.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-6lpzyk6g?file=main.py'
+    },
+    'chain-of-responsibility': {
+      label: 'Chain of Responsibility',
+      titleKey: 'exercises.patterns.chain-of-responsibility.practice.title',
+      descriptionKey: 'exercises.patterns.chain-of-responsibility.practice.description',
+      warningKey: 'exercises.patterns.chain-of-responsibility.practice.warning',
+      url: 'https://stackblitz.com/edit/secret-python-h11srkns?file=main.py'
     }
   };
 
