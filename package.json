@@ -1,10 +1,11 @@
 {
   "name": "dualnodelabswebsite",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "ng build && firebase deploy",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:dualnodelabswebsite": "node dist/dualnodelabswebsite/server/server.mjs"

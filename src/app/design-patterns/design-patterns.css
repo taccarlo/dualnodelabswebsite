@@ -15,6 +15,32 @@
   min-height: 50vh;
 }
 
+.pattern-search {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto var(--space-2xl);
+  padding: 12px 20px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-full);
+  transition: var(--transition-fast);
+}
+
+.pattern-search:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-container);
+}
+
+.search-empty {
+  text-align: center;
+  color: var(--text-secondary);
+}
+
 .pattern-category {
   margin-bottom: var(--space-2xl);
 }

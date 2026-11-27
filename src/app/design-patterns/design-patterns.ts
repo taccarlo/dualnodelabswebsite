@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../i18n/translate.pipe';
 import { TranslateService } from '../i18n/translate.service';
@@ -7,7 +7,7 @@ import packageJson from '../../../package.json';
 
 @Component({
   selector: 'app-design-patterns',
-  imports: [NgFor, RouterLink, TranslatePipe],
+  imports: [NgFor, NgIf, RouterLink, TranslatePipe],
   templateUrl: './design-patterns.html',
   styleUrl: './design-patterns.css'
 })
@@ -51,6 +51,23 @@ export class DesignPatternsComponent {
     { name: 'Repository', route: '/design-patterns/repository' },
     { name: 'Result', route: '/design-patterns/result' },
   ];
+
+  searchTerm = '';
+
+  get categories() {
+    const term = this.searchTerm.trim().toLowerCase();
+    return [
+      { titleKey: 'designpatterns.creational', patterns: this.creationalPatterns },
+      { titleKey: 'designpatterns.structural', patterns: this.structuralPatterns },
+      { titleKey: 'designpatterns.behavioral', patterns: this.behavioralPatterns },
+      { titleKey: 'designpatterns.architectural', patterns: this.architecturalPatterns },
+    ]
+      .map(category => ({
+        ...category,
+        patterns: category.patterns.filter(p => p.name.toLowerCase().includes(term)),
+      }))
+      .filter(category => category.patterns.length > 0);
+  }
 
   get currentLang() {
     return this.translateService.currentLang();

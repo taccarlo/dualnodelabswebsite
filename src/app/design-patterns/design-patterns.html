@@ -11,41 +11,23 @@
   <section class="content-section">
     <div class="content-container section-padding">
 
-      <div class="pattern-category">
-        <h3 class="category-title">{{ 'designpatterns.creational' | translate }}</h3>
+      <input type="search"
+             class="pattern-search"
+             [placeholder]="'designpatterns.search.placeholder' | translate"
+             [attr.aria-label]="'designpatterns.search.placeholder' | translate"
+             [value]="searchTerm"
+             (input)="searchTerm = $any($event.target).value" />
+
+      <div class="pattern-category" *ngFor="let category of categories">
+        <h3 class="category-title">{{ category.titleKey | translate }}</h3>
         <ul class="pattern-list">
-          <li *ngFor="let p of creationalPatterns"
+          <li *ngFor="let p of category.patterns"
               [routerLink]="p.route"
               [class.clickable]="!!p.route">{{ p.name }}</li>
         </ul>
       </div>
 
-      <div class="pattern-category">
-        <h3 class="category-title">{{ 'designpatterns.structural' | translate }}</h3>
-        <ul class="pattern-list">
-          <li *ngFor="let p of structuralPatterns"
-              [routerLink]="p.route"
-              [class.clickable]="!!p.route">{{ p.name }}</li>
-        </ul>
-      </div>
-
-      <div class="pattern-category">
-        <h3 class="category-title">{{ 'designpatterns.behavioral' | translate }}</h3>
-        <ul class="pattern-list">
-          <li *ngFor="let p of behavioralPatterns"
-              [routerLink]="p.route"
-              [class.clickable]="!!p.route">{{ p.name }}</li>
-        </ul>
-      </div>
-
-      <div class="pattern-category">
-        <h3 class="category-title">{{ 'designpatterns.architectural' | translate }}</h3>
-        <ul class="pattern-list">
-          <li *ngFor="let p of architecturalPatterns"
-              [routerLink]="p.route"
-              [class.clickable]="!!p.route">{{ p.name }}</li>
-        </ul>
-      </div>
+      <p class="search-empty" *ngIf="categories.length === 0">{{ 'designpatterns.search.noResults' | translate }}</p>
     </div>
   </section>
 
